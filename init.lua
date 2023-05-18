@@ -89,6 +89,9 @@ P.S. You can delete this when you're done too. It's your config now! :)
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
+vim.g.codeium_disable_bindings = true
+vim.keymap.set({ 'n', 'v' }, ';', '') -- jolly
+vim.keymap.set({ 'n', 'v' }, ',', '') -- jolly
 
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = false
@@ -136,8 +139,8 @@ vim.opt.updatetime = 250
 vim.opt.timeoutlen = 300
 
 -- Configure how new splits should be opened
-vim.opt.splitright = true
-vim.opt.splitbelow = true
+vim.opt.splitright = false
+vim.opt.splitbelow = false
 
 -- Sets how neovim will display certain whitespace characters in the editor.
 --  See `:help 'list'`
@@ -165,7 +168,7 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+vim.keymap.set('n', '<leader>qd', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
@@ -185,10 +188,10 @@ vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' }
 --  Use CTRL+<hjkl> to switch between windows
 --
 --  See `:help wincmd` for a list of all window commands
-vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
-vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
-vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
-vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+-- vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
+-- vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
+-- vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
+-- vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
@@ -207,7 +210,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
-if not vim.loop.fs_stat(lazypath) then
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
   local lazyrepo = 'https://github.com/folke/lazy.nvim.git'
   local out = vim.fn.system { 'git', 'clone', '--filter=blob:none', '--branch=stable', lazyrepo, lazypath }
   if vim.v.shell_error ~= 0 then
@@ -251,6 +254,47 @@ require('lazy').setup({
   { -- Adds git related signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
     opts = {
+      on_attach = function(bufnr)
+        local gitsigns = require 'gitsigns'
+
+        local function map(mode, l, r, opts)
+          opts = opts or {}
+          opts.buffer = bufnr
+          vim.keymap.set(mode, l, r, opts)
+        end
+
+        -- Navigation
+        map('n', ']c', function()
+          if vim.wo.diff then
+            vim.cmd.normal { ']c', bang = true }
+          else
+            gitsigns.nav_hunk 'next'
+          end
+        end, { desc = 'Jump to next git [c]hange' })
+
+        map('n', '[c', function()
+          if vim.wo.diff then
+            vim.cmd.normal { '[c', bang = true }
+          else
+            gitsigns.nav_hunk 'prev'
+          end
+        end, { desc = 'Jump to previous git [c]hange' })
+
+        -- Actions
+        map({ 'n', 'v' }, '<leader>g+', gitsigns.stage_hunk, { desc = 'git stage hunk' })
+        map({ 'n', 'v' }, '<leader>g-', gitsigns.undo_stage_hunk, { desc = 'git undo stage hunk' })
+        map({ 'n', 'v' }, '<leader>gr', gitsigns.reset_hunk, { desc = 'git reset hunk' })
+        map('n', '<leader>gR', gitsigns.reset_buffer, { desc = 'git reset buffer' })
+        map('n', '<leader>gS', gitsigns.stage_buffer, { desc = 'git stage buffer' })
+        map('n', '<leader>gp', gitsigns.preview_hunk, { desc = 'git preview hunk' })
+        map('n', '<leader>gP', '<cmd>Gitsigns toggle_word_diff<CR>', { desc = 'git preview hunk' })
+        map('n', '<leader>g@', function()
+          gitsigns.diffthis '@'
+        end, { desc = 'git diff against last commit' })
+        -- Toggles
+        map('n', '<leader>gd', gitsigns.toggle_deleted, { desc = 'git show deleted' })
+        -- map('n', ';l', gitsigns.toggle_linehl, { desc = 'git toggle line highlights' })
+      end,
       signs = {
         add = { text = '+' },
         change = { text = '~' },
@@ -284,13 +328,35 @@ require('lazy').setup({
 
       -- Document existing key chains
       require('which-key').add {
-        { '<leader>c', group = '[C]ode' },
-        { '<leader>d', group = '[D]ocument' },
+        mode = 'n',
         { '<leader>r', group = '[R]ename' },
-        { '<leader>s', group = '[S]earch' },
-        { '<leader>w', group = '[W]orkspace' },
-        { '<leader>t', group = '[T]oggle' },
-        { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
+        { '<leader>x', group = 'Trouble' },
+        { '<leader>c', group = 'CODE' },
+        { '<leader>cd', group = 'DB' },
+        { '<leader>d', group = 'DEBUG' },
+        { '<leader>g', group = 'GIT' },
+        { '<leader>gl', group = 'GIT LOGS' },
+        { '<leader>gb', group = 'BLAME' },
+        { '<leader>h', group = 'HISTORY' },
+        { '<leader>i', group = 'IA' },
+        { '<leader>ia', group = 'ASK TO IA' },
+        { '<leader>im', group = 'ACT_AS' },
+        { '<leader>o', group = 'ORG' },
+        { '<leader>q', group = 'QUICKFIX' },
+        { '<leader>r', group = 'REFACTORY' },
+        { '<leader>s', group = 'SEARCH' },
+        { '<leader>S', group = 'SESSION' },
+        { '<leader>t', group = 'TOGGLE' },
+        { '<leader>w', group = 'WORKSPACE' },
+        { '<leader>\\', group = 'FILESYSTEM' },
+      }
+      require('which-key').add {
+        mode = 'v',
+        { '<leader>d', group = 'DEBUG' },
+        { '<leader>g', group = 'GIT' },
+        { '<leader>i', group = 'IA' },
+        { '<leader>ic', group = 'COMPLETE BY IA' },
+        { '<leader>ie', group = 'EDIT WITH INSTRUCTIONS' },
       }
     end,
   },
@@ -325,6 +391,9 @@ require('lazy').setup({
 
       -- Useful for getting pretty icons, but requires a Nerd Font.
       { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
+      { 'kkharji/sqlite.lua' },
+      { 'nvim-telescope/telescope-live-grep-args.nvim' },
+      { 'sharkdp/fd' },
     },
     config = function()
       -- Telescope is a fuzzy finder that comes with a lot of different things that
@@ -348,17 +417,133 @@ require('lazy').setup({
 
       -- [[ Configure Telescope ]]
       -- See `:help telescope` and `:help telescope.setup()`
+      local select_one_or_multi = function(prompt_bufnr)
+        local picker = require('telescope.actions.state').get_current_picker(prompt_bufnr)
+        local multi = picker:get_multi_selection()
+        if not vim.tbl_isempty(multi) then
+          require('telescope.actions').close(prompt_bufnr)
+          for _, j in pairs(multi) do
+            if j.path ~= nil then
+              vim.cmd(string.format('%s %s', 'edit', j.path))
+            end
+          end
+        else
+          require('telescope.actions').select_default(prompt_bufnr)
+        end
+      end
+
       require('telescope').setup {
         -- You can put your default mappings / updates / etc. in here
         --  All the info you're looking for is in `:help telescope.setup()`
         --
-        -- defaults = {
-        --   mappings = {
-        --     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
-        --   },
-        -- },
-        -- pickers = {}
+        defaults = {
+          -- https://github.com/nvim-telescope/telescope.nvim/blob/c2b8311dfacd08b3056b8f0249025d633a4e71a8/lua/telescope/mappings.lua#L133
+          mappings = {
+            n = {
+              ['<C-a>'] = require('telescope.actions').select_all,
+              ['<C-S-A>'] = require('telescope.actions').drop_all,
+              ['<C-e>'] = require('telescope.actions').toggle_all,
+              ['<C-b>'] = require('telescope.actions').results_scrolling_up,
+              ['<C-f>'] = require('telescope.actions').results_scrolling_down,
+              ['<S-Down>'] = require('telescope.actions').cycle_history_next,
+              ['<S-Up>'] = require('telescope.actions').cycle_history_prev,
+              ['<PageDown>'] = false,
+              ['<PageUp>'] = false,
+              ['<C-o>'] = select_one_or_multi,
+            },
+            i = {
+              ['<C-a>'] = require('telescope.actions').select_all,
+              ['<C-S-A>'] = require('telescope.actions').drop_all,
+              ['<C-e>'] = require('telescope.actions').toggle_all,
+              ['<C-b>'] = require('telescope.actions').results_scrolling_up,
+              ['<C-f>'] = require('telescope.actions').results_scrolling_down,
+              ['<S-Down>'] = require('telescope.actions').cycle_history_next,
+              ['<S-Up>'] = require('telescope.actions').cycle_history_prev,
+              ['<PageDown>'] = false,
+              ['<PageUp>'] = false,
+              ['<C-o>'] = select_one_or_multi,
+              ['<C-g>'] = {
+                function(p_bufnr)
+                  -- send results to quick fix list
+                  require('telescope.actions').send_to_qflist(p_bufnr)
+                  local qflist = vim.fn.getqflist()
+                  local paths = {}
+                  local hash = {}
+                  for k in pairs(qflist) do
+                    local path = vim.fn.bufname(qflist[k]['bufnr']) -- extract path from quick fix list
+                    if not hash[path] then -- add to paths table, if not already appeared
+                      paths[#paths + 1] = path
+                      hash[path] = true -- remember existing paths
+                    end
+                  end
+                  -- show search scope with message
+                  vim.notify('find in ...\n  ' .. table.concat(paths, '\n  '))
+                  -- execute live_grep_args with search scope
+                  require('telescope').extensions.live_grep_args.live_grep_args { prompt_title = 'Live Grep on Quickfix', search_dirs = paths }
+                end,
+                type = 'action',
+                opts = {
+                  nowait = true,
+                  silent = true,
+                  desc = 'Live grep on found files results',
+                },
+              },
+            },
+          },
+          preview = {
+            hide_on_startup = false,
+          },
+          dynamic_preview_title = true,
+          scroll_strategy = 'limit',
+          path_display = {
+            shorten = { len = 4, exclude = { -1 } },
+            truncate = 3,
+          },
+          layout_strategy = 'flex',
+          layout_config = {
+            mirror = false,
+            prompt_position = 'top',
+            width = 0.75,
+            height = 0.9,
+            horizontal = {
+              preview_width = 0.5,
+            },
+            vertical = {
+              preview_height = 0.5,
+            },
+          },
+          sorting_strategy = 'ascending',
+        },
+        pickers = {
+          buffers = {
+            sort_mru = true,
+            ignore_current_buffer = true,
+            mappings = {
+              n = {
+                d = require('telescope.actions').delete_buffer,
+              },
+            },
+          },
+          diagnostics = {
+            layout_strategy = 'vertical',
+            layout_config = {
+              mirror = true,
+              prompt_position = 'top',
+              width = 0.9,
+              height = 0.9,
+            },
+          },
+        },
         extensions = {
+          ['live_grep_args'] = {
+            auto_quoting = true, -- enable/disable auto-quoting
+            mappings = {
+              i = {
+                ['<C-s>'] = require('telescope-live-grep-args.actions').quote_prompt { postfix = ' ' },
+                ['<C-i>'] = require('telescope-live-grep-args.actions').quote_prompt { postfix = ' --iglob **/*' },
+              },
+            },
+          },
           ['ui-select'] = {
             require('telescope.themes').get_dropdown(),
           },
@@ -368,6 +553,8 @@ require('lazy').setup({
       -- Enable Telescope extensions if they are installed
       pcall(require('telescope').load_extension, 'fzf')
       pcall(require('telescope').load_extension, 'ui-select')
+      pcall(require('telescope').load_extension, 'neoclip')
+      pcall(require('telescope').load_extension, 'live_grep_args')
 
       -- See `:help telescope.builtin`
       local builtin = require 'telescope.builtin'
@@ -376,14 +563,25 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
       vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
       vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
-      vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
+      vim.keymap.set('n', '<leader>sg', require('telescope').extensions.live_grep_args.live_grep_args, { desc = '[S]earch by [G]rep' })
       vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
       vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
       vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
-      vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
+      vim.keymap.set('n', '<leader><leader>', function()
+        builtin.buffers { only_cwd = true }
+      end, { desc = '[ ] Find existing buffers in cwd' })
+      vim.keymap.set('n', '<leader><leader><leader>', function()
+        builtin.buffers { only_cwd = false }
+      end, { desc = 'find existing buffers' })
+      vim.keymap.set('n', '<leader>1', function()
+        builtin.buffers { cwd = '' .. Get_root '.git' .. '/src/', prompt_title = 'Find sources buffers' }
+      end, { desc = 'Find src buffers' })
+      vim.keymap.set('n', '<leader>2', function()
+        builtin.buffers { cwd = '' .. Get_root '.git' .. '/test/', prompt_title = 'Find tests buffers' }
+      end, { desc = 'Find tests buffers' })
 
       -- Slightly advanced example of overriding default behavior and theme
-      vim.keymap.set('n', '<leader>/', function()
+      vim.keymap.set('n', '/', function()
         -- You can pass additional configuration to Telescope to change the theme, layout, etc.
         builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
           winblend = 10,
@@ -393,7 +591,7 @@ require('lazy').setup({
 
       -- It's also possible to pass additional configuration options.
       --  See `:help telescope.builtin.live_grep()` for information about particular keys
-      vim.keymap.set('n', '<leader>s/', function()
+      vim.keymap.set('n', 's/', function()
         builtin.live_grep {
           grep_open_files = true,
           prompt_title = 'Live Grep in Open Files',
@@ -401,7 +599,7 @@ require('lazy').setup({
       end, { desc = '[S]earch [/] in Open Files' })
 
       -- Shortcut for searching your Neovim configuration files
-      vim.keymap.set('n', '<leader>sn', function()
+      vim.keymap.set('n', 'sn', function()
         builtin.find_files { cwd = vim.fn.stdpath 'config' }
       end, { desc = '[S]earch [N]eovim files' })
     end,
@@ -574,7 +772,18 @@ require('lazy').setup({
         --    https://github.com/pmizio/typescript-tools.nvim
         --
         -- But for many setups, the LSP (`tsserver`) will work just fine
-        -- tsserver = {},
+        tsserver = {
+          inlayHints = {
+            includeInlayParameterNameHints = 'all',
+            includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+            includeInlayFunctionParameterTypeHints = true,
+            includeInlayVariableTypeHints = true,
+            includeInlayPropertyDeclarationTypeHints = true,
+            includeInlayFunctionLikeReturnTypeHints = true,
+            includeInlayEnumMemberValueHints = true,
+          },
+        },
+
         --
 
         lua_ls = {
@@ -617,6 +826,7 @@ require('lazy').setup({
             -- by the server configuration above. Useful when disabling
             -- certain features of an LSP (for example, turning off formatting for tsserver)
             server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
+            server.init_options = { enableProfileLoading = false }
             require('lspconfig')[server_name].setup(server)
           end,
         },
@@ -681,12 +891,12 @@ require('lazy').setup({
           -- `friendly-snippets` contains a variety of premade snippets.
           --    See the README about individual language/framework/plugin snippets:
           --    https://github.com/rafamadriz/friendly-snippets
-          -- {
-          --   'rafamadriz/friendly-snippets',
-          --   config = function()
-          --     require('luasnip.loaders.from_vscode').lazy_load()
-          --   end,
-          -- },
+          {
+            'rafamadriz/friendly-snippets',
+            config = function()
+              require('luasnip.loaders.from_vscode').lazy_load()
+            end,
+          },
         },
       },
       'saadparwaiz1/cmp_luasnip',
@@ -883,8 +1093,8 @@ require('lazy').setup({
   --    This is the easiest way to modularize your config.
   --
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
-  --    For additional information, see `:help lazy.nvim-lazy.nvim-structuring-your-plugins`
-  -- { import = 'custom.plugins' },
+  --    For additional information, see `::help lazy.nvim-lazy.nvim-structuring-your-pluginshelp lazy.nvim-lazy.nvim-structuring-your-plugins`
+  { import = 'custom.plugins' },
 }, {
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the
