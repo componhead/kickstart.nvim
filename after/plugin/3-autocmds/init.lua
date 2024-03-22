@@ -115,10 +115,12 @@ vim.api.nvim_create_autocmd({
 local help_pages = vim.api.nvim_create_augroup('help-pages', { clear = true })
 vim.api.nvim_create_autocmd({
   'BufWinEnter',
+  'WinEnter',
 }, {
   group = help_pages,
   callback = function()
     if vim.bo.buftype == 'help' then
+      vim.cmd 'TSBufDisable highlight'
       vim.cmd 'wincmd L'
     end
   end,

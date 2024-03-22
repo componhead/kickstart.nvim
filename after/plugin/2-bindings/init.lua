@@ -97,11 +97,17 @@ wk.register({
       name = '+GIT',
       b = {
         name = '+BLAME',
-        b = { '<cmd>Git blame<CR>', 'git blame' },
-        r = { '<cmd>Git blame -w -C -C -C<CR>', 'real file git blame' },
+        b = { '<cmd>Git blame -w -C -C -C<CR>', 'real git blame' },
+        l = { '<cmd>Git blame<CR>', 'last committers' },
       },
       c = { '<cmd>Telescope git_commits layout_strategy=horizontal layout_config={"width":0.9,"height":0.9}<CR>', 'commits log' },
-      d = { '<cmd>Gitsigns diffthis<CR><cmd>wincmd H<CR>', 'diff with HEAD', silent = true },
+      h = {
+        function()
+          require('gitsigns').diffthis('HEAD', { vertical = true, split = 'rightbelow' })
+        end,
+        'diff with HEAD',
+        silent = true,
+      },
       l = {
         name = '+LOG',
         f = {
@@ -158,6 +164,13 @@ wk.register({
           'hunks in loclist',
         },
         r = { '<cmd>Git log -w -C -C -C<CR>', 'real file git log' },
+      },
+      m = {
+        function()
+          require('gitsigns').diffthis('origin/master', { vertical = true, split = 'rightbelow' })
+        end,
+        'diff with origin/master',
+        silent = true,
       },
       q = {
         function()
