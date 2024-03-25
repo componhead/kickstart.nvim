@@ -354,7 +354,6 @@ require('lazy').setup({
               ['<C-f>'] = require('telescope.actions').results_scrolling_down,
               ['<PageDown>'] = false,
               ['<PageUp>'] = false,
-              d = require('telescope.actions').delete_buffer,
             },
           },
           -- layout_config = {
@@ -372,7 +371,16 @@ require('lazy').setup({
           sorting_strategy = 'ascending',
           winblend = 10,
         },
-        -- pickers = {}
+        pickers = {
+          buffers = {
+            sort_lastused = true,
+            mappings = {
+              n = {
+                d = require('telescope.actions').delete_buffer,
+              },
+            },
+          },
+        },
         extensions = {
           ['ui-select'] = {
             require('telescope.themes').get_dropdown(),
