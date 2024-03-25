@@ -29,7 +29,6 @@ return {
 
     -- Add your own debuggers here
     -- 'leoluz/nvim-dap-go',
-    { 'jbyuki/one-small-step-for-vimkind', module = 'osv' },
     { 'mxsdev/nvim-dap-vscode-js', module = { 'dap-vscode-js' } },
     {
       'microsoft/vscode-js-debug',

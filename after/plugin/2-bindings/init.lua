@@ -61,8 +61,6 @@ wk.register {
   ['<leader>h'] = { name = 'Git [H]unk', _ = 'which_key_ignore' },
   ['<leader>i'] = { name = 'IA', _ = 'which_key_ignore' },
   ['<leader>ia'] = { name = 'ASK', _ = 'which_key_ignore' },
-  ['<leader>ic'] = { name = 'COMPLETE', _ = 'which_key_ignore' },
-  ['<leader>ie'] = { name = 'EDIT_WITH_INSTRUCTIONS', _ = 'which_key_ignore' },
   ['<leader>im'] = { name = 'ACT_AS', _ = 'which_key_ignore' },
   ['<leader>o'] = { name = 'ORG', _ = 'which_key_ignore' },
   ['<leader>r'] = { name = 'REFACTORY', _ = 'which_key_ignore' },
@@ -196,6 +194,11 @@ wk.register({
 })
 
 wk.register({
+  ['<leader>i'] = { name = 'IA', _ = 'which_key_ignore' },
+  ['<leader>ic'] = { name = 'COMPLETE', _ = 'which_key_ignore' },
+  ['<leader>ie'] = { name = 'EDIT_WITH_INSTRUCTIONS', _ = 'which_key_ignore' },
+}, { mode = 'x', noremap = true, silent = true, expr = true })
+wk.register({
   ['<leader>'] = {
     g = {
       name = '+GIT',
@@ -226,4 +229,4 @@ wk.register({
       L = { '<cmd>Gclog<CR>', 'commit log in qf for selected chunk' },
     },
   },
-}, { mode = 'x', noremap = true, silent = true, expr = true })
+}, { mode = 'v', noremap = true, silent = true, expr = true })

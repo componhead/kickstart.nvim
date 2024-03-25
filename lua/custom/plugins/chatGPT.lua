@@ -14,10 +14,31 @@ return {
     local wk = require 'which-key'
     wk.register({
       g = { '<cmd>ChatGPT<CR>', 'ask to chatgpt' },
-    }, { prefix = '<leader>ia' })
+    }, {
+      mode = 'n',
+      noremap = true,
+      silent = true,
+      expr = false,
+      prefix = '<leader>ia',
+    })
+    wk.register({
+      g = { '<cmd>ChatGPTActAs<CR>', 'chatgpt act as...' },
+    }, {
+      mode = 'n',
+      noremap = true,
+      silent = true,
+      expr = false,
+      prefix = '<leader>im',
+    })
     wk.register({
       g = { '<cmd>ChatGPTCompleteCode<CR>', 'complete by chatGPT' },
-    }, { prefix = '<leader>ic' })
+    }, {
+      mode = 'v',
+      noremap = true,
+      silent = true,
+      expr = false,
+      prefix = '<leader>ic',
+    })
     wk.register({
       g = {
         function()
@@ -25,9 +46,12 @@ return {
         end,
         'edit with instructions to chatgpt',
       },
-    }, { prefix = '<leader>ie' })
-    wk.register({
-      g = { '<cmd>ChatGPTActAs<CR>', 'chatgpt act as...' },
-    }, { prefix = '<leader>im' })
+    }, {
+      mode = 'v',
+      noremap = true,
+      silent = true,
+      expr = false,
+      prefix = '<leader>ie',
+    })
   end,
 }
