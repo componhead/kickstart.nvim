@@ -15,7 +15,7 @@ return {
           auto_quoting = true, -- enable/disable auto-quoting
           mappings = {
             i = {
-              ['<C-k>'] = require('telescope-live-grep-args.actions').quote_prompt(),
+              ['<C-w>'] = require('telescope-live-grep-args.actions').quote_prompt(),
               ['<C-i>'] = require('telescope-live-grep-args.actions').quote_prompt { postfix = ' --iglob ' },
             },
           },

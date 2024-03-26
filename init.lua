@@ -350,10 +350,19 @@ require('lazy').setup({
         defaults = {
           mappings = {
             n = {
+              a = require('telescope.actions').select_all,
+              A = require('telescope.actions').drop_all,
+              t = require('telescope.actions').toggle_all,
               ['<C-b>'] = require('telescope.actions').results_scrolling_up,
               ['<C-f>'] = require('telescope.actions').results_scrolling_down,
-              ['<PageDown>'] = false,
-              ['<PageUp>'] = false,
+              ['<S-Down>'] = require('telescope.actions').cycle_history_next,
+              ['<S-Up>'] = require('telescope.actions').cycle_history_prev,
+            },
+            i = {
+              ['<C-b>'] = require('telescope.actions').results_scrolling_up,
+              ['<C-f>'] = require('telescope.actions').results_scrolling_down,
+              ['<S-Down>'] = require('telescope.actions').cycle_history_next,
+              ['<S-Up>'] = require('telescope.actions').cycle_history_prev,
             },
           },
           -- layout_config = {
