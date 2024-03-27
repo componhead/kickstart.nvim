@@ -1,4 +1,4 @@
-vim.api.nvim_set_option('updatetime', 300)
+vim.g.accents = 'àèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸçÇßØøÅåÆæœ'
 vim.g.html_number_lines = 0
 vim.g.html_relative_number_lines = 0
 vim.g.loaded_netrw = 1

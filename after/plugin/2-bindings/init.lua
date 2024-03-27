@@ -54,7 +54,7 @@ wk.register {
   ['<leader>c'] = { name = '[C]ode', _ = 'which_key_ignore' },
   ['<leader>d'] = { name = '[D]ocument', _ = 'which_key_ignore' },
   ['<leader>g'] = { name = '[G]it', _ = 'which_key_ignore' },
-  ['<leader>h'] = { name = 'Git [H]unk', _ = 'which_key_ignore' },
+  ['<leader>h'] = { name = 'History', _ = 'which_key_ignore' },
   ['<leader>i'] = { name = 'IA', _ = 'which_key_ignore' },
   ['<leader>ia'] = { name = 'ASK', _ = 'which_key_ignore' },
   ['<leader>im'] = { name = 'ACT_AS', _ = 'which_key_ignore' },
@@ -173,6 +173,30 @@ wk.register({
         'all hunks in quickfix',
       },
       r = { '<cmd>gitsigns refresh<cr>', 'refresh' },
+    },
+    h = {
+      name = 'History',
+      c = {
+        function()
+          require('telescope.builtin').command_history()
+        end,
+        'history of commands',
+        silent = true,
+      },
+      q = {
+        function()
+          require('telescope.builtin').quickfixhistory()
+        end,
+        'history of quickfix',
+        silent = true,
+      },
+      s = {
+        function()
+          require('telescope.builtin').search_history()
+        end,
+        'history of searches',
+        silent = true,
+      },
     },
     M = { '<cmd>Telescope marks <CR>', 'open quickfix' },
     Q = { '<cmd>Telescope quickfix<CR>', 'open quickfix' },

@@ -348,21 +348,29 @@ require('lazy').setup({
         --  All the info you're looking for is in `:help telescope.setup()`
         --
         defaults = {
+          -- https://github.com/nvim-telescope/telescope.nvim/blob/c2b8311dfacd08b3056b8f0249025d633a4e71a8/lua/telescope/mappings.lua#L133
           mappings = {
             n = {
-              a = require('telescope.actions').select_all,
-              A = require('telescope.actions').drop_all,
-              t = require('telescope.actions').toggle_all,
+              ['<C-a>'] = require('telescope.actions').select_all,
+              ['<C-S-A>'] = require('telescope.actions').drop_all,
+              ['<C-e>'] = require('telescope.actions').toggle_all,
               ['<C-b>'] = require('telescope.actions').results_scrolling_up,
               ['<C-f>'] = require('telescope.actions').results_scrolling_down,
               ['<S-Down>'] = require('telescope.actions').cycle_history_next,
               ['<S-Up>'] = require('telescope.actions').cycle_history_prev,
+              ['<PageDown>'] = false,
+              ['<PageUp>'] = false,
             },
             i = {
+              ['<C-a>'] = require('telescope.actions').select_all,
+              ['<C-S-A>'] = require('telescope.actions').drop_all,
+              ['<C-e>'] = require('telescope.actions').toggle_all,
               ['<C-b>'] = require('telescope.actions').results_scrolling_up,
               ['<C-f>'] = require('telescope.actions').results_scrolling_down,
               ['<S-Down>'] = require('telescope.actions').cycle_history_next,
               ['<S-Up>'] = require('telescope.actions').cycle_history_prev,
+              ['<PageDown>'] = false,
+              ['<PageUp>'] = false,
             },
           },
           -- layout_config = {

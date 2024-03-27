@@ -9,6 +9,18 @@ return {
     },
   },
   config = function()
+    local quote_prompt = {
+      function()
+        require('telescope-live-grep-args.actions').quote_prompt()
+      end,
+      "quote prompt with '",
+    }
+    local search_glob = {
+      function()
+        require('telescope-live-grep-args.actions').quote_prompt { postfix = ' --iglob ' }
+      end,
+      'quote and search with glob',
+    }
     require('telescope').setup {
       extensions = {
         live_grep_args = {
@@ -17,14 +29,14 @@ return {
             n = {
               ['<Tab>'] = require('telescope.actions').toggle_selection + require('telescope.actions').move_selection_worse,
               ['<S-Tab>'] = require('telescope.actions').toggle_selection + require('telescope.actions').move_selection_better,
-              ['<C-w>'] = require('telescope-live-grep-args.actions').quote_prompt(),
-              ['<C-i>'] = require('telescope-live-grep-args.actions').quote_prompt { postfix = ' --iglob ' },
+              ['<C-s>'] = quote_prompt,
+              ['<C-i>'] = search_glob,
             },
             i = {
               ['<Tab>'] = require('telescope.actions').toggle_selection + require('telescope.actions').move_selection_worse,
               ['<S-Tab>'] = require('telescope.actions').toggle_selection + require('telescope.actions').move_selection_better,
-              ['<C-w>'] = require('telescope-live-grep-args.actions').quote_prompt(),
-              ['<C-i>'] = require('telescope-live-grep-args.actions').quote_prompt { postfix = ' --iglob ' },
+              ['<C-s>'] = quote_prompt,
+              ['<C-i>'] = search_glob,
             },
           },
         },
