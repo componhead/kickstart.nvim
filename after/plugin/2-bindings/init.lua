@@ -190,6 +190,13 @@ wk.register({
         'history of quickfix',
         silent = true,
       },
+      r = {
+        function()
+          require('telescope').extensions.neoclip.default()
+        end,
+        'history of registers',
+        silent = true,
+      },
       s = {
         function()
           require('telescope.builtin').search_history()
