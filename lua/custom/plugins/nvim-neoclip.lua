@@ -1,25 +1,25 @@
 return {
-  "AckslD/nvim-neoclip.lua",
+  'AckslD/nvim-neoclip.lua',
   requires = {
-    { 'kkharji/sqlite.lua',           module = 'sqlite' },
+    { 'kkharji/sqlite.lua', module = 'sqlite' },
     -- you'll need at least one of these
     { 'nvim-telescope/telescope.nvim' },
     -- {'ibhagwan/fzf-lua'},
   },
   config = function()
-    require('neoclip').setup({
+    require('neoclip').setup {
       history = 1000,
-      enable_persistent_history = false,
+      enable_persistent_history = true,
       length_limit = 1048576,
       continuous_sync = false,
-      db_path = vim.fn.stdpath("data") .. "/databases/neoclip.sqlite3",
+      db_path = vim.fn.stdpath 'data' .. '/databases/neoclip.sqlite3',
       filter = nil,
       preview = true,
       prompt = nil,
       default_register = '"',
       default_register_macros = 'q',
       enable_macro_history = true,
-      content_spec_column = false,
+      content_spec_column = true,
       disable_keycodes_parsing = false,
       on_select = {
         move_to_front = false,
@@ -43,10 +43,10 @@ return {
           i = {
             select = '<cr>',
             paste = '<c-p>',
-            paste_behind = '<c-k>',
+            paste_behind = '<c-s-p>',
             replay = '<c-q>', -- replay a macro
             delete = '<c-d>', -- delete an entry
-            edit = '<c-e>',   -- edit an entry
+            edit = '<c-e>', -- edit an entry
             custom = {},
           },
           n = {
@@ -64,11 +64,10 @@ return {
         fzf = {
           select = 'default',
           paste = 'ctrl-p',
-          paste_behind = 'ctrl-k',
+          paste_behind = 'ctrl-s-p',
           custom = {},
         },
       },
-    })
+    }
   end,
 }
-
