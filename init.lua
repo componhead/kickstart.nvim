@@ -321,6 +321,7 @@ require('lazy').setup({
       -- Useful for getting pretty icons, but requires a Nerd Font.
       { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
       { 'kkharji/sqlite.lua' },
+      { 'nvim-telescope/telescope-live-grep-args.nvim' },
     },
     config = function()
       -- Telescope is a fuzzy finder that comes with a lot of different things that
@@ -389,12 +390,34 @@ require('lazy').setup({
               ['<PageDown>'] = false,
               ['<PageUp>'] = false,
               ['<CR>'] = select_one_or_multi,
+              ['<C-g>'] = {
+                function(p_bufnr)
+                  -- send results to quick fix list
+                  require('telescope.actions').send_to_qflist(p_bufnr)
+                  local qflist = vim.fn.getqflist()
+                  local paths = {}
+                  local hash = {}
+                  for k in pairs(qflist) do
+                    local path = vim.fn.bufname(qflist[k]['bufnr']) -- extract path from quick fix list
+                    if not hash[path] then -- add to paths table, if not already appeared
+                      paths[#paths + 1] = path
+                      hash[path] = true -- remember existing paths
+                    end
+                  end
+                  -- show search scope with message
+                  vim.notify('find in ...\n  ' .. table.concat(paths, '\n  '))
+                  -- execute live_grep_args with search scope
+                  require('telescope').extensions.live_grep_args.live_grep_args { search_dirs = paths }
+                end,
+                type = 'action',
+                opts = {
+                  nowait = true,
+                  silent = true,
+                  desc = 'Live grep on found files results',
+                },
+              },
             },
           },
-          -- layout_config = {
-          --   vertical = { width = 0.5 }
-          --   -- other layout configuration here
-          -- },
           layout_strategy = 'vertical',
           -- other defaults configuration here
           layout_config = {
@@ -418,38 +441,26 @@ require('lazy').setup({
           find_files = {
             hidden = false,
             mappings = {
-              i = {
-                ['<C-g>'] = {
-                  function(p_bufnr)
-                    -- send results to quick fix list
-                    require('telescope.actions').send_to_qflist(p_bufnr)
-                    local qflist = vim.fn.getqflist()
-                    local paths = {}
-                    local hash = {}
-                    for k in pairs(qflist) do
-                      local path = vim.fn.bufname(qflist[k]['bufnr']) -- extract path from quick fix list
-                      if not hash[path] then -- add to paths table, if not already appeared
-                        paths[#paths + 1] = path
-                        hash[path] = true -- remember existing paths
-                      end
-                    end
-                    -- show search scope with message
-                    vim.notify('find in ...\n  ' .. table.concat(paths, '\n  '))
-                    -- execute live_grep_args with search scope
-                    require('telescope').extensions.live_grep_args.live_grep_args { search_dirs = paths }
-                  end,
-                  type = 'action',
-                  opts = {
-                    nowait = true,
-                    silent = true,
-                    desc = 'Live grep on found files results',
-                  },
-                },
-              },
+              i = {},
             },
           },
         },
         extensions = {
+          ['live_grep_args'] = {
+            auto_quoting = true, -- enable/disable auto-quoting
+            mappings = {
+              n = {
+                ['<Tab>'] = require('telescope.actions').toggle_selection + require('telescope.actions').move_selection_worse,
+                ['<S-Tab>'] = require('telescope.actions').toggle_selection + require('telescope.actions').move_selection_better,
+              },
+              i = {
+                ['<Tab>'] = require('telescope.actions').toggle_selection + require('telescope.actions').move_selection_worse,
+                ['<S-Tab>'] = require('telescope.actions').toggle_selection + require('telescope.actions').move_selection_better,
+                ['<C-s>'] = require('telescope-live-grep-args.actions').quote_prompt { postfix = ' ' },
+                ['<C-i>'] = require('telescope-live-grep-args.actions').quote_prompt { postfix = ' --iglob ' },
+              },
+            },
+          },
           ['ui-select'] = {
             require('telescope.themes').get_dropdown(),
           },
@@ -460,6 +471,7 @@ require('lazy').setup({
       pcall(require('telescope').load_extension, 'fzf')
       pcall(require('telescope').load_extension, 'ui-select')
       pcall(require('telescope').load_extension, 'neoclip')
+      pcall(require('telescope').load_extension, 'live_grep_args')
 
       -- See `:help telescope.builtin`
       local builtin = require 'telescope.builtin'
