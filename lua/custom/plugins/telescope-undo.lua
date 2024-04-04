@@ -5,21 +5,27 @@ return {
     -- don't use `defaults = { }` here, do this in the main telescope spec
     extensions = {
       undo = {
+        layout_strategy = 'horizontal',
+        layout_config = {
+          preview_width = 0.85,
+          preview_cutoff = 70,
+          prompt_position = 'top',
+          mirror = false,
+        },
+        sorting_strategy = 'ascending',
+        winblend = 10,
         use_delta = true,
-        use_custom_command = nil, -- setting this implies `use_delta = false`. Accepted format is: { "bash", "-c", "echo '$DIFF' | delta" }
+        use_custom_command = nil,
         side_by_side = false,
         diff_context_lines = vim.o.scrolloff,
-        entry_format = 'state #$ID, $STAT, $TIME',
+        entry_format = '#$ID, $STAT, $TIME',
         time_format = '',
-        saved_only = false,
+        saved_only = true,
       },
-      -- no other extensions here, they can have their own spec too
     },
   },
   config = function(_, opts)
-    -- Calling telescope's setup from multiple specs does not hurt, it will happily merge the
-    -- configs for us. We won't use data, as everything is in it's own namespace (telescope
-    -- defaults, as well as each extension).
+    -- Calling telescope's setup from multiple specs does not hurt, it will happily merge the configs for us. We won't use data, as everything is in it's own namespace (telescope defaults, as well as each extension).
     require('telescope').setup(opts)
     require('telescope').load_extension 'undo'
     local wk = require 'which-key'

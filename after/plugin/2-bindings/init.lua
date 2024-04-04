@@ -16,6 +16,8 @@ vim.keymap.set('v', 'y', [["+y]])
 -- Keymaps for better default experience
 -- See `:help vim.keymap.set()`
 vim.keymap.set('c', '<C-g>', 'Gvdiffsplit')
+vim.keymap.set({ 'n', 'i' }, '<C-S-o>', '<cmd>bprev<CR>', { silent = true })
+vim.keymap.set({ 'n', 'i' }, '<C-S-i>', '<cmd>bnext<CR>', { silent = true })
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 vim.keymap.set({ 'n', 'v' }, '<C-q>', 'q', { silent = true })
 vim.keymap.set({ 'n', 'v' }, 'q', '<Nop>', { silent = true })
@@ -209,8 +211,8 @@ wk.register({
     Q = { '<cmd>Telescope quickfix<CR>', 'open quickfix' },
     S = {
       name = '+SESSION',
-      c = { '<cmd>ChangeCWD<CR>', 'change cwd' },
       v = { '<cmd>source $VIMRC<CR>', 'source new nvim configuration' },
+      S = { '<cmd>SessionManager<CR>', 'session manager' },
     },
   },
 }, {

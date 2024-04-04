@@ -6,5 +6,9 @@ return {
   },
   config = function()
     require('lspsaga').setup {}
+    local wk = require 'which-key'
+    wk.register({
+      d = { '<cmd>Lspsaga show_workspace_diagnostics<CR>', 'show workspace diagnostics' },
+    }, { prefix = '<leader>w' })
   end,
 }
