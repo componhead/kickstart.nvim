@@ -122,6 +122,8 @@ vim.api.nvim_create_autocmd({
     if vim.bo.buftype == 'help' then
       vim.cmd 'TSBufDisable highlight'
       vim.cmd 'wincmd L'
+    else
+      vim.cmd 'TSEnable highlight'
     end
   end,
 })

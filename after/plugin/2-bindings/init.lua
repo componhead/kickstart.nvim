@@ -207,8 +207,11 @@ wk.register({
         silent = true,
       },
     },
-    M = { '<cmd>Telescope marks <CR>', 'open quickfix' },
-    Q = { '<cmd>Telescope quickfix<CR>', 'open quickfix' },
+    M = { '<cmd>Telescope marks <CR>', 'open marks' },
+    Q = {
+      name = '+QUICKFIX',
+      Q = { '<cmd>Telescope quickfix<CR>', 'open quickfix' },
+    },
     S = {
       name = '+SESSION',
       v = { '<cmd>source $VIMRC<CR>', 'source new nvim configuration' },

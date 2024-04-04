@@ -1,6 +1,6 @@
 return {
-  "otavioschwanck/telescope-alternate",
-  dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
+  'otavioschwanck/telescope-alternate',
+  dependencies = { 'nvim-telescope/telescope.nvim', 'nvim-lua/plenary.nvim' },
   config = function()
     --   mappings = {
     --     { 'app/services/(.*)_services/(.*).rb', { -- alternate from services to contracts / models
