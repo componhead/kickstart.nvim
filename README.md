@@ -104,6 +104,8 @@ information about extending and exploring Neovim.
 
 #### Examples of adding popularly requested plugins
 
+NOTE: You'll need to uncomment the line in the init.lua that turns on loading custom plugins.
+
 <details>
   <summary>Adding autopairs</summary>
 
@@ -215,19 +217,10 @@ This requires:
 
 ```lua
 {'nvim-telescope/telescope-fzf-native.nvim', build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
-<<<<<<< HEAD
 ```
 </details>
 <details><summary>Windows with gcc/make using chocolatey</summary>
 Alternatively, one can install gcc and make which don't require changing the config,
-||||||| parent of 9ab81ec (sync upstream)
-```
-
-Alternatively, one can install gcc and make which don't require changing the config,
-=======
-
-Alternatively one can install gcc and make which don't require changing the config,
->>>>>>> 9ab81ec (sync upstream)
 the easiest way is to use choco:
 
 1. install [chocolatey](https://chocolatey.org/install)
@@ -238,7 +231,7 @@ winget install --accept-source-agreements chocolatey.chocolatey
 ```
 
 2. install all requirements using choco, exit previous cmd and
-open a new one so that choco path is set, run in cmd as **admin**:
+open a new one so that choco path is set, and run in cmd as **admin**:
 ```
 choco install -y neovim git ripgrep wget fd unzip gzip mingw make
 ```
@@ -280,9 +273,3 @@ sudo dnf install -y gcc make git ripgrep fd-find neovim
 ```
 </details>
 
-<<<<<<< HEAD
-||||||| parent of 9ab81ec (sync upstream)
-Then, continue with the [Install Kickstart](#Install-Kickstart) step.
-=======
-Then continue with the [Install Kickstart](#Install-Kickstart) step.
->>>>>>> 9ab81ec (sync upstream)

@@ -54,7 +54,7 @@ end, { desc = "grep text under file's directories" })
 local wk = require 'which-key'
 wk.register {
   ['<leader>c'] = { name = '[C]ode', _ = 'which_key_ignore' },
-  ['<leader>d'] = { name = '[D]ocument', _ = 'which_key_ignore' },
+  ['<leader>d'] = { name = 'DEBUG', _ = 'which_key_ignore' },
   ['<leader>g'] = { name = '[G]it', _ = 'which_key_ignore' },
   ['<leader>h'] = { name = 'History', _ = 'which_key_ignore' },
   ['<leader>i'] = { name = 'IA', _ = 'which_key_ignore' },
