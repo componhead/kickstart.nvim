@@ -322,6 +322,7 @@ require('lazy').setup({
       { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
       { 'kkharji/sqlite.lua' },
       { 'nvim-telescope/telescope-live-grep-args.nvim' },
+      { 'sharkdp/fd' },
     },
     config = function()
       -- Telescope is a fuzzy finder that comes with a lot of different things that
@@ -365,6 +366,11 @@ require('lazy').setup({
         --  All the info you're looking for is in `:help telescope.setup()`
         --
         defaults = {
+          scroll_strategy = 'limit',
+          path_display = {
+            shorten = { len = 4, exclude = { -2, -1 } },
+            truncate = 3,
+          },
           -- https://github.com/nvim-telescope/telescope.nvim/blob/c2b8311dfacd08b3056b8f0249025d633a4e71a8/lua/telescope/mappings.lua#L133
           mappings = {
             n = {

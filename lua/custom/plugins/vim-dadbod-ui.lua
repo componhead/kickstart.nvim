@@ -13,6 +13,7 @@ return {
   init = function()
     -- Your DBUI configuration
     vim.g.db_ui_use_nerd_fonts = 1
+    vim.g.db_ui_winwidth = 80
     local wk = require 'which-key'
     wk.register({
       d = {

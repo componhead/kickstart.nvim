@@ -37,10 +37,10 @@ return {
       -- like `size`, width and height can be a number or function which is passed the current terminal
       -- winblend = 3,
       width = function(_)
-        return math.floor(vim.o.columns * 0.90)
+        return math.floor(vim.o.columns * 0.95)
       end,
       height = function(_)
-        return math.floor(vim.o.lines * 0.90)
+        return math.floor(vim.o.lines * 0.95)
       end,
       -- zindex = <value>,
     },
