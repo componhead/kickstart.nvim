@@ -366,11 +366,6 @@ require('lazy').setup({
         --  All the info you're looking for is in `:help telescope.setup()`
         --
         defaults = {
-          scroll_strategy = 'limit',
-          path_display = {
-            shorten = { len = 4, exclude = { -2, -1 } },
-            truncate = 3,
-          },
           -- https://github.com/nvim-telescope/telescope.nvim/blob/c2b8311dfacd08b3056b8f0249025d633a4e71a8/lua/telescope/mappings.lua#L133
           mappings = {
             n = {
@@ -383,7 +378,7 @@ require('lazy').setup({
               ['<S-Up>'] = require('telescope.actions').cycle_history_prev,
               ['<PageDown>'] = false,
               ['<PageUp>'] = false,
-              ['<CR>'] = select_one_or_multi,
+              ['<C-o>'] = select_one_or_multi,
             },
             i = {
               ['<C-a>'] = require('telescope.actions').select_all,
@@ -395,7 +390,7 @@ require('lazy').setup({
               ['<S-Up>'] = require('telescope.actions').cycle_history_prev,
               ['<PageDown>'] = false,
               ['<PageUp>'] = false,
-              ['<CR>'] = select_one_or_multi,
+              ['<C-o>'] = select_one_or_multi,
               ['<C-g>'] = {
                 function(p_bufnr)
                   -- send results to quick fix list
@@ -424,20 +419,32 @@ require('lazy').setup({
               },
             },
           },
-          layout_strategy = 'vertical',
-          -- other defaults configuration here
+          preview = {
+            hide_on_startup = false,
+          },
+          dynamic_preview_title = true,
+          scroll_strategy = 'limit',
+          path_display = {
+            shorten = { len = 4, exclude = { -1 } },
+            truncate = 3,
+          },
+          layout_strategy = 'flex',
           layout_config = {
+            mirror = false,
             prompt_position = 'top',
-            width = 0.9,
+            width = 0.75,
             height = 0.9,
-            mirror = true,
+            horizontal = {
+              preview_width = 0.7,
+            },
+            vertical = {
+              preview_height = 0.7,
+            },
           },
           sorting_strategy = 'ascending',
-          winblend = 10,
         },
         pickers = {
           buffers = {
-            sort_lastused = true,
             mappings = {
               n = {
                 d = require('telescope.actions').delete_buffer,
