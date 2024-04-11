@@ -435,10 +435,10 @@ require('lazy').setup({
             width = 0.75,
             height = 0.9,
             horizontal = {
-              preview_width = 0.7,
+              preview_width = 0.5,
             },
             vertical = {
-              preview_height = 0.7,
+              preview_height = 0.5,
             },
           },
           sorting_strategy = 'ascending',

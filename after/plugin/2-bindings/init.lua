@@ -50,6 +50,9 @@ end, { desc = "search files under file's directories" })
 vim.keymap.set('n', '<leader>sp', function()
   require('telescope.builtin').live_grep { cwd = require('telescope.utils').buffer_dir() }
 end, { desc = "grep text under file's directories" })
+vim.keymap.set('n', '<leader>sz', function()
+  require('telescope.builtin').current_buffer_fuzzy_find()
+end, { desc = 'fuzzy search in current buffer' })
 
 local wk = require 'which-key'
 wk.register {
