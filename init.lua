@@ -408,7 +408,7 @@ require('lazy').setup({
                   -- show search scope with message
                   vim.notify('find in ...\n  ' .. table.concat(paths, '\n  '))
                   -- execute live_grep_args with search scope
-                  require('telescope').extensions.live_grep_args.live_grep_args { search_dirs = paths }
+                  require('telescope').extensions.live_grep_args.live_grep_args { prompt_title = 'Live Grep on Quickfix', search_dirs = paths }
                 end,
                 type = 'action',
                 opts = {
