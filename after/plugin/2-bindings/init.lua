@@ -82,13 +82,7 @@ wk.register({
   ['<leader>'] = {
     ['\\'] = {
       name = '+FILESYSTEM',
-      f = {
-        function()
-          print(vim.fn.expand '%:p')
-        end,
-        'show current file path',
-      },
-      -- see BufEnter hook management
+      c = { '<cmd>CdGitRoot<CR>', 'change cwd to current git root' },
       y = { "<cmd>let @+=expand('%:p')<CR>", 'copy absolute file path to clipboard', silent = true },
       Y = { "<cmd>let @+=expand('%')<CR>", 'copy relative file path to clipboard', silent = true },
     },
