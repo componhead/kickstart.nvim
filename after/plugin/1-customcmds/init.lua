@@ -33,6 +33,10 @@ end
 --   end
 -- end
 
+vim.api.nvim_create_user_command('CdGitRoot', function()
+  vim.api.nvim_set_current_dir(get_git_root())
+end, {})
+
 vim.api.nvim_create_user_command('BufOnly', function()
   pcall(function()
     vim.fn.execute('%bd|e#|bd#', true)

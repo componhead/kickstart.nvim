@@ -24,6 +24,7 @@ vim.o.incsearch = true
 vim.o.readonly = false
 vim.o.relativenumber = true
 vim.o.scrolloff = 6
+vim.o.shada = "'100,<50,s10,f1,:50,@50,/50"
 vim.o.shiftwidth = 2
 vim.o.smartindent = true
 vim.o.softtabstop = 2
