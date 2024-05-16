@@ -451,6 +451,8 @@ require('lazy').setup({
         },
         pickers = {
           buffers = {
+            sort_mru = true,
+            ignore_current_buffer = true,
             mappings = {
               n = {
                 d = require('telescope.actions').delete_buffer,
@@ -493,10 +495,11 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
       vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
       vim.keymap.set('n', '<leader>1', function()
-        builtin.buffers { cwd = '' .. get_git_root() .. '/src/', prompt_title = 'Find src/ buffers', sort_mru = true, silent = true }
+        print(get_git_root())
+        builtin.buffers { cwd = '' .. get_git_root() .. '/src/', prompt_title = 'Find sources buffers', only_cwd = true }
       end, { desc = 'Find src buffers' })
       vim.keymap.set('n', '<leader>2', function()
-        builtin.buffers { cwd = '' .. get_git_root() .. '/test/', prompt_title = 'Find tests buffers', sort_mru = true }
+        builtin.buffers { cwd = '' .. get_git_root() .. '/test/', prompt_title = 'Find tests buffers', only_cwd = true }
       end, { desc = 'Find tests buffers' })
 
       -- Slightly advanced example of overriding default behavior and theme
@@ -753,6 +756,7 @@ require('lazy').setup({
             -- by the server configuration above. Useful when disabling
             -- certain features of an LSP (for example, turning off formatting for tsserver)
             server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
+            server.init_options = { enableProfileLoading = false }
             require('lspconfig')[server_name].setup(server)
           end,
         },
