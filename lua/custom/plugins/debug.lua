@@ -50,9 +50,11 @@ return {
       ensure_installed = {
         -- Update this to ensure that you have the debuggers for the langs you want
         'javascript',
+        'typescript',
+        'rust',
       },
 
-      automatic_installation = false,
+      automatic_installation = true,
     }
 
     -- You can provide additional configuration to the handlers,
@@ -199,7 +201,6 @@ return {
     dap.listeners.before.event_terminated['dapui_config'] = dapui.close
     dap.listeners.before.event_exited['dapui_config'] = dapui.close
 
-    -- NODE DEBUGGING
     local jsDebuggerPath = os.getenv 'JS_DEBUG_PATH'
     require('dap-vscode-js').setup {
       -- node_path = 'node', -- Path of node executable. Defaults to $NODE_PATH, and then 'node'
