@@ -256,8 +256,8 @@ vim.api.nvim_create_autocmd({
     vim.o.relativenumber = true
     vim.o.cursorline = true
     vim.cmd.hi('WinSeparator', 'guibg=' .. colors.blue7)
-    vim.cmd.hi('NormalNC', 'guibg=' .. colors.bg_dark)
-    vim.cmd.hi('LineNr', 'guifg=' .. colors.blue0, 'guibg=NONE', 'guibg=NONE', 'cterm=NONE', 'gui=NONE')
+    vim.cmd.hi('NormalNC', 'guibg=' .. colors.black)
+    vim.cmd.hi('LineNr', 'guifg=' .. colors.blue0, 'guibg=NONE', 'cterm=NONE', 'gui=NONE')
   end,
 })
 vim.api.nvim_create_autocmd({
