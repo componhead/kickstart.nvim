@@ -1,4 +1,4 @@
--- regex format oneline gql chrome copied curl in a new file
+-- regex format oneline gql chrome copied curl in a new gile
 vim.keymap.set(
   'v',
   '<A-r>g',
@@ -23,6 +23,8 @@ vim.keymap.set({ 'n', 'v' }, '<C-q>', 'q', { silent = true })
 vim.keymap.set({ 'n', 'v' }, 'q', '<Nop>', { silent = true })
 vim.keymap.set({ 'n', 'v' }, '[z', '<Cmd>mkview<CR>', { silent = true })
 vim.keymap.set({ 'n', 'v' }, ']z', '<Cmd>loadview<CR>', { silent = true })
+vim.keymap.set({ 'n', 'v' }, 'c', '"_c', { silent = true })
+vim.keymap.set({ 'n', 'v' }, 'C', '"_C', { silent = true })
 
 -- Remap for dealing with word wrap
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
@@ -41,7 +43,7 @@ vim.keymap.set('n', 'n', 'nzzzv')
 vim.keymap.set('n', 'N', 'Nzzzv')
 vim.keymap.set({ 'n', 'v' }, '<BS>', [['_d]])
 vim.keymap.set('c', '<C-w>', '<cmd>w !sudo tee > /dev/null %<CR>')
-vim.keymap.set('c', '<C-y>', '<cmd>:let @+ = v:errmsg<CR><Esc>')
+vim.keymap.set('c', '<C-y>', '<cmd>let @+=v:errmsg<CR><Esc>')
 vim.keymap.set('i', 'jk', '<ESC>')
 vim.keymap.set('t', 'jk', [[<C-\><C-n>]])
 vim.keymap.set('n', '<leader>sc', function()

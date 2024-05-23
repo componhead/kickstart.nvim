@@ -20,7 +20,7 @@ return {
     end,
     hide_numbers = false, -- hide the number column in toggleterm buffers
     autochdir = true, -- when neovim changes it current directory the terminal will change it's own when next it's opened
-    insert_mappings = false, -- whether or not the open mapping applies in insert mode
+    insert_mappings = true, -- whether or not the open mapping applies in insert mode
     terminal_mappings = true, -- whether or not the open mapping applies in the opened terminals
     persist_size = true,
     persist_mode = true, -- if set to true (default) the previous terminal mode will be remembered
@@ -37,10 +37,10 @@ return {
       -- like `size`, width and height can be a number or function which is passed the current terminal
       -- winblend = 3,
       width = function(_)
-        return math.floor(vim.o.columns * 0.95)
+        return math.floor(vim.o.columns * 0.97)
       end,
       height = function(_)
-        return math.floor(vim.o.lines * 0.95)
+        return math.floor(vim.o.lines * 0.97)
       end,
       -- zindex = <value>,
     },

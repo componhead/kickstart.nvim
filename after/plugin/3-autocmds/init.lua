@@ -130,7 +130,7 @@ vim.api.nvim_create_autocmd({
 
 local diffing = vim.api.nvim_create_augroup('diffing', { clear = true })
 vim.api.nvim_create_autocmd({
-  'BufNew',
+  'VimEnter',
   'BufEnter',
 }, {
   group = diffing,
@@ -140,10 +140,26 @@ vim.api.nvim_create_autocmd({
       vim.keymap.set('n', '[x', '', { silent = true, buffer = true })
       vim.wo.scrollbind = true
       vim.wo.cursorbind = true
-      vim.keymap.set('n', '[]', [[<cmd>diffget //1<CR>]czz]], { silent = true, desc = 'diffget base', buffer = true })
-      vim.keymap.set('n', '[[', [[<cmd>diffget //2<CR>]czz]], { silent = true, desc = 'diffget ours', buffer = true })
-      vim.keymap.set('n', ']]', [[<cmd>diffget //3<CR>]czz]], { silent = true, desc = 'diffget theirs', buffer = true })
-      vim.keymap.set('n', '][', [[<cmd>diffget<CR>]czz]], { silent = true, desc = 'diffget other file', buffer = true })
+      local diffing_buffers = 0
+      for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+        local buffer = vim.api.nvim_win_get_buf(win)
+        if vim.api.nvim_buf_is_loaded(buffer) then
+          diffing_buffers = diffing_buffers + 1
+        end
+      end
+      if diffing_buffers > 2 then
+        vim.keymap.set('n', '][', '', { silent = true, buffer = true })
+        vim.keymap.set('n', '[]', [[<cmd>diffget //1<CR>]czz]], { silent = true, desc = 'diffget base', buffer = true })
+        vim.keymap.set('n', '[[', [[<cmd>diffget //2<CR>]czz]], { silent = true, desc = 'diffget ours', buffer = true })
+        vim.keymap.set('n', ']]', [[<cmd>diffget //3<CR>]czz]], { silent = true, desc = 'diffget theirs', buffer = true })
+      else
+        if diffing_buffers == 2 then
+          vim.keymap.set('n', '[]', '', { silent = true, buffer = true })
+          vim.keymap.set('n', ']]', '', { silent = true, buffer = true })
+          vim.keymap.set('n', '[[', '', { silent = true, buffer = true })
+          vim.keymap.set('n', '][', [[<cmd>diffget<CR>]czz]], { silent = true, desc = 'diffget other file', buffer = true })
+        end
+      end
       vim.keymap.set('n', ']x', '<Plug>(git-conflict-next-conflict)', { silent = true, desc = 'next conflict', buffer = true })
       vim.keymap.set('n', '[x', '<Plug>(git-conflict-prev-conflict)', { silent = true, desc = 'previuos conflict', buffer = true })
       vim.keymap.set('n', 'xo', '<Plug>(git-conflict-ours)', { silent = true, desc = 'get ours', buffer = true })
@@ -153,21 +169,6 @@ vim.api.nvim_create_autocmd({
     end
   end,
 })
--- vim.api.nvim_create_autocmd({
---   'User',
--- }, {
---   pattern = 'GitConflictDetected',
---   group = diffing,
---   callback = function()
---     vim.notify('Conflict detected in ' .. vim.fn.expand '<afile>')
---     vim.keymap.set('n', 'ro', '<Plug>(git-conflict-ours)', { silent = true, desc = 'get ours', buffer = true })
---     vim.keymap.set('n', 'rt', '<Plug>(git-conflict-theirs)', { silent = true, desc = 'get theirs', buffer = true })
---     vim.keymap.set('n', 'rb', '<Plug>(git-conflict-both)', { silent = true, desc = 'get both', buffer = true })
---     vim.keymap.set('n', 'r0', '<Plug>(git-conflict-none)', { silent = true, desc = 'get none', buffer = true })
---     vim.keymap.set('n', '[r', '<Plug>(git-conflict-prev-conflict)', { silent = true, desc = 'previuos conflict', buffer = true })
---     vim.keymap.set('n', ']r', '<Plug>(git-conflict-next-conflict)', { silent = true, desc = 'next conflict', buffer = true })
---   end,
--- })
 
 local prj_files = vim.api.nvim_create_augroup('package-file', { clear = true })
 vim.api.nvim_create_autocmd({

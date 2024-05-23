@@ -14,24 +14,6 @@ function get_git_root()
     return git_root
   end
 end
--- function get_git_root(
---   local function is_git_repo()
---     vim.fn.system 'git rev-parse --is-inside-git-dir'
---     return vim.v.shell_error == 0
---   end
---   if not is_git_repo() then
---     return nil
---   end
---   if vim.fn.system 'git rev-parse --is-inside-work-tree' then
---     local dot_git_file = vim.fn.findfile('.git', '.;')
---     local git_root = vim.fn.fnamemodify(dot_git_file, ':p:h:h')
---     return git_root
---   else
---     local dot_git_path = vim.fn.finddir('.git', '.;')
---     local git_root = vim.fn.fnamemodify(dot_git_path, ':p:h:h')
---     return git_root
---   end
--- end
 
 vim.api.nvim_create_user_command('CdGitRoot', function()
   vim.api.nvim_set_current_dir(get_git_root())
