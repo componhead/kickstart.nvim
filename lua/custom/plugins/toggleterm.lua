@@ -4,10 +4,11 @@ return {
   opts = {
     direction = 'float',
     open_mapping = '<C-\\><C-\\>',
-    on_create = function()
-      local enter = vim.api.nvim_replace_termcodes('<CR>', true, true, true)
-      vim.fn.feedkeys(' cd .' .. enter)
-    end,
+    -- moved to fish config
+    -- on_create = function()
+    --   local enter = vim.api.nvim_replace_termcodes('<CR>', true, true, true)
+    --   vim.fn.feedkeys(' cd .' .. enter)
+    -- end,
     on_open = function()
       vim.o.number = true
       vim.o.relativenumber = true
