@@ -21,6 +21,7 @@ vim.o.grepprg = 'rg --vimgrep --no-heading --smart-case'
 vim.o.guicursor = 'n-v-c:block,i-ci-ve:ver25,r-cr-o:hor20'
 vim.o.hlsearch = false
 vim.o.incsearch = true
+vim.o.iskeyword = '@,48-57,_,192-255,-'
 vim.o.readonly = false
 vim.o.relativenumber = true
 vim.o.scrolloff = 6
