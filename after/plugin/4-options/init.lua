@@ -34,3 +34,5 @@ vim.o.tabstop = 2
 vim.o.termguicolors = true
 vim.o.undolevels = 99999
 vim.o.wrap = true
+vim.wo.scrollbind = false
+vim.wo.cursorbind = false

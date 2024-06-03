@@ -11,11 +11,12 @@ vim.keymap.set('v', '<A-r>c', [[<Cmd>s/\v^(\s*[a-z]{-})_([a-z]{1})/\1\U\2/g<CR>]
 vim.keymap.set('v', '<A-r>t', [[<Cmd>%s/\v['"](\w+)['"](:)|( Object | Array )|^\s*[+-]/\1\2/g<CR>]], { desc = 'from stringified to javascript literal object' })
 
 vim.keymap.set('v', 'y', [["+y]])
+vim.keymap.set('v', 'd', [["_d]])
 
 -- [[ Custom Keymaps ]]
 -- Keymaps for better default experience
 -- See `:help vim.keymap.set()`
-vim.keymap.set('c', '<C-g>', 'Gvdiffsplit')
+vim.keymap.set('c', '<C-g>', 'Gdiffsplit @')
 vim.keymap.set({ 'n', 'i' }, '<C-S-o>', '<cmd>bprev<CR>', { silent = true })
 vim.keymap.set({ 'n', 'i' }, '<C-S-i>', '<cmd>bnext<CR>', { silent = true })
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
@@ -41,7 +42,6 @@ vim.keymap.set('n', '<C-u>', '<C-u>M')
 vim.keymap.set('n', '<C-y>', '3<C-y>')
 vim.keymap.set('n', 'n', 'nzzzv')
 vim.keymap.set('n', 'N', 'Nzzzv')
-vim.keymap.set({ 'n', 'v' }, '<BS>', [['_d]])
 vim.keymap.set('c', '<C-w>', '<cmd>w !sudo tee > /dev/null %<CR>')
 vim.keymap.set('c', '<C-y>', '<cmd>let @+=v:errmsg<CR><Esc>')
 vim.keymap.set('i', 'jk', '<ESC>')
