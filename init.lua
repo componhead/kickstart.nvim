@@ -459,6 +459,15 @@ require('lazy').setup({
               },
             },
           },
+          diagnostics = {
+            layout_strategy = 'vertical',
+            layout_config = {
+              mirror = true,
+              prompt_position = 'top',
+              width = 0.9,
+              height = 0.9,
+            },
+          },
         },
         extensions = {
           ['live_grep_args'] = {

@@ -32,8 +32,6 @@ vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = tr
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 vim.keymap.set('n', ']c', ']czz', { silent = true, desc = 'diffget base', buffer = true })
 vim.keymap.set('n', '[c', '[czz', { silent = true, desc = 'diffget base', buffer = true })
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
 vim.keymap.set('n', '<leader>gp', require('gitsigns').preview_hunk, { buffer = bufnr, desc = 'preview git hunk' })
 vim.keymap.set('n', '<F4>', "<Cmd>echom('" .. vim.fn.expand '%:p' .. "')<CR>", { silent = true })
 vim.keymap.set('n', '<C-d>', '<C-d>M')
@@ -72,14 +70,6 @@ wk.register {
   ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
 }
 wk.register({
-  [']'] = {
-    h = { '<cmd>Gitsigns stage_hunk<CR>', 'stage hunk' },
-    H = { '<cmd>Gitsigns undo_stage_hunk<CR>', 'unstage hunk' },
-  },
-  ['['] = {
-    h = { '<cmd>Gitsigns reset_hunk<CR>', 'reset hunk' },
-    H = { '<cmd>Gitsigns reset buffer<CR>', 'reset buffer' },
-  },
   ['<leader>'] = {
     ['\\'] = {
       name = '+FILESYSTEM',
@@ -205,10 +195,9 @@ wk.register({
         silent = true,
       },
     },
-    M = { '<cmd>Telescope marks <CR>', 'open marks' },
-    Q = {
+    q = {
       name = '+QUICKFIX',
-      Q = { '<cmd>Telescope quickfix<CR>', 'open quickfix' },
+      q = { '<cmd>Telescope quickfix<CR>', 'open quickfix' },
     },
     S = {
       name = '+SESSION',
