@@ -16,7 +16,7 @@ vim.keymap.set('v', 'd', [["_d]])
 -- [[ Custom Keymaps ]]
 -- Keymaps for better default experience
 -- See `:help vim.keymap.set()`
-vim.keymap.set('c', '<C-g>', 'Gdiffsplit @')
+vim.keymap.set('c', '<C-g>', 'Gvdiffsplit')
 vim.keymap.set({ 'n', 'i' }, '<C-S-o>', '<cmd>bprev<CR>', { silent = true })
 vim.keymap.set({ 'n', 'i' }, '<C-S-i>', '<cmd>bnext<CR>', { silent = true })
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })

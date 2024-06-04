@@ -140,7 +140,7 @@ vim.api.nvim_create_autocmd({
       vim.keymap.set('n', '[x', '', { silent = true, buffer = true })
       vim.wo.scrollbind = true
       vim.wo.cursorbind = true
-      vim.o.foldmethod = 'syntax'
+      vim.o.foldmethod = 'diff'
       local diffing_buffers = 0
       for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
         local buffer = vim.api.nvim_win_get_buf(win)

@@ -1,1 +1,1 @@
-print 'js filetype'
+-- print 'js filetype'

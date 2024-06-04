@@ -1,1 +1,1 @@
-print 'lua filetype'
+-- print 'lua filetype'
