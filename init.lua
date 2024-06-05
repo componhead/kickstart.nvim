@@ -509,10 +509,10 @@ require('lazy').setup({
         builtin.buffers { only_cwd = false }
       end, { desc = 'find existing buffers' })
       vim.keymap.set('n', '<leader>1', function()
-        builtin.buffers { cwd = '' .. get_git_root() .. '/src/', prompt_title = 'Find sources buffers' }
+        builtin.buffers { cwd = '' .. Get_git_root() .. '/src/', prompt_title = 'Find sources buffers' }
       end, { desc = 'Find src buffers' })
       vim.keymap.set('n', '<leader>2', function()
-        builtin.buffers { cwd = '' .. get_git_root() .. '/test/', prompt_title = 'Find tests buffers' }
+        builtin.buffers { cwd = '' .. Get_git_root() .. '/test/', prompt_title = 'Find tests buffers' }
       end, { desc = 'Find tests buffers' })
 
       -- Slightly advanced example of overriding default behavior and theme

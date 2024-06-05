@@ -24,7 +24,7 @@ vim.api.nvim_create_autocmd({
           vim.cmd(command)
         end,
         'create a html file from markdown',
-        buffer = vim.api.nvim_buf_get_number(0),
+        buffer = true,
       },
       H = {
         function()
@@ -115,7 +115,6 @@ vim.api.nvim_create_autocmd({
 local help_pages = vim.api.nvim_create_augroup('help-pages', { clear = true })
 vim.api.nvim_create_autocmd({
   'BufWinEnter',
-  'WinEnter',
 }, {
   group = help_pages,
   callback = function()

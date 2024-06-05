@@ -22,8 +22,6 @@ vim.keymap.set({ 'n', 'i' }, '<C-S-i>', '<cmd>bnext<CR>', { silent = true })
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 vim.keymap.set({ 'n', 'v' }, '<C-q>', 'q', { silent = true })
 vim.keymap.set({ 'n', 'v' }, 'q', '<Nop>', { silent = true })
-vim.keymap.set({ 'n', 'v' }, '[z', '<Cmd>mkview<CR>', { silent = true })
-vim.keymap.set({ 'n', 'v' }, ']z', '<Cmd>loadview<CR>', { silent = true })
 vim.keymap.set({ 'n', 'v' }, 'c', '"_c', { silent = true })
 vim.keymap.set({ 'n', 'v' }, 'C', '"_C', { silent = true })
 
