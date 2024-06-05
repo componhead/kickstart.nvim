@@ -32,7 +32,6 @@ vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = tr
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 vim.keymap.set('n', ']c', ']czz', { silent = true, desc = 'diffget base', buffer = true })
 vim.keymap.set('n', '[c', '[czz', { silent = true, desc = 'diffget base', buffer = true })
-vim.keymap.set('n', '<leader>gp', require('gitsigns').preview_hunk, { buffer = bufnr, desc = 'preview git hunk' })
 vim.keymap.set('n', '<F4>', "<Cmd>echom('" .. vim.fn.expand '%:p' .. "')<CR>", { silent = true })
 vim.keymap.set('n', '<C-d>', '<C-d>M')
 vim.keymap.set('n', '<C-e>', '3<C-e>')
@@ -85,13 +84,6 @@ wk.register({
         l = { '<cmd>Git blame<CR>', 'last committers' },
       },
       c = { '<cmd>Telescope git_commits layout_strategy=horizontal layout_config={"width":0.9,"height":0.9}<CR>', 'commits log' },
-      h = {
-        function()
-          require('gitsigns').diffthis('HEAD', { vertical = true, split = 'rightbelow' })
-        end,
-        'diff with HEAD',
-        silent = true,
-      },
       l = {
         name = '+LOG',
         f = {
@@ -141,28 +133,8 @@ wk.register({
           'function git log',
         },
         l = { '<cmd>Git log --oneline --decorate --graph --all<CR><C-W>L', 'git log' },
-        h = {
-          function()
-            require('gitsigns').setqflist(0, { use_loation_list = true, open = true })
-          end,
-          'hunks in loclist',
-        },
         r = { '<cmd>Git log -w -C -C -C<CR>', 'real file git log' },
       },
-      m = {
-        function()
-          require('gitsigns').diffthis('origin/master', { vertical = true, split = 'rightbelow' })
-        end,
-        'diff with origin/master',
-        silent = true,
-      },
-      q = {
-        function()
-          require('gitsigns').setqflist('all', { open = true })
-        end,
-        'all hunks in quickfix',
-      },
-      r = { '<cmd>gitsigns refresh<cr>', 'refresh' },
     },
     h = {
       name = 'History',

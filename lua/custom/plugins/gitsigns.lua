@@ -8,14 +8,8 @@ return {
       on_attach = function(bufnr)
         local gitsigns = require 'gitsigns'
 
-        local function map(mode, l, r, opts)
-          opts = opts or {}
-          opts.buffer = bufnr
-          vim.keymap.set(mode, l, r, opts)
-        end
-
         -- Navigation
-        map('n', ']c', function()
+        vim.keymap.set('n', ']c', function()
           if vim.wo.diff then
             vim.cmd.normal { ']c', bang = true }
           else
@@ -23,7 +17,7 @@ return {
           end
         end, { desc = 'Jump to next git [c]hange' })
 
-        map('n', '[c', function()
+        vim.keymap.set('n', '[c', function()
           if vim.wo.diff then
             vim.cmd.normal { '[c', bang = true }
           else
@@ -39,10 +33,10 @@ return {
           group = diffing,
           callback = function()
             if vim.wo.diff then
-              map('n', ']x', '', { silent = true, buffer = true })
-              map('n', '[x', '', { silent = true, buffer = true })
-              map('n', ']]', '', { silent = true, buffer = true })
-              map('n', '[[', '', { silent = true, buffer = true })
+              vim.keymap.set('n', ']x', '', { silent = true, buffer = true })
+              vim.keymap.set('n', '[x', '', { silent = true, buffer = true })
+              vim.keymap.set('n', ']]', '', { silent = true, buffer = true })
+              vim.keymap.set('n', '[[', '', { silent = true, buffer = true })
               vim.wo.scrollbind = true
               vim.wo.cursorbind = true
               vim.o.foldmethod = 'diff'
@@ -54,39 +48,39 @@ return {
                 end
               end
               if diffing_buffers > 2 then
-                map('n', '][', '', { silent = true, buffer = true })
-                map('n', '[]', [[<cmd>diffget //1<CR>]czz]], { silent = true, desc = 'diffget base', buffer = true })
-                map('n', '[[', [[<cmd>diffget //2<CR>]czz]], { silent = true, desc = 'diffget ours', buffer = true })
-                map('n', ']]', [[<cmd>diffget //3<CR>]czz]], { silent = true, desc = 'diffget theirs', buffer = true })
+                vim.keymap.set('n', '][', '', { silent = true, buffer = true })
+                vim.keymap.set('n', '[]', [[<cmd>diffget //1<CR>]czz]], { silent = true, desc = 'diffget base', buffer = true })
+                vim.keymap.set('n', '[[', [[<cmd>diffget //2<CR>]czz]], { silent = true, desc = 'diffget ours', buffer = true })
+                vim.keymap.set('n', ']]', [[<cmd>diffget //3<CR>]czz]], { silent = true, desc = 'diffget theirs', buffer = true })
               else
                 if diffing_buffers == 2 then
-                  map('n', '[]', '', { silent = true, buffer = true })
-                  map('n', ']]', '', { silent = true, buffer = true })
-                  map('n', '[[', '', { silent = true, buffer = true })
-                  map('n', '][', [[<cmd>diffget<CR>]czz]], { silent = true, desc = 'diffget other file', buffer = true })
+                  vim.keymap.set('n', '[]', '', { silent = true, buffer = true })
+                  vim.keymap.set('n', ']]', '', { silent = true, buffer = true })
+                  vim.keymap.set('n', '[[', '', { silent = true, buffer = true })
+                  vim.keymap.set('n', '][', [[<cmd>diffget<CR>]czz]], { silent = true, desc = 'diffget other file', buffer = true })
                 end
               end
-              map('n', ']x', '<Plug>(git-conflict-next-conflict)', { silent = true, desc = 'next conflict', buffer = true })
-              map('n', '[x', '<Plug>(git-conflict-prev-conflict)', { silent = true, desc = 'previuos conflict', buffer = true })
-              map('n', 'xo', '<Plug>(git-conflict-ours)', { silent = true, desc = 'get ours', buffer = true })
-              map('n', 'xt', '<Plug>(git-conflict-theirs)', { silent = true, desc = 'get theirs', buffer = true })
-              map('n', 'xb', '<Plug>(git-conflict-both)', { silent = true, desc = 'get both', buffer = true })
-              map('n', 'x0', '<Plug>(git-conflict-none)', { silent = true, desc = 'get none', buffer = true })
+              vim.keymap.set('n', ']x', '<Plug>(git-conflict-next-conflict)', { silent = true, desc = 'next conflict', buffer = true })
+              vim.keymap.set('n', '[x', '<Plug>(git-conflict-prev-conflict)', { silent = true, desc = 'previuos conflict', buffer = true })
+              vim.keymap.set('n', 'xo', '<Plug>(git-conflict-ours)', { silent = true, desc = 'get ours', buffer = true })
+              vim.keymap.set('n', 'xt', '<Plug>(git-conflict-theirs)', { silent = true, desc = 'get theirs', buffer = true })
+              vim.keymap.set('n', 'xb', '<Plug>(git-conflict-both)', { silent = true, desc = 'get both', buffer = true })
+              vim.keymap.set('n', 'x0', '<Plug>(git-conflict-none)', { silent = true, desc = 'get none', buffer = true })
             else
-              map({ 'n', 'v' }, '[r', gitsigns.reset_hunk, { desc = 'git reset hunk' })
-              map('n', ']r', gitsigns.stage_buffer, { desc = 'git stage buffer' })
-              map({ 'n', 'v' }, ']h', gitsigns.stage_hunk, { desc = 'git stage hunk(s)' })
-              map({ 'n', 'v' }, '[h', gitsigns.undo_stage_hunk, { desc = 'git undo stage hunk' })
-              map('n', '[R', gitsigns.reset_buffer, { desc = 'git reset buffer' })
-              map('n', '[g', gitsigns.preview_hunk, { desc = 'git preview hunk' })
-              map('n', ']g', gitsigns.blame_line, { desc = 'git blame line' })
-              map('n', '[G', gitsigns.diffthis, { desc = 'git diff against index' })
-              map('n', ']G', function()
+              vim.keymap.set({ 'n', 'v' }, '[r', gitsigns.reset_hunk, { desc = 'git reset hunk' })
+              vim.keymap.set('n', ']r', gitsigns.stage_buffer, { desc = 'git stage buffer' })
+              vim.keymap.set({ 'n', 'v' }, ']h', gitsigns.stage_hunk, { desc = 'git stage hunk(s)' })
+              vim.keymap.set({ 'n', 'v' }, '[h', gitsigns.undo_stage_hunk, { desc = 'git undo stage hunk' })
+              vim.keymap.set('n', '[R', gitsigns.reset_buffer, { desc = 'git reset buffer' })
+              vim.keymap.set('n', '[g', gitsigns.preview_hunk, { desc = 'git preview hunk' })
+              vim.keymap.set('n', ']g', gitsigns.blame_line, { desc = 'git blame line' })
+              vim.keymap.set('n', '[G', gitsigns.diffthis, { desc = 'git diff against index' })
+              vim.keymap.set('n', ']G', function()
                 gitsigns.diffthis '@'
               end, { desc = 'git [D]iff against last commit' })
               -- Toggles
-              map('n', '<leader>tb', gitsigns.toggle_current_line_blame, { desc = '[T]oggle git show [b]lame line' })
-              map('n', '<leader>tD', gitsigns.toggle_deleted, { desc = '[T]oggle git show [D]eleted' })
+              vim.keymap.set('n', '<leader>tb', gitsigns.toggle_current_line_blame, { desc = '[T]oggle git show [b]lame line' })
+              vim.keymap.set('n', '<leader>tD', gitsigns.toggle_deleted, { desc = '[T]oggle git show [D]eleted' })
             end
           end,
         })
