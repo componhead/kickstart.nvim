@@ -156,8 +156,6 @@ vim.api.nvim_create_autocmd({
         vim.cmd('edit ' .. rust_prj)
       end, { desc = desc })
     end
-
-    vim.api.nvim_command 'ColorizerAttachToBuffer'
   end,
 })
 
@@ -189,16 +187,6 @@ vim.api.nvim_create_autocmd({
     if vim.fn.filereadable(lint_file) ~= 0 then
       vim.cmd 'EslintFixAll'
     end
-  end,
-})
-
-local after_plugins = vim.api.nvim_create_augroup('after-plugins', { clear = true })
-vim.api.nvim_create_autocmd({
-  'VimEnter',
-}, {
-  group = after_plugins,
-  callback = function()
-    vim.cmd 'packadd cfilter'
   end,
 })
 
