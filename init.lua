@@ -555,7 +555,7 @@ require('lazy').setup({
             mappings = {
               i = {
                 ['<C-s>'] = require('telescope-live-grep-args.actions').quote_prompt { postfix = ' ' },
-                ['<C-i>'] = require('telescope-live-grep-args.actions').quote_prompt { postfix = ' --iglob **/' },
+                ['<C-i>'] = require('telescope-live-grep-args.actions').quote_prompt { postfix = ' --iglob **/*' },
               },
             },
           },
