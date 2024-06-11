@@ -11,7 +11,6 @@ vim.keymap.set('v', '<A-r>c', [[<Cmd>s/\v^(\s*[a-z]{-})_([a-z]{1})/\1\U\2/g<CR>]
 vim.keymap.set('v', '<A-r>t', [[<Cmd>%s/\v['"](\w+)['"](:)|( Object | Array )|^\s*[+-]/\1\2/g<CR>]], { desc = 'from stringified to javascript literal object' })
 
 vim.keymap.set('v', 'y', [["+y]])
-vim.keymap.set('v', 'd', [["_d]])
 
 -- [[ Custom Keymaps ]]
 -- Keymaps for better default experience
