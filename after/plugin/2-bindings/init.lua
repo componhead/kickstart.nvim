@@ -64,9 +64,8 @@ wk.register({
   ['<leader>'] = {
     ['\\'] = {
       name = '+FILESYSTEM',
-      c = { '<cmd>CdGitRoot<CR>', 'change cwd to current git root' },
-      y = { "<cmd>let @+=expand('%:p')<CR>", 'copy absolute file path to clipboard', silent = true },
-      Y = { "<cmd>let @+=expand('%')<CR>", 'copy relative file path to clipboard', silent = true },
+      y = { "<cmd>let @+=expand('%')<CR>", 'copy relative file path to clipboard', silent = true },
+      Y = { "<cmd>let @+=expand('%:p')<CR>", 'copy absolute file path to clipboard', silent = true },
     },
     g = {
       name = '+GIT',

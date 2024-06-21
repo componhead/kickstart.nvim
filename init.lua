@@ -282,10 +282,8 @@ require('lazy').setup({
           vim.keymap.set({ 'n', 'v' }, ']h', gitsigns.stage_hunk, { desc = 'git stage hunk(s)' })
           vim.keymap.set({ 'n', 'v' }, '[h', gitsigns.undo_stage_hunk, { desc = 'git undo stage hunk' })
           vim.keymap.set('n', '[R', gitsigns.reset_buffer, { desc = 'git reset buffer' })
-          vim.keymap.set('n', '[g', gitsigns.preview_hunk, { desc = 'git preview hunk' })
-          vim.keymap.set('n', ']g', gitsigns.blame_line, { desc = 'git blame line' })
-          vim.keymap.set('n', '[G', gitsigns.diffthis, { desc = 'git diff against index' })
-          vim.keymap.set('n', ']G', function()
+          vim.keymap.set('n', 'g!', gitsigns.preview_hunk, { desc = 'git preview hunk' })
+          vim.keymap.set('n', 'g@', function()
             gitsigns.diffthis '@'
           end, { desc = 'git [D]iff against last commit' })
           -- Toggles

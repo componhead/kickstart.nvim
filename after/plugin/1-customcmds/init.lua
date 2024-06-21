@@ -1,8 +1,8 @@
 -- Function to find the git root directory based on the current buffer's path
-function Get_git_root()
-  local dot_git_file = vim.fn.findfile('.git', '.;')
+function Get_root(file_name)
+  local dot_git_file = vim.fn.findfile(file_name, '.;')
   if dot_git_file == '' then
-    local dot_git_path = vim.fn.finddir('.git', '.;')
+    local dot_git_path = vim.fn.finddir(file_name, '.;')
     if dot_git_path == '' then
       return nil
     else
@@ -16,7 +16,11 @@ function Get_git_root()
 end
 
 vim.api.nvim_create_user_command('CdGitRoot', function()
-  vim.api.nvim_set_current_dir(Get_git_root())
+  vim.api.nvim_set_current_dir(Get_root '.git')
+end, {})
+
+vim.api.nvim_create_user_command('CdNodeRoot', function()
+  vim.api.nvim_set_current_dir(Get_root 'package.json')
 end, {})
 
 vim.api.nvim_create_user_command('BufOnly', function()
