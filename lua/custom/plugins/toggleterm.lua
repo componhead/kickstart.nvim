@@ -10,16 +10,12 @@ return {
     --   vim.fn.feedkeys(' cd .' .. enter)
     -- end,
     on_open = function()
-      vim.o.number = true
-      vim.o.relativenumber = true
-      vim.o.numberwidth = 4
       vim.o.ma = true
       vim.keymap.set('n', '<UP>', '<C-\\><C-n>i<UP>', { silent = true, buffer = true })
       vim.keymap.set('n', '<DOWN>', '<C-\\><C-n>i<DOWN', { silent = true, buffer = true })
       vim.keymap.set('n', '<RIGHT>', '<C-\\><C-n>i<RIGHT>', { silent = true, buffer = true })
       vim.keymap.set('n', '<LEFT>', '<C-\\><C-n>i<LEFT>', { silent = true, buffer = true })
     end,
-    hide_numbers = false, -- hide the number column in toggleterm buffers
     autochdir = true, -- when neovim changes it current directory the terminal will change it's own when next it's opened
     insert_mappings = true, -- whether or not the open mapping applies in insert mode
     terminal_mappings = true, -- whether or not the open mapping applies in the opened terminals
