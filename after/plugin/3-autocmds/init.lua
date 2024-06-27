@@ -145,7 +145,7 @@ vim.api.nvim_create_autocmd({
             vim.cmd('edit ' .. node_prj)
           end,
           desc,
-          buffer = vim.api.nvim_buf_get_number(0),
+          buffer = vim.api.nvim_get_current_buf(),
         },
       }, { prefix = '<leader>c' })
     end
