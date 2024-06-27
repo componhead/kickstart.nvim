@@ -2,7 +2,7 @@ return {
   'miversen33/sunglasses.nvim',
   config = {
     filter_type = 'NOSYNTAX',
-    filter_percent = 0.5,
+    filter_percent = 0.25,
     vim.api.nvim_create_autocmd({
       'BufLeave',
     }, {

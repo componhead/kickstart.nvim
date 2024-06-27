@@ -89,6 +89,8 @@ P.S. You can delete this when you're done too. It's your config now! :)
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
+vim.keymap.set('n', ';', '') -- jolly
+vim.keymap.set('n', ',', '') -- jolly
 
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = false
@@ -185,10 +187,10 @@ vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' }
 --  Use CTRL+<hjkl> to switch between windows
 --
 --  See `:help wincmd` for a list of all window commands
-vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
-vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
-vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
-vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+-- vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
+-- vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
+-- vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
+-- vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
@@ -251,8 +253,14 @@ require('lazy').setup({
       on_attach = function(bufnr)
         local gitsigns = require 'gitsigns'
 
+        local function map(mode, l, r, opts)
+          opts = opts or {}
+          opts.buffer = bufnr
+          vim.keymap.set(mode, l, r, opts)
+        end
+
         -- Navigation
-        vim.keymap.set('n', ']c', function()
+        map('n', ']c', function()
           if vim.wo.diff then
             vim.cmd.normal { ']c', bang = true }
           else
@@ -260,7 +268,7 @@ require('lazy').setup({
           end
         end, { desc = 'Jump to next git [c]hange' })
 
-        vim.keymap.set('n', '[c', function()
+        map('n', '[c', function()
           if vim.wo.diff then
             vim.cmd.normal { '[c', bang = true }
           else
@@ -268,28 +276,20 @@ require('lazy').setup({
           end
         end, { desc = 'Jump to previous git [c]hange' })
 
-        if vim.wo.diff then
-          vim.wo.scrollbind = true
-          vim.wo.cursorbind = true
-          vim.o.foldmethod = 'diff'
-          vim.keymap.set('n', '][', [[<cmd>diffget<CR>]czz]], { silent = true, desc = 'diffget other file', buffer = true })
-          vim.keymap.set('n', '[]', [[<cmd>diffget //1<CR>]czz]], { silent = true, desc = 'diffget base', buffer = true })
-          vim.keymap.set('n', '[[', [[<cmd>diffget //2<CR>]czz]], { silent = true, desc = 'diffget ours', buffer = true })
-          vim.keymap.set('n', ']]', [[<cmd>diffget //3<CR>]czz]], { silent = true, desc = 'diffget theirs', buffer = true })
-        else
-          vim.keymap.set({ 'n', 'v' }, '[r', gitsigns.reset_hunk, { desc = 'git reset hunk' })
-          vim.keymap.set('n', ']r', gitsigns.stage_buffer, { desc = 'git stage buffer' })
-          vim.keymap.set({ 'n', 'v' }, ']h', gitsigns.stage_hunk, { desc = 'git stage hunk(s)' })
-          vim.keymap.set({ 'n', 'v' }, '[h', gitsigns.undo_stage_hunk, { desc = 'git undo stage hunk' })
-          vim.keymap.set('n', '[R', gitsigns.reset_buffer, { desc = 'git reset buffer' })
-          vim.keymap.set('n', 'g!', gitsigns.preview_hunk, { desc = 'git preview hunk' })
-          vim.keymap.set('n', 'g@', function()
-            gitsigns.diffthis '@'
-          end, { desc = 'git [D]iff against last commit' })
-          -- Toggles
-          vim.keymap.set('n', '<leader>tb', gitsigns.toggle_current_line_blame, { desc = '[T]oggle git show [b]lame line' })
-          vim.keymap.set('n', '<leader>tD', gitsigns.toggle_deleted, { desc = '[T]oggle git show [D]eleted' })
-        end
+        -- Actions
+        map({ 'n', 'v' }, ';+', gitsigns.stage_hunk, { desc = 'git stage hunk' })
+        map({ 'n', 'v' }, ';-', gitsigns.undo_stage_hunk, { desc = 'git undo stage hunk' })
+        map({ 'n', 'v' }, ';r', gitsigns.reset_hunk, { desc = 'git reset hunk' })
+        map('n', ';R', gitsigns.reset_buffer, { desc = 'git reset buffer' })
+        map('n', ';S', gitsigns.stage_buffer, { desc = 'git stage buffer' })
+        map('n', ';p', gitsigns.preview_hunk, { desc = 'git preview hunk' })
+        map('n', ';P', '<cmd>Gitsigns toggle_word_diff<CR>', { desc = 'git preview hunk' })
+        map('n', ';@', function()
+          gitsigns.diffthis '@'
+        end, { desc = 'git diff against last commit' })
+        -- Toggles
+        map('n', ';d', gitsigns.toggle_deleted, { desc = 'git show deleted' })
+        -- map('n', ';l', gitsigns.toggle_linehl, { desc = 'git toggle line highlights' })
       end,
       signs = {
         add = { text = '+' },
@@ -300,7 +300,6 @@ require('lazy').setup({
       },
     },
   },
-
   -- NOTE: Plugins can also be configured to run Lua code when they are loaded.
   --
   -- This is often very useful to both group configuration, as well as handle
@@ -330,12 +329,7 @@ require('lazy').setup({
         ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
         ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
         ['<leader>t'] = { name = '[T]oggle', _ = 'which_key_ignore' },
-        ['<leader>h'] = { name = 'Git [H]unk', _ = 'which_key_ignore' },
       }
-      -- visual mode
-      require('which-key').register({
-        ['<leader>h'] = { 'Git [H]unk' },
-      }, { mode = 'v' })
     end,
   },
 
@@ -552,10 +546,10 @@ require('lazy').setup({
         builtin.buffers { only_cwd = false }
       end, { desc = 'find existing buffers' })
       vim.keymap.set('n', '<leader>1', function()
-        builtin.buffers { cwd = '' .. Get_git_root() .. '/src/', prompt_title = 'Find sources buffers' }
+        builtin.buffers { cwd = '' .. Get_root '.git' .. '/src/', prompt_title = 'Find sources buffers' }
       end, { desc = 'Find src buffers' })
       vim.keymap.set('n', '<leader>2', function()
-        builtin.buffers { cwd = '' .. Get_git_root() .. '/test/', prompt_title = 'Find tests buffers' }
+        builtin.buffers { cwd = '' .. Get_root '.git' .. '/test/', prompt_title = 'Find tests buffers' }
       end, { desc = 'Find tests buffers' })
 
       -- Slightly advanced example of overriding default behavior and theme

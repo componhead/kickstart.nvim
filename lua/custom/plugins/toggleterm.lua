@@ -37,7 +37,7 @@ return {
         return math.floor(vim.o.columns * 0.97)
       end,
       height = function(_)
-        return math.floor(vim.o.lines * 0.97)
+        return math.floor(vim.o.lines * 0.90)
       end,
       -- zindex = <value>,
     },

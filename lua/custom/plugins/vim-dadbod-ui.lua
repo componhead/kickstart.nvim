@@ -18,7 +18,7 @@ return {
     wk.register({
       d = {
         name = '+DB',
-        b = { '<cmd>DBUIToggle<CR><cmd>tabedit %<CR>', 'show DBs panel' },
+        b = { '<cmd>tabnew %<CR><cmd>DBUIToggle<CR><cmd>only<CR>', 'show DBs panel' },
         c = { '<cmd>DBUIAddConnection<CR>', 'add DB connection' },
         f = { '<cmd>DBUIFindBuffer<CR>', 'find DB buffer' },
         i = { '<cmd>DBUILastQueryInfo<CR>', 'last query info' },

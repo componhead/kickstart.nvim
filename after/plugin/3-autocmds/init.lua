@@ -24,7 +24,7 @@ vim.api.nvim_create_autocmd({
           vim.cmd(command)
         end,
         'create a html file from markdown',
-        buffer = true,
+        buffer = vim.api.nvim_get_current_buf(),
       },
       H = {
         function()
@@ -32,14 +32,14 @@ vim.api.nvim_create_autocmd({
           vim.cmd(command)
         end,
         'change markdown buffer to html',
-        buffer = vim.api.nvim_buf_get_number(0),
+        buffer = vim.api.nvim_get_current_buf(),
       },
-      p = {
+      P = {
         function()
           require('md-pdf').convert_md_to_pdf()
         end,
         'transform markdown in pdf',
-        buffer = vim.api.nvim_buf_get_number(0),
+        buffer = vim.api.nvim_get_current_buf(),
       },
     }, { prefix = '<leader>c' })
   end,
@@ -59,7 +59,7 @@ vim.api.nvim_create_autocmd({
           vim.cmd(command)
         end,
         'transform markdown in html',
-        buffer = vim.api.nvim_buf_get_number(0),
+        buffer = vim.api.nvim_get_current_buf(),
       },
     }, { prefix = '<leader>c' })
   end,
@@ -79,7 +79,7 @@ vim.api.nvim_create_autocmd({
           vim.cmd(command)
         end,
         'open file in browser',
-        buffer = vim.api.nvim_buf_get_number(0),
+        buffer = vim.api.nvim_get_current_buf(),
       },
     }, { prefix = '<leader>c' })
   end,
