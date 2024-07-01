@@ -2,7 +2,7 @@ return {
   'miversen33/sunglasses.nvim',
   config = {
     filter_type = 'NOSYNTAX',
-    filter_percent = 0.25,
+    filter_percent = 0.5,
     vim.api.nvim_create_autocmd({
       'BufLeave',
     }, {
@@ -16,11 +16,12 @@ return {
       'WinClosed',
     }, {
       callback = function()
-        if vim.wo.diff then
-          vim.cmd 'SunglassesOff'
-        end
+        vim.cmd 'SunglassesOff'
       end,
     }),
+    require('which-key').register({
+      s = { '<cmd>SunglassesEnableToggle<CR>', 'toggle sunglasses' },
+    }, { prefix = '<leader>t' }),
   },
   event = 'BufEnter',
 }

@@ -17,7 +17,7 @@ return {
         use_delta = true,
         use_custom_command = nil,
         side_by_side = false,
-        diff_context_lines = vim.o.scrolloff,
+        vim_diff_opts = { ctxlen = 10 },
         entry_format = '#$ID, $STAT, $TIME',
         time_format = '',
         saved_only = true,

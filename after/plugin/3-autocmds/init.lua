@@ -10,61 +10,6 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   pattern = '*',
 })
 
-local md_files = vim.api.nvim_create_augroup('md-files', { clear = true })
-vim.api.nvim_create_autocmd({
-  'BufEnter',
-}, {
-  pattern = '*.md',
-  group = md_files,
-  callback = function()
-    wk.register({
-      h = {
-        function()
-          local command = 'NewMarkdownToHTML'
-          vim.cmd(command)
-        end,
-        'create a html file from markdown',
-        buffer = vim.api.nvim_get_current_buf(),
-      },
-      H = {
-        function()
-          local command = 'MarkdownToHTML'
-          vim.cmd(command)
-        end,
-        'change markdown buffer to html',
-        buffer = vim.api.nvim_get_current_buf(),
-      },
-      P = {
-        function()
-          require('md-pdf').convert_md_to_pdf()
-        end,
-        'transform markdown in pdf',
-        buffer = vim.api.nvim_get_current_buf(),
-      },
-    }, { prefix = '<leader>c' })
-  end,
-})
-
-local txt_files = vim.api.nvim_create_augroup('txt-files', { clear = true })
-vim.api.nvim_create_autocmd({
-  'BufEnter',
-}, {
-  pattern = '*.txt',
-  group = txt_files,
-  callback = function()
-    wk.register({
-      h = {
-        function()
-          local command = 'TOhtml'
-          vim.cmd(command)
-        end,
-        'transform markdown in html',
-        buffer = vim.api.nvim_get_current_buf(),
-      },
-    }, { prefix = '<leader>c' })
-  end,
-})
-
 local html_files = vim.api.nvim_create_augroup('html-files', { clear = true })
 vim.api.nvim_create_autocmd({
   'BufEnter',
