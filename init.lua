@@ -906,6 +906,7 @@ require('lazy').setup({
       --  into multiple repos for maintenance purposes.
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-path',
+      'jc-doyle/cmp-pandoc-references',
     },
     config = function()
       -- See `:help cmp`
@@ -977,6 +978,7 @@ require('lazy').setup({
           { name = 'nvim_lsp' },
           { name = 'luasnip' },
           { name = 'path' },
+          { name = 'pandoc_references' },
         },
       }
     end,
