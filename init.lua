@@ -286,8 +286,8 @@ require('lazy').setup({
         map({ 'n', 'v' }, '<leader>gr', gitsigns.reset_hunk, { desc = 'git reset hunk' })
         map('n', '<leader>gR', gitsigns.reset_buffer, { desc = 'git reset buffer' })
         map('n', '<leader>gS', gitsigns.stage_buffer, { desc = 'git stage buffer' })
-        map('n', '<leader>gp', gitsigns.preview_hunk, { desc = 'git preview hunk' })
-        map('n', '<leader>gP', '<cmd>Gitsigns toggle_word_diff<CR>', { desc = 'git preview hunk' })
+        map('n', '<leader>gP', gitsigns.preview_hunk, { desc = 'git preview hunk' })
+        map('n', '<leader>gt', '<cmd>Gitsigns toggle_word_diff<CR>', { desc = 'git preview hunk' })
         map('n', '<leader>g@', function()
           gitsigns.diffthis '@'
         end, { desc = 'git diff against last commit' })
@@ -1072,6 +1072,30 @@ require('lazy').setup({
       --    - Incremental selection: Included, see `:help nvim-treesitter-incremental-selection-mod`
       --    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
       --    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
+    end,
+  },
+  {
+    'nvim-neorg/neorg',
+    lazy = false,
+    version = '*',
+    config = function()
+      require('neorg').setup {
+        load = {
+          ['core.defaults'] = {},
+          ['core.concealer'] = {},
+          ['core.dirman'] = {
+            config = {
+              workspaces = {
+                notes = vim.env.PRIVATE_DOTFILES_ROOT .. '/notes',
+              },
+              default_workspace = 'notes',
+            },
+          },
+        },
+      }
+
+      vim.wo.foldlevel = 99
+      vim.wo.conceallevel = 2
     end,
   },
 
