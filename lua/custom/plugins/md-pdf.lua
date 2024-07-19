@@ -37,15 +37,9 @@ return {
         '--standalone=[true|false]',
       },
       keys = {
-        require('which-key').add {
-          {
-            '<leader>cP',
-            function()
-              require('md-pdf').convert_md_to_pdf()
-            end,
-            desc = 'transform markdown in pdf',
-          },
-        },
+        vim.keymap.set('n', '<leader>cP', function()
+          require('md-pdf').convert_md_to_pdf()
+        end, { desc = 'transform markdown in pdf' }),
       },
     }
   end,

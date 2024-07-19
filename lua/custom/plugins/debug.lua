@@ -71,120 +71,65 @@ return {
     local standardWidth = vim.api.nvim_win_get_width(0)
     local standardHeight = math.floor(vim.api.nvim_win_get_height(0) * 0.25)
     -- Dap UI setup
-    local wk = require 'which-key'
-    wk.add {
-      {
-        '<leader>db',
-        '<cmd>DapToggleBreakpoint<CR>',
-        desc = 'toggle breakpoint',
-      },
-      {
-        '<leader>dd',
-        function()
-          require('dapui').toggle()
-        end,
-        desc = 'toggle debug view',
-      },
-      {
-        '<leader>dc',
-        function()
-          require('dapui').float_element('console', {
-            width = standardWidth,
-            height = standardHeight,
-            enter = true,
-            position = 'bottom',
-          })
-        end,
-        desc = 'toggle float console',
-      },
-      {
-        '<leader>dr',
-        function()
-          require('dapui').float_element('repl', {
-            width = standardWidth,
-            height = standardHeight,
-            enter = true,
-            position = 'bottom',
-          })
-        end,
-        desc = 'toggle float REPL',
-      },
-      {
-        '<leader>dk',
-        function()
-          require('dapui').float_element('stacks', {
-            width = standardWidth,
-            height = standardHeight,
-            enter = true,
-            position = 'bottom',
-          })
-        end,
-        desc = 'toggle float stacks',
-      },
-      {
-        '<leader>ds',
-        function()
-          require('dapui').float_element('scopes', {
-            width = standardWidth,
-            height = standardHeight,
-            enter = true,
-            position = 'bottom',
-          })
-        end,
-        desc = 'toggle float scopes',
-      },
-      {
-        '<leader>dw',
-        function()
-          require('dapui').float_element('watches', {
-            width = standardWidth,
-            height = standardHeight,
-            enter = true,
-            position = 'bottom',
-          })
-        end,
-        desc = 'toggle float watches',
-      },
-      {
-        '<leader>dx',
-        function()
-          require('dapui').float_element('breakpoints', {
-            width = standardWidth,
-            height = standardHeight,
-            enter = true,
-            position = 'bottom',
-          })
-        end,
-        desc = 'toggle float breakpoints window',
-      },
-      {
-        '<leader>dB',
-        function()
-          dap.set_breakpoint(vim.fn.input 'Breakpoint condition: ')
-        end,
-        desc = 'toggle breakpoint with condition',
-      },
-      {
-        '<leader>dl',
-        '<cmd>DapShowLog<CR>',
-        desc = 'show log',
-      },
-      mode = 'n',
-      noremap = true,
-      silent = true,
-      expr = false,
-    }
-    wk.add {
-      {
-        '<leader>de',
-        require('dapui').eval(),
-        desc = 'evaluate expression',
-      },
-      mode = 'v',
-      noremap = true,
-      silent = true,
-      expr = false,
-    }
+    vim.keymap.set('n', '<leader>db', '<cmd>DapToggleBreakpoint<CR>', { desc = 'toggle breakpoint' })
+    vim.keymap.set('n', '<leader>dd', function()
+      require('dapui').toggle()
+    end, { desc = 'toggle debug view' })
+    vim.keymap.set('n', '<leader>dc', function()
+      require('dapui').float_element('console', {
+        width = standardWidth,
+        height = standardHeight,
+        enter = true,
+        position = 'bottom',
+      })
+    end, { desc = 'toggle float console' })
+    vim.keymap.set('n', '<leader>dr', function()
+      require('dapui').float_element('repl', {
+        width = standardWidth,
+        height = standardHeight,
+        enter = true,
+        position = 'bottom',
+      })
+    end, { desc = 'toggle float REPL' })
+    vim.keymap.set('n', '<leader>dk', function()
+      require('dapui').float_element('stacks', {
+        width = standardWidth,
+        height = standardHeight,
+        enter = true,
+        position = 'bottom',
+      })
+    end, { desc = 'toggle float stacks' })
+    vim.keymap.set('n', '<leader>ds', function()
+      require('dapui').float_element('scopes', {
+        width = standardWidth,
+        height = standardHeight,
+        enter = true,
+        position = 'bottom',
+      })
+    end, { desc = 'toggle float scopes' })
+    vim.keymap.set('n', '<leader>dw', function()
+      require('dapui').float_element('watches', {
+        width = standardWidth,
+        height = standardHeight,
+        enter = true,
+        position = 'bottom',
+      })
+    end, { desc = 'toggle float watches' })
+    vim.keymap.set('n', '<leader>dx', function()
+      require('dapui').float_element('breakpoints', {
+        width = standardWidth,
+        height = standardHeight,
+        enter = true,
+        position = 'bottom',
+      })
+    end, { desc = 'toggle float breakpoints window' })
+    vim.keymap.set('n', '<leader>dB', function()
+      dap.set_breakpoint(vim.fn.input 'Breakpoint condition: ')
+    end, { desc = 'toggle breakpoint with condition' })
+    vim.keymap.set('n', '<leader>dl', '<cmd>DapShowLog<CR>', { desc = 'show log' })
+    vim.keymap.set('v', '<leader>de', function()
+      require('dapui').eval()
+    end, { desc = 'evaluate expression' })
 
     -- For more information, see |:help nvim-dap-ui|
     dapui.setup {

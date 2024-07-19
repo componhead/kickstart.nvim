@@ -19,9 +19,7 @@ return {
         vim.cmd 'SunglassesOff'
       end,
     }),
-    require('which-key').add {
-      { '<leader>ts', '<cmd>SunglassesEnableToggle<CR>', desc = 'toggle sunglasses' },
-    },
+    vim.keymap.set('n', '<leader>ts', '<cmd>SunglassesEnableToggle<CR>', { desc = 'toggle sunglasses' }),
   },
   event = 'BufEnter',
 }

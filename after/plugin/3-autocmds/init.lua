@@ -17,17 +17,11 @@ vim.api.nvim_create_autocmd({
   pattern = '*.html,*.htm',
   group = html_files,
   callback = function()
-    wk.add {
-      {
-        '<leader>cb',
-        function()
-          local filename = vim.fn.expand '%:p:r'
-          local open_in_browser = '!open -a "' .. vim.fn.expand '$BROWSER' .. '" "' .. filename .. '.html"'
-          vim.cmd(open_in_browser)
-        end,
-        desc = 'open file in browser',
-      },
-    }
+    vim.keymap.set('n', '<leader>cb', function()
+      local filename = vim.fn.expand '%:p:r'
+      local open_in_browser = '!open -a "' .. vim.fn.expand '$BROWSER' .. '" "' .. filename .. '.html"'
+      vim.cmd(open_in_browser)
+    end, { desc = 'open file in browser' })
   end,
 })
 
@@ -39,19 +33,16 @@ vim.api.nvim_create_autocmd({
   pattern = '**/.leetcode/**/*',
   group = leetcode,
   callback = function()
-    local wk = require 'which-key'
-    wk.add {
-      { '<leader>clq', '<cmd>LBQuestions<cr>', desc = 'List Questions' },
-      { '<leader>cls', '<cmd>LBSearch<cr>', desc = 'Search Questions' },
-      { '<leader>clt', '<cmd>LBTest<cr>', desc = 'Test Question' },
-      { '<leader>clw', '<cmd>LBkrite<cr>', desc = 'Write Question' },
-      { '<leader>clx', '<cmd>LBDelete<cr>', desc = 'Delete Question' },
-      { '<leader>cly', '<cmd>LBExport<cr>', desc = 'Export Question' },
-      { '<leader>clz', '<cmd>LBImport<cr>', desc = 'Import Question' },
-      { '<leader>cl<tab>', '<cmd>LBNext<cr>', desc = 'Next Question' },
-      { '<leader>cl<S-tab>', '<cmd>LBPrevious<cr>', desc = 'Previous Question' },
-      { '<leader>cl<leader>', '<cmd>LBShow<cr>', desc = 'Show Question' },
-    }
+    vim.keymap.set('n', '<leader>clq', '<cmd>LBQuestions<cr>', { desc = 'List Questions' })
+    vim.keymap.set('n', '<leader>cls', '<cmd>LBSearch<cr>', { desc = 'Search Questions' })
+    vim.keymap.set('n', '<leader>clt', '<cmd>LBTest<cr>', { desc = 'Test Question' })
+    vim.keymap.set('n', '<leader>clw', '<cmd>LBkrite<cr>', { desc = 'Write Question' })
+    vim.keymap.set('n', '<leader>clx', '<cmd>LBDelete<cr>', { desc = 'Delete Question' })
+    vim.keymap.set('n', '<leader>cly', '<cmd>LBExport<cr>', { desc = 'Export Question' })
+    vim.keymap.set('n', '<leader>clz', '<cmd>LBImport<cr>', { desc = 'Import Question' })
+    vim.keymap.set('n', '<leader>cl<tab>', '<cmd>LBNext<cr>', { desc = 'Next Question' })
+    vim.keymap.set('n', '<leader>cl<S-tab>', '<cmd>LBPrevious<cr>', { desc = 'Previous Question' })
+    vim.keymap.set('n', '<leader>cl<leader>', '<cmd>LBShow<cr>', { desc = 'Show Question' })
   end,
 })
 
@@ -82,15 +73,9 @@ vim.api.nvim_create_autocmd({
 
     local node_prj = vim.fn['getcwd']() .. '/package.json'
     if vim.fn.filereadable(node_prj) ~= 0 then
-      wk.add {
-        {
-          '<leader>cp',
-          function()
-            vim.cmd('edit ' .. node_prj)
-          end,
-          desc = desc,
-        },
-      }
+      vim.keymap.set('n', '<leader>cp', function()
+        vim.cmd('edit ' .. node_prj)
+      end, { desc = desc })
     end
 
     local rust_prj = vim.fn['getcwd']() .. '/Cargo.toml'

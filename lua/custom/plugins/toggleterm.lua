@@ -64,10 +64,7 @@ return {
   },
   config = function(_, opts)
     require('toggleterm').setup(opts)
-    local wk = require 'which-key'
-    wk.add {
-      { '<leader>\\l', '<Cmd>TermSelect<CR>', silent = true, desc = 'list all terminals' },
-      { '<leader>\\t', '<Cmd>ToggleTermSetName<CR>', silent = true, desc = 'set a name to a terminal' },
-    }
+    vim.keymap.set('n', '<leader>\\l', '<Cmd>TermSelect<CR>', { silent = true, desc = 'list all terminals' })
+    vim.keymap.set('n', '<leader>\\t', '<Cmd>ToggleTermSetName<CR>', { silent = true, desc = 'set a name to a terminal' })
   end,
 }

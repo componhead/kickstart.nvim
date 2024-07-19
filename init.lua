@@ -330,7 +330,7 @@ require('lazy').setup({
       require('which-key').add {
         mode = 'n',
         { '<leader>r', group = '[R]ename' },
-        { '<leader>x', group = 'Trouble' },
+        { '<leader>x', group = 'TROUBLE' },
         { '<leader>c', group = 'CODE' },
         { '<leader>cd', group = 'DB' },
         { '<leader>d', group = 'DEBUG' },
@@ -341,7 +341,7 @@ require('lazy').setup({
         { '<leader>i', group = 'IA' },
         { '<leader>ia', group = 'ASK TO IA' },
         { '<leader>im', group = 'ACT_AS' },
-        { '<leader>o', group = 'ORG' },
+        { '<leader>n', group = 'NOTES' },
         { '<leader>q', group = 'QUICKFIX' },
         { '<leader>r', group = 'REFACTORY' },
         { '<leader>s', group = 'SEARCH' },
@@ -1046,7 +1046,7 @@ require('lazy').setup({
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
     opts = {
-      ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' },
+      ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc', 'norg' },
       -- Autoinstall languages that are not installed
       auto_install = true,
       highlight = {
