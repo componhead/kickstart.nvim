@@ -1,3 +1,8 @@
+vim.keymap.set('n', '<leader>gg', '<Cmd>diffget<CR>', { buffer = true, desc = 'Diff get' })
+vim.keymap.set('n', '<leader>glp', function()
+  local command = ':Git log -p -S'
+  vim.api.nvim_feedkeys(command, 't', true)
+end, { desc = 'pickaxe' })
 -- regex format oneline gql chrome copied curl in a new gile
 vim.keymap.set(
   'v',
