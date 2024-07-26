@@ -139,8 +139,8 @@ vim.opt.updatetime = 250
 vim.opt.timeoutlen = 300
 
 -- Configure how new splits should be opened
-vim.opt.splitright = false
-vim.opt.splitbelow = false
+vim.opt.splitright = true
+vim.opt.splitbelow = true
 
 -- Sets how neovim will display certain whitespace characters in the editor.
 --  See `:help 'list'`
@@ -262,7 +262,7 @@ require('lazy').setup({
         -- Navigation
         map('n', ']c', function()
           if vim.wo.diff then
-            vim.cmd.normal { ']c', bang = true }
+            vim.cmd.normal { ']czz', bang = true }
           else
             gitsigns.nav_hunk 'next'
           end
@@ -270,7 +270,7 @@ require('lazy').setup({
 
         map('n', '[c', function()
           if vim.wo.diff then
-            vim.cmd.normal { '[c', bang = true }
+            vim.cmd.normal { '[czz', bang = true }
           else
             gitsigns.nav_hunk 'prev'
           end
