@@ -30,14 +30,14 @@ return {
       -- see :h nvim_open_win for details on borders however
       -- the 'curved' border is a custom border type
       -- not natively supported but implemented in this plugin.
-      border = 'curved',
+      border = 'solid',
       -- like `size`, width and height can be a number or function which is passed the current terminal
       -- winblend = 3,
       width = function(_)
         return math.floor(vim.o.columns * 0.97)
       end,
       height = function(_)
-        return math.floor(vim.o.lines * 0.90)
+        return math.floor(vim.o.lines * 0.95)
       end,
       -- zindex = <value>,
     },
@@ -64,7 +64,7 @@ return {
   },
   config = function(_, opts)
     require('toggleterm').setup(opts)
-    vim.keymap.set('n', '<leader>\\l', '<Cmd>TermSelect<CR>', { silent = true, desc = 'list all terminals' })
-    vim.keymap.set('n', '<leader>\\t', '<Cmd>ToggleTermSetName<CR>', { silent = true, desc = 'set a name to a terminal' })
+    vim.keymap.set('n', '<leader>\\t', '<Cmd>TermSelect<CR>', { silent = true, desc = 'list all terminals' })
+    vim.keymap.set('n', '<leader>\\n', '<Cmd>ToggleTermSetName<CR>', { silent = true, desc = 'set a name to a terminal' })
   end,
 }

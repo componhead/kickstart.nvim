@@ -1,17 +1,17 @@
 -- Function to find the git root directory based on the current buffer's path
 function Get_root(file_name)
-  local dot_git_file = vim.fn.findfile(file_name, '.;')
-  if dot_git_file == '' then
-    local dot_git_path = vim.fn.finddir(file_name, '.;')
-    if dot_git_path == '' then
+  local file = vim.fn.findfile(file_name, '.;')
+  if file == '' then
+    local path = vim.fn.finddir(file_name, '.;')
+    if path == '' then
       return nil
     else
-      local git_root = vim.fn.fnamemodify(dot_git_path, ':p:h:h')
-      return git_root
+      local root = vim.fn.fnamemodify(path, ':p:h:h')
+      return root
     end
   else
-    local git_root = vim.fn.fnamemodify(dot_git_file, ':p:h')
-    return git_root
+    local root = vim.fn.fnamemodify(file, ':p:h')
+    return root
   end
 end
 

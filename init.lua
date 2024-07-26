@@ -581,7 +581,7 @@ require('lazy').setup({
       end, { desc = 'Find tests buffers' })
 
       -- Slightly advanced example of overriding default behavior and theme
-      vim.keymap.set('n', '/', function()
+      vim.keymap.set('n', '<leader>/', function()
         -- You can pass additional configuration to Telescope to change the theme, layout, etc.
         builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
           winblend = 10,
@@ -979,6 +979,7 @@ require('lazy').setup({
           { name = 'luasnip' },
           { name = 'path' },
           { name = 'pandoc_references' },
+          { name = 'neorg' },
         },
       }
     end,
@@ -1091,9 +1092,20 @@ require('lazy').setup({
               default_workspace = 'notes',
             },
           },
+          ['core.completion'] = {
+            config = {
+              engine = 'nvim-cmp',
+            },
+          },
+          ['core.integrations.nvim-cmp'] = {},
         },
       }
 
+      vim.keymap.set('n', '<Leader>no', '<Cmd>Neorg<CR>')
+      vim.keymap.set('n', '<Leader>ni', '<Cmd>Neorg index<CR>')
+      vim.keymap.set('n', '<Leader>nj', '<Cmd>Neorg journal<CR>')
+      vim.keymap.set('n', '<Leader>nq', '<Cmd>Neorg return<CR>')
+      vim.keymap.set('n', '<Leader>nt', '<Cmd>Neorg toggle-concealer<CR>', { desc = 'toggle concealer' })
       vim.wo.foldlevel = 99
       vim.wo.conceallevel = 2
     end,
