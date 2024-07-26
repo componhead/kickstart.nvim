@@ -9,6 +9,20 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   pattern = '*',
 })
 
+local diffing = vim.api.nvim_create_augroup('diffing', { clear = true })
+vim.api.nvim_create_autocmd({
+  'BufEnter',
+}, {
+  pattern = '*',
+  group = diffing,
+  callback = function()
+    if vim.bo.filetype == 'diff' then
+      vim.keymap.set('n', 'do', '<cmd>diffget<cr>', { desc = 'diffget (obtain)' })
+      vim.keymap.set('n', 'dp', '<cmd>diffput<cr>', { desc = 'diffput' })
+    end
+  end,
+})
+
 local html_files = vim.api.nvim_create_augroup('html-files', { clear = true })
 vim.api.nvim_create_autocmd({
   'BufEnter',
