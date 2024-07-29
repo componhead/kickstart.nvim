@@ -549,6 +549,39 @@ require('lazy').setup({
         },
       }
 
+      vim.keymap.set(
+        'n',
+        '<leader>glf',
+        '<cmd>Telescope git_commits layout_strategy=horizontal layout_config={"width":0.9,"height":0.9}<CR>',
+        { desc = 'commits log' }
+      )
+
+      vim.keymap.set('n', '<leader>hc', function()
+        require('telescope.builtin').command_history()
+      end, { desc = 'history of commands' })
+
+      vim.keymap.set('n', '<leader>hq', function()
+        require('telescope.builtin').quickfixhistory()
+      end, { desc = 'history of quickfix' })
+
+      vim.keymap.set('n', '<leader>hs', function()
+        require('telescope.builtin').search_history()
+      end, { desc = 'history of searches' })
+
+      vim.keymap.set('n', '<leader>qq', '<cmd>Telescope quickfix<CR>', { desc = 'open quickfix' })
+
+      vim.keymap.set('n', '<leader>sc', function()
+        require('telescope.builtin').find_files { cwd = require('telescope.utils').buffer_dir() }
+      end, { desc = "search files under file's directories" })
+
+      vim.keymap.set('n', '<leader>sp', function()
+        require('telescope.builtin').live_grep { cwd = require('telescope.utils').buffer_dir() }
+      end, { desc = "grep text under file's directories" })
+
+      vim.keymap.set('n', '<leader>sz', function()
+        require('telescope.builtin').current_buffer_fuzzy_find()
+      end, { desc = 'fuzzy search in current buffer' })
+
       -- Enable Telescope extensions if they are installed
       pcall(require('telescope').load_extension, 'fzf')
       pcall(require('telescope').load_extension, 'ui-select')

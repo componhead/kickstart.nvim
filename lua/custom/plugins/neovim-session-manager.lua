@@ -25,6 +25,7 @@ return {
       max_path_length = 80, -- Shorten the display path if length exceeds this threshold. Use 0 if don't want to shorten the path at all.
     }
 
+    vim.keymap.set('n', '<leader>SS', '<cmd>SessionManager<CR>', { desc = 'session manager' })
     vim.keymap.set('n', '<leader>Sd', '<cmd>SessionManager load_current_dir_session<CR>', { desc = 'load current dir session' })
     vim.keymap.set('n', '<leader>Sl', '<cmd>SessionManager load_session<CR>', { desc = 'load session' })
     vim.keymap.set('n', '<leader>Ss', '<cmd>SessionManager save_current_session<CR>', { desc = 'save session' })

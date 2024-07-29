@@ -69,5 +69,8 @@ return {
         },
       },
     }
+    vim.keymap.set('n', '<leader>hr', function()
+      require('telescope').extensions.neoclip.default()
+    end, { desc = 'history of registers' })
   end,
 }
