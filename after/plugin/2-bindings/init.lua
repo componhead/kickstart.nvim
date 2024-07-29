@@ -138,7 +138,7 @@ vim.keymap.set('n', '<leader>hs', function()
   require('telescope.builtin').search_history()
 end, { desc = 'history of searches' })
 
-vim.keymap.set('n', "''", function()
+vim.keymap.set('n', '<leader>hr', function()
   require('telescope').extensions.neoclip.default()
 end, { desc = 'history of registers' })
 

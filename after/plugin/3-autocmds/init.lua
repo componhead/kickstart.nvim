@@ -82,7 +82,6 @@ vim.api.nvim_create_autocmd({
   group = prj_files,
   callback = function()
     local desc = 'open package management file'
-    local wk = require 'which-key'
 
     local node_prj = vim.fn['getcwd']() .. '/package.json'
     if vim.fn.filereadable(node_prj) ~= 0 then
