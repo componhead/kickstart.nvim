@@ -15,6 +15,14 @@ function Get_root(file_name)
   end
 end
 
+vim.api.nvim_create_user_command('ShowPaths', function()
+  return vim.api.nvim_echo({
+    { vim.fn.expand '%:p:h' .. '\n', 'Title' },
+    { vim.fn.expand '%:h' .. '\n', 'Title' },
+    { vim.fn.expand '%:t', 'WarningMsg' },
+  }, false, {})
+end, {})
+
 vim.api.nvim_create_user_command('CdGitRoot', function()
   vim.api.nvim_set_current_dir(Get_root '.git')
 end, {})
