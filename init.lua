@@ -286,7 +286,7 @@ require('lazy').setup({
         map('n', '<leader>gR', gitsigns.reset_buffer, { desc = 'git reset buffer' })
         map('n', '<leader>gS', gitsigns.stage_buffer, { desc = 'git stage buffer' })
         map('n', '<leader>gP', gitsigns.preview_hunk, { desc = 'git preview hunk' })
-        map('n', '<leader>gt', '<cmd>Gitsigns toggle_word_diff<CR>', { desc = 'git preview hunk' })
+        map('n', '<leader>gw', '<cmd>Gitsigns toggle_word_diff<CR>', { desc = 'toggle git word diff' })
         map('n', '<leader>g@', function()
           gitsigns.diffthis '@'
         end, { desc = 'git diff against last commit' })
