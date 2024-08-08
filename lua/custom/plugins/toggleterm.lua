@@ -11,10 +11,6 @@ return {
     -- end,
     on_open = function()
       vim.o.ma = true
-      vim.keymap.set('n', '<UP>', '<C-\\><C-n>i<UP>', { silent = true, buffer = true })
-      vim.keymap.set('n', '<DOWN>', '<C-\\><C-n>i<DOWN', { silent = true, buffer = true })
-      vim.keymap.set('n', '<RIGHT>', '<C-\\><C-n>i<RIGHT>', { silent = true, buffer = true })
-      vim.keymap.set('n', '<LEFT>', '<C-\\><C-n>i<LEFT>', { silent = true, buffer = true })
     end,
     autochdir = true, -- when neovim changes it current directory the terminal will change it's own when next it's opened
     insert_mappings = true, -- whether or not the open mapping applies in insert mode
@@ -30,14 +26,14 @@ return {
       -- see :h nvim_open_win for details on borders however
       -- the 'curved' border is a custom border type
       -- not natively supported but implemented in this plugin.
-      border = 'solid',
+      border = 'double',
       -- like `size`, width and height can be a number or function which is passed the current terminal
       -- winblend = 3,
       width = function(_)
-        return math.floor(vim.o.columns * 0.97)
+        return math.floor(vim.o.columns * 1)
       end,
       height = function(_)
-        return math.floor(vim.o.lines * 0.95)
+        return math.floor(vim.o.lines * 1)
       end,
       -- zindex = <value>,
     },
@@ -50,9 +46,9 @@ return {
     highlights = {
       -- highlights which map to a highlight group name and a table of it's values
       -- NOTE: this is only a subset of values, any group placed here will be set for the terminal window split
-      -- Normal = {
-      --   guibg = '#FFFFFF',
-      -- },
+      Normal = {
+        guibg = '#FFFFFF',
+      },
       NormalFloat = {
         link = 'Normal',
       },

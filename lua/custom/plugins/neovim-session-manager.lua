@@ -31,5 +31,14 @@ return {
     vim.keymap.set('n', '<leader>Ss', '<cmd>SessionManager save_current_session<CR>', { desc = 'save session' })
     vim.keymap.set('n', '<leader>SD', '<cmd>SessionManager delete_session<CR>', { desc = 'delete session' })
     vim.keymap.set('n', '<leader>SL', '<cmd>SessionManager load_last_session<CR>', { desc = 'load last session' })
+    local sessionmanager_plugin = vim.api.nvim_create_augroup('sessionmanager-plugin', { clear = true })
+    vim.api.nvim_create_autocmd({
+      'VimEnter',
+    }, {
+      group = sessionmanager_plugin,
+      callback = function()
+        vim.cmd 'SessionManager load_git_session'
+      end,
+    })
   end,
 }
