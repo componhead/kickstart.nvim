@@ -1146,6 +1146,18 @@ require('lazy').setup({
         },
       }
 
+      vim.api.nvim_create_autocmd({
+        'BufLeave',
+      }, {
+        group = vim.api.nvim_create_augroup('neorg', { clear = true }),
+        pattern = '*.norg',
+        callback = function()
+          if vim.bo.filetype == 'norg' then
+            vim.cmd 'bd'
+          end
+        end,
+      })
+
       vim.keymap.set('n', '<Leader>no', '<Cmd>Neorg<CR>')
       vim.keymap.set('n', '<Leader>ni', '<Cmd>Neorg index<CR>')
       vim.keymap.set('n', '<Leader>nj', '<Cmd>Neorg journal<CR>')
