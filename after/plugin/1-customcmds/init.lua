@@ -24,11 +24,13 @@ vim.api.nvim_create_user_command('ShowPaths', function()
 end, {})
 
 vim.api.nvim_create_user_command('CdGitRoot', function()
-  vim.api.nvim_set_current_dir(Get_root '.git')
+  local dir = Get_root '.git' or vim.fn.getcwd()
+  vim.api.nvim_set_current_dir(dir)
 end, {})
 
 vim.api.nvim_create_user_command('CdNodeRoot', function()
-  vim.api.nvim_set_current_dir(Get_root 'package.json')
+  local dir = Get_root 'package.json' or vim.fn.getcwd()
+  vim.api.nvim_set_current_dir(dir)
 end, {})
 
 vim.api.nvim_create_user_command('BufOnly', function()
