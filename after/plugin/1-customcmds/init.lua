@@ -15,6 +15,22 @@ function Get_root(file_name)
   end
 end
 
+function Get_qf_paths()
+  local qflist = vim.fn.getqflist()
+  local paths = {}
+  local hash = {}
+  for k in pairs(qflist) do
+    local path = vim.fn.bufname(qflist[k]['bufnr']) -- extract path from quick fix list
+    if not hash[path] then -- add to paths table, if not already appeared
+      paths[#paths + 1] = path
+      hash[path] = true -- remember existing paths
+    end
+  end
+  -- show search scope with message
+  vim.notify('find in ...\n  ' .. table.concat(paths, '\n  '))
+  return paths
+end
+
 vim.api.nvim_create_user_command('ShowPaths', function()
   return vim.api.nvim_echo({
     { vim.fn.expand '%:p:h' .. '\n', 'Title' },

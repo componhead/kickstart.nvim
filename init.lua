@@ -450,7 +450,6 @@ require('lazy').setup({
       -- Useful for getting pretty icons, but requires a Nerd Font.
       { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
       { 'kkharji/sqlite.lua' },
-      { 'nvim-telescope/telescope-live-grep-args.nvim' },
       { 'sharkdp/fd' },
     },
     config = function()
@@ -524,20 +523,9 @@ require('lazy').setup({
                 function(p_bufnr)
                   -- send results to quick fix list
                   require('telescope.actions').send_to_qflist(p_bufnr)
-                  local qflist = vim.fn.getqflist()
-                  local paths = {}
-                  local hash = {}
-                  for k in pairs(qflist) do
-                    local path = vim.fn.bufname(qflist[k]['bufnr']) -- extract path from quick fix list
-                    if not hash[path] then -- add to paths table, if not already appeared
-                      paths[#paths + 1] = path
-                      hash[path] = true -- remember existing paths
-                    end
-                  end
-                  -- show search scope with message
-                  vim.notify('find in ...\n  ' .. table.concat(paths, '\n  '))
+                  local paths = Get_qf_paths()
                   -- execute live_grep_args with search scope
-                  require('telescope').extensions.live_grep_args.live_grep_args { prompt_title = 'Live Grep on Quickfix', search_dirs = paths }
+                  require('telescope.builtin').live_grep { prompt_title = 'Live Grep on Quickfix', search_dirs = paths }
                 end,
                 type = 'action',
                 opts = {
@@ -593,15 +581,6 @@ require('lazy').setup({
           },
         },
         extensions = {
-          ['live_grep_args'] = {
-            auto_quoting = true, -- enable/disable auto-quoting
-            mappings = {
-              i = {
-                ['<C-s>'] = require('telescope-live-grep-args.actions').quote_prompt { postfix = ' ' },
-                ['<C-i>'] = require('telescope-live-grep-args.actions').quote_prompt { postfix = ' --iglob **/*' },
-              },
-            },
-          },
           ['ui-select'] = {
             require('telescope.themes').get_dropdown(),
           },
@@ -627,6 +606,10 @@ require('lazy').setup({
         require('telescope.builtin').search_history()
       end, { desc = 'history of searches' })
 
+      vim.keymap.set('n', '<leader>hn', function()
+        require('telescope.builtin').notify()
+      end, { desc = 'history of notify' })
+
       vim.keymap.set('n', '<leader>qq', '<cmd>Telescope quickfix<CR>', { desc = 'open quickfix' })
 
       vim.keymap.set('n', '<leader>sc', function()
@@ -645,7 +628,6 @@ require('lazy').setup({
       pcall(require('telescope').load_extension, 'fzf')
       pcall(require('telescope').load_extension, 'ui-select')
       pcall(require('telescope').load_extension, 'neoclip')
-      pcall(require('telescope').load_extension, 'live_grep_args')
 
       -- See `:help telescope.builtin`
       local builtin = require 'telescope.builtin'
@@ -654,7 +636,7 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
       vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
       vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
-      vim.keymap.set('n', '<leader>sg', require('telescope').extensions.live_grep_args.live_grep_args, { desc = '[S]earch by [G]rep' })
+      vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
       vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
       vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
       vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
