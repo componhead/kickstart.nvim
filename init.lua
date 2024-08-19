@@ -1146,8 +1146,6 @@ require('lazy').setup({
       end
 
       -- ... and there is more!
-      --  Check out: https://github.com/echasnovski/mini.nvim
-      require('mini.bracketed').setup()
     end,
   },
   { -- Highlight, edit, and navigate code

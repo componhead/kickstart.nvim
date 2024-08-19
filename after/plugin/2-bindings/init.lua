@@ -1,4 +1,3 @@
-vim.keymap.set('n', '<leader>gg', '<Cmd>diffget<CR>', { buffer = true, desc = 'Diff get' })
 -- regex format oneline gql chrome copied curl in a new gile
 vim.keymap.set(
   'v',

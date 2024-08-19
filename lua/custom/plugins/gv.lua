@@ -79,6 +79,6 @@ return {
 
     vim.keymap.set('v', '<leader>gL', '<cmd>Gclog<CR>', { desc = 'commit log in qf for selected chunk' })
 
-    vim.keymap.set('c', '<C-g>', 'Gvdiffsplit HEAD...origin/master<CR>', { silent = false })
+    vim.keymap.set('c', '<C-g>', 'Gvdiffsplit! HEAD...origin/master<CR>', { silent = false })
   end,
 }
