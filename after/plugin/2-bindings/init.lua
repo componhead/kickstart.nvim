@@ -8,9 +8,11 @@ vim.keymap.set(
 vim.keymap.set('v', '<A-r>j', [[<Cmd>s/\v^'(.*)'$/\1/g<CR>yu<Cmd>vsplit formatted.json<CR>p<Cmd>nohlsearch<CR>gg=G]], { desc = 'to json format' })
 vim.keymap.set('v', '<A-r>s', [[<Cmd>s/\v^(\s*[a-z]{-})([A-Z]{1})/\1_\u\2/g<CR>]], { desc = 'camelCase to snake_case' })
 vim.keymap.set('v', '<A-r>c', [[<Cmd>s/\v^(\s*[a-z]{-})_([a-z]{1})/\1\U\2/g<CR>]], { desc = 'snake_case to camelCase' })
-vim.keymap.set('v', '<A-r>t', [[<Cmd>%s/\v['"](\w+)['"](:)|( Object | Array )|^\s*[+-]/\1\2/g<CR>]], { desc = 'from stringified to javascript literal object' })
+vim.keymap.set('v', '<A-r>t', [[<Cmd>%s/\v['"](\w+)['"](:)|( Object | Array )|^\s*[+-]/\1\2/g<CR>]], { desc = 'to javascript literal object' })
 vim.keymap.set('v', '<A-r>u', [[<cmd>.!uuidgen<CR>]], { expr = true, silent = true })
 vim.keymap.set('v', '<C-c>', [["+y]])
+
+vim.keymap.set({ 'n', 'v' }, '<BS>', [["_d]])
 
 -- [[ Custom Keymaps ]]
 -- Keymaps for better default experience
@@ -37,7 +39,7 @@ vim.keymap.set('n', '<leader>Sv', '<cmd>source $VIMRC<CR>', { desc = 'source new
 vim.keymap.set('n', '<leader>tn', '<cmd>set relativenumber!<CR>', { desc = 'toggle line numbers mode' })
 
 vim.keymap.set('c', '<C-w>', '<cmd>w !sudo tee > /dev/null %<CR>')
-vim.keymap.set('c', '<C-y>', '<cmd>let @+=v:errmsg<CR><Esc>')
+vim.keymap.set('c', '<C-e>', '<cmd>let @+=v:errmsg<CR><Esc>')
 
 vim.keymap.set('i', 'jk', '<ESC>')
 

@@ -11,14 +11,15 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 
 local diffing = vim.api.nvim_create_augroup('diffing', { clear = true })
 vim.api.nvim_create_autocmd({
+  'VimEnter',
   'BufEnter',
 }, {
   pattern = '*',
   group = diffing,
   callback = function()
-    if vim.bo.filetype == 'diff' then
-      vim.keymap.set('n', 'do', '<cmd>diffget<cr>', { desc = 'diffget (obtain)' })
-      vim.keymap.set('n', 'dp', '<cmd>diffput<cr>', { desc = 'diffput' })
+    if vim.o.diff == true then
+      vim.keymap.set('n', '[[', '<cmd>diffget<cr>]czz', { desc = 'diffget (obtain)' })
+      vim.keymap.set('n', ']]', '<cmd>diffput<cr>]czz', { desc = 'diffput' })
     end
   end,
 })

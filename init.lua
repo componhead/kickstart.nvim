@@ -286,7 +286,8 @@ require('lazy').setup({
           map('n', '<leader>gR', gitsigns.reset_buffer, { desc = 'git reset buffer' })
           map('n', '<leader>gS', gitsigns.stage_buffer, { desc = 'git stage buffer' })
           map('n', '<leader>gP', gitsigns.preview_hunk, { desc = 'git preview hunk' })
-          map('n', '<leader>gw', '<cmd>Gitsigns toggle_word_diff<CR>', { desc = 'toggle git word diff' })
+          map('n', '<leader>tw', '<cmd>Gitsigns toggle_word_diff<CR>', { desc = 'toggle git word diff' })
+          map('n', '<leader>tl', '<cmd>Gitsigns toggle_linehl<CR>', { desc = 'toggle git line highlights' })
           map('n', '<leader>g@', function()
             gitsigns.diffthis '@'
           end, { desc = 'git diff against last commit' })
@@ -313,7 +314,7 @@ require('lazy').setup({
         signcolumn = false, -- Toggle with `:Gitsigns toggle_signs`
         numhl = true, -- Toggle with `:Gitsigns toggle_numhl`
         linehl = false, -- Toggle with `:Gitsigns toggle_linehl`
-        word_diff = true, -- Toggle with `:Gitsigns toggle_word_diff`
+        word_diff = false, -- Toggle with `:Gitsigns toggle_word_diff`
         watch_gitdir = {
           follow_files = true,
         },
@@ -497,9 +498,10 @@ require('lazy').setup({
           -- https://github.com/nvim-telescope/telescope.nvim/blob/c2b8311dfacd08b3056b8f0249025d633a4e71a8/lua/telescope/mappings.lua#L133
           mappings = {
             n = {
-              ['<C-a>'] = require('telescope.actions').select_all,
-              ['<C-S-A>'] = require('telescope.actions').drop_all,
-              ['<C-e>'] = require('telescope.actions').toggle_all,
+              ['<C-v>'] = require('telescope.actions').select_vertical,
+              ['<C-h>'] = require('telescope.actions').select_horizontal,
+              ['<C-t>'] = require('telescope.actions').select_tab,
+              ['<C-a>'] = require('telescope.actions').toggle_all,
               ['<C-b>'] = require('telescope.actions').results_scrolling_up,
               ['<C-f>'] = require('telescope.actions').results_scrolling_down,
               ['<S-Down>'] = require('telescope.actions').cycle_history_next,
@@ -507,11 +509,27 @@ require('lazy').setup({
               ['<PageDown>'] = false,
               ['<PageUp>'] = false,
               ['<C-o>'] = select_one_or_multi,
+              ['<C-g>'] = {
+                function(p_bufnr)
+                  -- send results to quick fix list
+                  require('telescope.actions').send_to_qflist(p_bufnr)
+                  local paths = Get_qf_paths()
+                  -- execute live_grep_args with search scope
+                  require('telescope.builtin').live_grep { prompt_title = 'Live Grep on Quickfix', search_dirs = paths }
+                end,
+                type = 'action',
+                opts = {
+                  nowait = true,
+                  silent = true,
+                  desc = 'Live grep on found files results',
+                },
+              },
             },
             i = {
-              ['<C-a>'] = require('telescope.actions').select_all,
-              ['<C-S-A>'] = require('telescope.actions').drop_all,
-              ['<C-e>'] = require('telescope.actions').toggle_all,
+              ['<C-v>'] = require('telescope.actions').select_vertical,
+              ['<C-h>'] = require('telescope.actions').select_horizontal,
+              ['<C-t>'] = require('telescope.actions').select_tab,
+              ['<C-a>'] = require('telescope.actions').toggle_all,
               ['<C-b>'] = require('telescope.actions').results_scrolling_up,
               ['<C-f>'] = require('telescope.actions').results_scrolling_down,
               ['<S-Down>'] = require('telescope.actions').cycle_history_next,
