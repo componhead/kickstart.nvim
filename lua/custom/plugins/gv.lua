@@ -5,11 +5,11 @@ return {
   config = function()
     vim.keymap.set('n', '<leader>gbb', '<cmd>Git blame -w -C -C -C<CR>', { desc = 'real git blame' })
     vim.keymap.set('n', '<leader>gbl', '<cmd>Git blame<CR>', { desc = 'last committers' })
-    vim.keymap.set('n', '<leader>gll', '<cmd>Git log --oneline --decorate --graph --all<CR><C-W>L', { desc = 'git log' })
-    vim.keymap.set('n', '<leader>glr', '<cmd>Git log -w -C -C -C<CR>', { desc = 'real git log' })
+    vim.keymap.set('n', '<leader>gll', '<cmd>GV', { desc = 'git log' })
+    vim.keymap.set('n', '<leader>glr', '<cmd>GV -w -C -C -C<CR>', { desc = 'real git log' })
 
     vim.keymap.set('n', '<leader>glp', function()
-      local command = ':Git log -p -S'
+      local command = ':GV -p -S'
       vim.api.nvim_feedkeys(command, 't', true)
     end, { desc = 'pickaxe' })
 
@@ -49,10 +49,10 @@ return {
       local fn_name = get_current_function().get_current_function_name()
       if fn_name ~= '()' then
         fn_name = ':' .. fn_name .. ':%'
-        local command = 'Git log -w -C -C -C -L ' .. fn_name
+        local command = 'GV -w -C -C -C -L ' .. fn_name
         vim.cmd(command)
       else
-        local command = ':Git log -w -C -C -C -L :_fname_:%'
+        local command = ':GV -w -C -C -C -L :_fname_:%'
         vim.api.nvim_feedkeys(command, 't', true)
       end
     end, { desc = 'function git log' })
@@ -73,12 +73,13 @@ return {
       vim.api.nvim_feedkeys(esc, 'x', false)
       local start_line = vim.api.nvim_buf_get_mark(0, '<')[1]
       local end_line = vim.api.nvim_buf_get_mark(0, '>')[1]
-      local command = ':Git log -w -C -C -C -L ' .. start_line .. ',' .. end_line .. ':%' .. ret
+      local command = ':GV -w -C -C -C -L ' .. start_line .. ',' .. end_line .. ':%' .. ret
       vim.api.nvim_feedkeys(command, 't', true)
     end, { desc = 'real chunk git log' })
 
     vim.keymap.set('v', '<leader>gL', '<cmd>Gclog<CR>', { desc = 'commit log in qf for selected chunk' })
 
     vim.keymap.set('n', '<leader>go', '<cmd>Gvdiffsplit HEAD...origin/master | wincmd h<CR>', { desc = 'compare with origin/master' })
+    vim.keymap.set('n', '<leader>g@', '<cmd>Gvdiffsplit HEAD@{1} | wincmd h<CR>', { desc = 'git diff against last commit' })
   end,
 }

@@ -1,4 +1,5 @@
 --[[
+O
 
 =====================================================================
 ==================== READ THIS BEFORE CONTINUING ====================
@@ -288,9 +289,6 @@ require('lazy').setup({
           map('n', '<leader>gP', gitsigns.preview_hunk, { desc = 'git preview hunk' })
           map('n', '<leader>tw', '<cmd>Gitsigns toggle_word_diff<CR>', { desc = 'toggle git word diff' })
           map('n', '<leader>tl', '<cmd>Gitsigns toggle_linehl<CR>', { desc = 'toggle git line highlights' })
-          map('n', '<leader>g@', function()
-            gitsigns.diffthis '@'
-          end, { desc = 'git diff against last commit' })
           -- Toggles
           map('n', '<leader>gd', gitsigns.toggle_deleted, { desc = 'git show deleted' })
           -- map('n', ';l', gitsigns.toggle_linehl, { desc = 'git toggle line highlights' })
