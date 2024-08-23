@@ -81,4 +81,14 @@ return {
     -- callback where you can add custom code when the Zen window closes
     on_close = function() end,
   },
+  config = function(_, opts)
+    require('zen-mode').setup(opts)
+    local zenMode = vim.api.nvim_create_augroup('zenMode', { clear = true })
+    vim.api.nvim_create_autocmd({ 'VimLeavePre' }, {
+      group = zenMode,
+      callback = function()
+        require('zen-mode').close()
+      end,
+    })
+  end,
 }
