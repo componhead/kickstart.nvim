@@ -286,11 +286,9 @@ require('lazy').setup({
           map('n', '<leader>gR', gitsigns.reset_buffer, { desc = 'git reset buffer' })
           map('n', '<leader>gS', gitsigns.stage_buffer, { desc = 'git stage buffer' })
           map('n', '<leader>gP', gitsigns.preview_hunk, { desc = 'git preview hunk' })
-          map('n', '<leader>tw', '<cmd>Gitsigns toggle_word_diff<CR>', { desc = 'toggle git word diff' })
-          map('n', '<leader>tl', '<cmd>Gitsigns toggle_linehl<CR>', { desc = 'toggle git line highlights' })
-          -- Toggles
+          map('n', '<leader>tw', gitsigns.toggle_word_diff, { desc = 'toggle git word diff' })
+          map('n', '<leader>tl', gitsigns.toggle_linehl, { desc = 'toggle git line highlights' })
           map('n', '<leader>gd', gitsigns.toggle_deleted, { desc = 'git show deleted' })
-          -- map('n', ';l', gitsigns.toggle_linehl, { desc = 'git toggle line highlights' })
         end,
         signs = {
           add = { text = '+' },

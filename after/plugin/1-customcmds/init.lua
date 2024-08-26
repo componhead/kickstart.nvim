@@ -39,6 +39,21 @@ vim.api.nvim_create_user_command('ShowPaths', function()
   }, false, {})
 end, {})
 
+vim.api.nvim_create_user_command('CdFileDir', function()
+  local dir = vim.fn.expand '%:h'
+  vim.api.nvim_set_current_dir(dir)
+end, {})
+
+vim.api.nvim_create_user_command('CdWindowGitRoot', function()
+  local dir = Get_root '.git' or vim.fn.getcwd()
+  vim.cmd('lcd ' .. dir)
+end, {})
+
+vim.api.nvim_create_user_command('CdTabGitRoot', function()
+  local dir = Get_root '.git' or vim.fn.getcwd()
+  vim.cmd('tcd ' .. dir)
+end, {})
+
 vim.api.nvim_create_user_command('CdGitRoot', function()
   local dir = Get_root '.git' or vim.fn.getcwd()
   vim.api.nvim_set_current_dir(dir)

@@ -14,6 +14,7 @@ return {
       -- See :help oil-columns
       columns = {
         'icon',
+        'oil',
         -- "permissions",
         -- "size",
         -- "mtime",
@@ -133,7 +134,7 @@ return {
           winblend = 0,
         },
         -- preview_split: Split direction: "auto", "left", "right", "above", "below".
-        preview_split = 'auto',
+        preview_split = 'right',
         -- This is the config that will be passed to nvim_open_win.
         -- Change values here to customize the layout
         override = function(conf)
@@ -145,7 +146,7 @@ return {
         -- Width dimensions can be integers or a float between 0 and 1 (e.g. 0.4 for 40%)
         -- min_width and max_width can be a single value or a list of mixed integer/float types.
         -- max_width = {100, 0.8} means "the lesser of 100 columns or 80% of total"
-        max_width = 0.9,
+        max_width = 0.8,
         -- min_width = {40, 0.4} means "the greater of 40 columns or 40% of total"
         min_width = { 40, 0.4 },
         -- optionally define an integer/float for the exact width of the preview window

@@ -55,7 +55,7 @@ return {
         local command = ':GV -w -C -C -C -L :_fname_:%'
         vim.api.nvim_feedkeys(command, 't', true)
       end
-    end, { desc = 'function git log' })
+    end, { desc = 'git log' })
 
     vim.keymap.set('v', '<leader>gb', function()
       local esc = vim.api.nvim_replace_termcodes('<esc>', true, false, true)
@@ -79,7 +79,7 @@ return {
 
     vim.keymap.set('v', '<leader>gL', '<cmd>Gclog<CR>', { desc = 'commit log in qf for selected chunk' })
 
-    vim.keymap.set('n', '<leader>go', '<cmd>Gvdiffsplit HEAD...origin/master | wincmd h<CR>', { desc = 'compare with origin/master' })
-    vim.keymap.set('n', '<leader>g@', '<cmd>Gvdiffsplit HEAD@{1} | wincmd h<CR>', { desc = 'git diff against last commit' })
+    vim.keymap.set('n', '<leader>go', [[<cmd>Gvdiffsplit HEAD...origin/master | wincmd h<CR>]], { desc = 'compare with origin/master' })
+    vim.keymap.set('n', '<leader>g@', [[<cmd>Gvdiffsplit HEAD@{1} | wincmd h<CR>]], { desc = 'git diff against last commit' })
   end,
 }
