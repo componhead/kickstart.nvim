@@ -24,13 +24,18 @@ return {
       autosave_only_in_session = true, -- Always autosaves session. If true, only autosaves after a session is active.
       max_path_length = 80, -- Shorten the display path if length exceeds this threshold. Use 0 if don't want to shorten the path at all.
     }
+    local session_manager = vim.api.nvim_create_augroup('session-manager', {}) -- A global group for all your config autocommands
 
+    vim.api.nvim_create_autocmd({ 'User' }, {
+      pattern = 'SessionLoadPost',
+      group = session_manager,
+      callback = function()
+        vim.cmd 'CdGitRoot'
+      end,
+    })
     vim.keymap.set('n', '<leader>SS', '<cmd>SessionManager<CR>', { desc = 'session manager' })
-    vim.keymap.set('n', '<leader>Sd', '<cmd>SessionManager load_current_dir_session<CR>', { desc = 'load current dir session' })
-    vim.keymap.set('n', '<leader>Sg', '<cmd>SessionManager load_git_session<CR>', { desc = 'load current git session' })
     vim.keymap.set('n', '<leader>Sl', '<cmd>SessionManager load_session<CR>', { desc = 'load session' })
     vim.keymap.set('n', '<leader>Ss', '<cmd>SessionManager save_current_session<CR>', { desc = 'save session' })
     vim.keymap.set('n', '<leader>SD', '<cmd>SessionManager delete_session<CR>', { desc = 'delete session' })
-    vim.keymap.set('n', '<leader>SL', '<cmd>SessionManager load_last_session<CR>', { desc = 'load last session' })
   end,
 }
