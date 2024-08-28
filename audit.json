@@ -11,6 +11,11 @@
             "date": 1724430543795,
             "name": "/Users/colossus/.tabby-client/agent/logs/20240823.0.log",
             "hash": "35072fb6e6f310d0173fd81d0e05c13b"
+        },
+        {
+            "date": 1724877450758,
+            "name": "/Users/colossus/.tabby-client/agent/logs/20240828.0.log",
+            "hash": "514d2106bda76c0307b83c240107f20d"
         }
     ]
 }
