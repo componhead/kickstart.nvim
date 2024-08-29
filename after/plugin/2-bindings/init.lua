@@ -9,7 +9,7 @@ vim.keymap.set('v', '<A-r>j', [[<Cmd>s/\v^'(.*)'$/\1/g<CR>yu<Cmd>vsplit formatte
 vim.keymap.set('v', '<A-r>s', [[<Cmd>s/\v^(\s*[a-z]{-})([A-Z]{1})/\1_\u\2/g<CR>]], { desc = 'camelCase to snake_case' })
 vim.keymap.set('v', '<A-r>c', [[<Cmd>s/\v^(\s*[a-z]{-})_([a-z]{1})/\1\U\2/g<CR>]], { desc = 'snake_case to camelCase' })
 vim.keymap.set('v', '<A-r>t', [[<Cmd>%s/\v['"](\w+)['"](:)|( Object | Array )|^\s*[+-]/\1\2/g<CR>]], { desc = 'to javascript literal object' })
-vim.keymap.set('v', '<A-r>u', [[<cmd>.!uuidgen<CR>]], { expr = true, silent = true })
+vim.keymap.set('v', '<A-r>u', [[<cmd>.!uuidgen<CR>]])
 vim.keymap.set('v', '<C-c>', [["+y]])
 
 vim.keymap.set({ 'n', 'v' }, '<BS>', [["_d]])
