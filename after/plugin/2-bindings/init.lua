@@ -30,13 +30,27 @@ vim.keymap.set('n', '<C-y>', '3<C-y>')
 
 vim.keymap.set('n', 'n', 'nzzzv')
 vim.keymap.set('n', 'N', 'Nzzzv')
-vim.keymap.set('n', '<leader>\\g', '<cmd>CdGitRoot<CR>', { desc = 'change cwd to git root' })
-vim.keymap.set('n', '<leader>\\n', '<cmd>CdNodeRoot<CR>', { desc = 'change cwd to node_modules' })
-vim.keymap.set('n', '<leader>\\p', '<cmd>ShowPaths<CR>', { desc = 'show paths' })
-vim.keymap.set('n', '<leader>\\y', "<cmd>let @+=expand('%')<CR>", { desc = 'copy relative file path to clipboard' })
-vim.keymap.set('n', '<leader>\\Y', "<cmd>let @+=expand('%:p')<CR>", { desc = 'copy absolute file path to clipboard' })
-vim.keymap.set('n', '<leader>Sv', '<cmd>source $VIMRC<CR>', { desc = 'source new nvim configuration' })
-vim.keymap.set('n', '<leader>tn', '<cmd>set relativenumber!<CR>', { desc = 'toggle line numbers mode' })
+vim.keymap.set('n', '<leader>\\g', function()
+  vim.cmd'CdGitRoot'
+end, { desc = 'change cwd to git root' })
+vim.keymap.set('n', '<leader>\\n', function()
+    vim.cmd'CdNodeRoot'
+end, { desc = 'change cwd to node_modules' })
+vim.keymap.set('n', '<leader>\\p', function()
+  vim.cmd'ShowPaths'
+end, { desc = 'show paths' })
+vim.keymap.set('n', '<leader>\\y', function()
+  vim.cmd"let @+=expand('%')"
+end, { desc = 'copy relative file path to clipboard' })
+vim.keymap.set('n', '<leader>\\Y', function()
+  vim.cmd"let @+=expand('%:p')"
+end, { desc = 'copy absolute file path to clipboard' })
+vim.keymap.set('n', '<leader>Sv', function()
+  vim.cmd'source $VIMRC'
+end, { desc = 'source new nvim configuration' })
+vim.keymap.set('n', '<leader>tn', function()
+  vim.cmd'set relativenumber!'
+end, { desc = 'toggle line numbers mode' })
 
 vim.keymap.set('c', '<C-w>', '<cmd>w !sudo tee > /dev/null %<CR>')
 vim.keymap.set('c', '<C-e>', '<cmd>let @+=v:errmsg<CR><Esc>')
