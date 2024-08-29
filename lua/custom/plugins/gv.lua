@@ -3,10 +3,10 @@ return {
   dependencies = { 'tpope/vim-fugitive' },
   version = '*',
   config = function()
-    vim.keymap.set('n', '<leader>gbb', '<cmd>Git blame -w -C -C -C<CR>', { desc = 'real git blame' })
-    vim.keymap.set('n', '<leader>gbl', '<cmd>Git blame<CR>', { desc = 'last committers' })
-    vim.keymap.set('n', '<leader>gll', '<cmd>GV', { desc = 'git log' })
-    vim.keymap.set('n', '<leader>glr', '<cmd>GV -w -C -C -C<CR>', { desc = 'real git log' })
+    vim.keymap.set('n', '<leader>gbb', function() vim.cmd'Git blame -w -C -C -C' end, { desc = 'real git blame' })
+    vim.keymap.set('n', '<leader>gbl', function() vim.cmd'Git blame' end, { desc = 'last committers' })
+    vim.keymap.set('n', '<leader>gll', function() vim.cmd'GV' end, { desc = 'git log' })
+    vim.keymap.set('n', '<leader>glr', function() vim.cmd'GV -w -C -C -C' end, { desc = 'real git log' })
 
     vim.keymap.set('n', '<leader>glp', function()
       local command = ':GV -p -S'

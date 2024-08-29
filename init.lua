@@ -630,39 +630,27 @@ require('lazy').setup({
       vim.keymap.set(
         'n',
         '<leader>glf',
-        '<cmd>Telescope git_commits layout_strategy=horizontal layout_config={"width":0.9,"height":0.9}<CR>',
+        function()
+          vim.cmd'Telescope git_commits layout_strategy=horizontal layout_config={"width":0.9,"height":0.9}'
+        end,
         { desc = 'commits log' }
       )
 
-      vim.keymap.set('n', '<leader>hc', function()
-        require('telescope.builtin').command_history()
-      end, { desc = 'history of commands' })
+      vim.keymap.set('n', '<leader>hc', function() require('telescope.builtin').command_history() end, { desc = 'history of commands' })
 
-      vim.keymap.set('n', '<leader>hq', function()
-        require('telescope.builtin').quickfixhistory()
-      end, { desc = 'history of quickfix' })
+      vim.keymap.set('n', '<leader>hq', function() require('telescope.builtin').quickfixhistory() end, { desc = 'history of quickfix' })
 
-      vim.keymap.set('n', '<leader>hs', function()
-        require('telescope.builtin').search_history()
-      end, { desc = 'history of searches' })
+      vim.keymap.set('n', '<leader>hs', function() require('telescope.builtin').search_history() end, { desc = 'history of searches' })
 
-      vim.keymap.set('n', '<leader>hn', function()
-        require('telescope.builtin').notify()
-      end, { desc = 'history of notify' })
+      vim.keymap.set('n', '<leader>hn', function() require('telescope.builtin').notify() end, { desc = 'history of notify' })
 
-      vim.keymap.set('n', '<leader>qq', '<cmd>Telescope quickfix<CR>', { desc = 'open quickfix' })
+      vim.keymap.set('n', '<leader>qq', function() vim.cmd'Telescope quickfix' end, { desc = 'open quickfix' })
 
-      vim.keymap.set('n', '<leader>sc', function()
-        require('telescope.builtin').find_files { cwd = require('telescope.utils').buffer_dir() }
-      end, { desc = "search files under file's directories" })
+      vim.keymap.set('n', '<leader>sc', function() require('telescope.builtin').find_files { cwd = require('telescope.utils').buffer_dir() } end, { desc = "search files under file's directories" })
 
-      vim.keymap.set('n', '<leader>sp', function()
-        require('telescope.builtin').live_grep { cwd = require('telescope.utils').buffer_dir() }
-      end, { desc = "grep text under file's directories" })
+      vim.keymap.set('n', '<leader>sp', function() require('telescope.builtin').live_grep { cwd = require('telescope.utils').buffer_dir() } end, { desc = "grep text under file's directories" })
 
-      vim.keymap.set('n', '<leader>sz', function()
-        require('telescope.builtin').current_buffer_fuzzy_find()
-      end, { desc = 'fuzzy search in current buffer' })
+      vim.keymap.set('n', '<leader>sz', function() require('telescope.builtin').current_buffer_fuzzy_find() end, { desc = 'fuzzy search in current buffer' })
 
       -- Enable Telescope extensions if they are installed
       pcall(require('telescope').load_extension, 'fzf')
@@ -1244,7 +1232,7 @@ require('lazy').setup({
       vim.keymap.set('n', '<Leader>ni', '<Cmd>Neorg index<CR>')
       vim.keymap.set('n', '<Leader>nj', '<Cmd>Neorg journal<CR>')
       vim.keymap.set('n', '<Leader>nq', '<Cmd>Neorg return<CR>')
-      vim.keymap.set('n', '<Leader>nt', '<Cmd>Neorg toggle-concealer<CR>', { desc = 'toggle concealer' })
+      vim.keymap.set('n', '<Leader>nt', '<Cmd>Neorg toggle-concealer<CR>')
       vim.wo.foldlevel = 99
       vim.wo.conceallevel = 2
     end,
