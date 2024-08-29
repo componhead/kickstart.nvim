@@ -12,6 +12,14 @@ return {
       end
     end
 
+    function checkCwd()
+      local cwd = vim.fn.getcwd()
+      local filename = vim.fn.expand '%:p'
+      if filename:find(cwd) == nil then
+        return '❗'
+      end
+    end
+
     local colors = require('tokyonight.colors').setup { transform = true }
     require('lualine').setup {
       options = {
@@ -64,6 +72,7 @@ return {
               bg = 'white',
             },
           },
+          'checkCwd()',
         },
         lualine_x = {
           'encoding',

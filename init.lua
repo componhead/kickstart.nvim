@@ -523,6 +523,13 @@ require('lazy').setup({
         end
       end
 
+      local grep_on_qf = function(p_bufnr)
+        -- send results to quick fix list
+        require('telescope.actions').send_to_qflist(p_bufnr)
+        local paths = Get_qf_paths()
+        -- execute live_grep_args with search scope
+        require('telescope.builtin').live_grep { prompt_title = 'Live Grep on Quickfix', search_dirs = paths }
+      end
       require('telescope').setup {
         -- You can put your default mappings / updates / etc. in here
         --  All the info you're looking for is in `:help telescope.setup()`
@@ -543,13 +550,7 @@ require('lazy').setup({
               ['<PageUp>'] = false,
               ['<C-o>'] = select_one_or_multi,
               ['<C-g>'] = {
-                function(p_bufnr)
-                  -- send results to quick fix list
-                  require('telescope.actions').send_to_qflist(p_bufnr)
-                  local paths = Get_qf_paths()
-                  -- execute live_grep_args with search scope
-                  require('telescope.builtin').live_grep { prompt_title = 'Live Grep on Quickfix', search_dirs = paths }
-                end,
+                grep_on_qf,
                 type = 'action',
                 opts = {
                   nowait = true,
@@ -571,13 +572,7 @@ require('lazy').setup({
               ['<PageUp>'] = false,
               ['<C-o>'] = select_one_or_multi,
               ['<C-g>'] = {
-                function(p_bufnr)
-                  -- send results to quick fix list
-                  require('telescope.actions').send_to_qflist(p_bufnr)
-                  local paths = Get_qf_paths()
-                  -- execute live_grep_args with search scope
-                  require('telescope.builtin').live_grep { prompt_title = 'Live Grep on Quickfix', search_dirs = paths }
-                end,
+                grep_on_qf,
                 type = 'action',
                 opts = {
                   nowait = true,
