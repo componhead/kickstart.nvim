@@ -624,7 +624,15 @@ require('lazy').setup({
           ['ui-select'] = {
             require('telescope.themes').get_dropdown(),
           },
-        },
+          persisted = {
+            layout_config = { width = 0.33, height = 0.50 },
+            mappings = {
+              n = {
+                d = require('telescope.actions').delete_buffer,
+              },
+            },
+          }
+        }
       }
 
       vim.keymap.set(
@@ -656,6 +664,7 @@ require('lazy').setup({
       pcall(require('telescope').load_extension, 'fzf')
       pcall(require('telescope').load_extension, 'ui-select')
       pcall(require('telescope').load_extension, 'neoclip')
+      pcall(require("telescope").load_extension, 'persisted')
 
       -- See `:help telescope.builtin`
       local builtin = require 'telescope.builtin'
@@ -882,20 +891,7 @@ require('lazy').setup({
         --
         -- Some languages (like typescript) have entire language plugins that can be useful:
         --    https://github.com/pmizio/typescript-tools.nvim
-        --
-        -- But for many setups, the LSP (`tsserver`) will work just fine
-        -- ts_ls = {},
-        tsserver = {
-          inlayHints = {
-            includeInlayParameterNameHints = 'all',
-            includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-            includeInlayFunctionParameterTypeHints = true,
-            includeInlayVariableTypeHints = true,
-            includeInlayPropertyDeclarationTypeHints = true,
-            includeInlayFunctionLikeReturnTypeHints = true,
-            includeInlayEnumMemberValueHints = true,
-          },
-        },
+        ts_ls = {},
 
         lua_ls = {
           -- cmd = {...},

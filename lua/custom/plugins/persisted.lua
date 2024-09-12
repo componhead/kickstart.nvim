@@ -1,5 +1,6 @@
 return {
   "olimorris/persisted.nvim",
+  dependencies = { 'nvim-telescope/telescope.nvim' },
   config = function()
     require("persisted").setup({
       save_dir = vim.fn.expand(vim.fn.stdpath("data") .. "/sessions/"), -- Resolves to ~/.local/share/nvim/sessions/
@@ -16,8 +17,8 @@ return {
         vim.notify("No existing session to load.")
       end,
     })
-    vim.keymap.set('n', '<leader>Sl', function()
-      vim.cmd'SessionSelect'
+    vim.keymap.set('n', '<leader>SS', function()
+      vim.cmd'Telescope persisted'
     end, { desc = 'load session' })
     vim.keymap.set('n', '<leader>Ss', function()
       vim.cmd'SessionSave'
@@ -25,7 +26,7 @@ return {
     vim.keymap.set('n', '<leader>SD', function()
       vim.cmd'SessionDelete'
     end, { desc = 'delete session' })
-    vim.keymap.set('n', '<leader>SS', function()
+    vim.keymap.set('n', '<leader>Sl', function()
       vim.cmd'SessionLoadLast'
     end, { desc = 'load last session' })
 
@@ -43,7 +44,7 @@ return {
         pattern = '*',
         group = persisted,
         callback = function()
-          print("Persisting session")
+          print("Persisting session...")
           local persisting_session = vim.g.persisting_session
           if persisting_session == nil then
             return
