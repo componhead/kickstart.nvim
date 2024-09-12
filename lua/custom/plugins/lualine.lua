@@ -13,7 +13,7 @@ return {
     end
 
     function checkCwd()
-      local cwd = vim.fn.getcwd()
+      local cwd = vim.pesc(vim.fn.getcwd())
       local filename = vim.fn.expand '%:p'
       if filename:find(cwd) == nil then
         return '❗'
