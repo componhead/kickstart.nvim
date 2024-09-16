@@ -33,7 +33,10 @@ vim.keymap.set('n', '<C-y>', '3<C-y>')
 
 vim.keymap.set('n', 'n', 'nzzzv')
 vim.keymap.set('n', 'N', 'Nzzzv')
-vim.keymap.set('n', '<leader>\\c', function() vim.cmd"let @+=expand('%:p:h')" end, { desc = 'copy file path to clipboard' })
+vim.keymap.set('n', '<leader>\\c', function()
+  local root = vim.g.session_file_path or Get_root '.git'
+  vim.fn.setreg('+', root)
+end, { desc = 'copy git root path to clipboard' })
 vim.keymap.set('n', '<leader>\\g', function() vim.cmd'CdGitRoot' end, { desc = 'change cwd to git root' })
 vim.keymap.set('n', '<leader>\\n', function() vim.cmd'CdNodeRoot' end, { desc = 'change cwd to node_modules' })
 vim.keymap.set('n', '<leader>\\p', function() vim.cmd'ShowPaths' end, { desc = 'show paths' })

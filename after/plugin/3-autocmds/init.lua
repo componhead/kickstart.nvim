@@ -100,23 +100,6 @@ vim.api.nvim_create_autocmd({
   end,
 })
 
-local nvim_session_group = vim.api.nvim_create_augroup('nvim-session-group', { clear = true })
--- Auto save session
-vim.api.nvim_create_autocmd({
-  'BufWritePre',
-}, {
-  group = nvim_session_group,
-  callback = function()
-    for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-      -- Don't save while there's any 'nofile' buffer open.
-      if vim.api.nvim_get_option_value('buftype', { buf = buf }) == 'nofile' then
-        return
-      end
-    end
-    require('session_manager').autosave_session()
-  end,
-})
-
 local js_formatting = vim.api.nvim_create_augroup('js-formatting', { clear = true })
 vim.api.nvim_create_autocmd({
   'BufWrite',
