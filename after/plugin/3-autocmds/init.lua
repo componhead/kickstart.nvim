@@ -157,15 +157,3 @@ vim.api.nvim_create_autocmd({
     vim.o.cursorline = false
   end,
 })
-
-local leave = vim.api.nvim_create_augroup('leave', { clear = true })
-vim.api.nvim_create_autocmd({
-  'VimLeave',
-  'VimSuspend',
-}, {
-  group = leave,
-  callback = function()
-    local cwd = vim.fn.getcwd()
-    vim.cmd('let @+="' .. cwd .. '"')
-  end,
-})
