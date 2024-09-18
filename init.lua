@@ -518,12 +518,12 @@ require('lazy').setup({
       end
 
       local grep_on_qf = function(p_bufnr)
-        -- send results to quick fix list
         require('telescope.actions').send_to_qflist(p_bufnr)
-        local paths = Get_qf_paths()
-        -- execute live_grep_args with search scope
+        local list = vim.fn.getqflist()
+        local paths = Get_list_paths(list)
         require('telescope.builtin').live_grep { prompt_title = 'Live Grep on Quickfix', search_dirs = paths }
       end
+
       require('telescope').setup {
         -- You can put your default mappings / updates / etc. in here
         --  All the info you're looking for is in `:help telescope.setup()`
@@ -549,7 +549,6 @@ require('lazy').setup({
                 opts = {
                   nowait = true,
                   silent = true,
-                  desc = 'Live grep on found files results',
                 },
               },
             },
@@ -571,7 +570,6 @@ require('lazy').setup({
                 opts = {
                   nowait = true,
                   silent = true,
-                  desc = 'Live grep on found files results',
                 },
               },
             },

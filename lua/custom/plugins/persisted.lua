@@ -1,5 +1,6 @@
 return {
   "olimorris/persisted.nvim",
+  lazy = false,
   dependencies = { 'nvim-telescope/telescope.nvim' },
   config = function()
     require("persisted").setup({
@@ -16,6 +17,18 @@ return {
       on_autoload_no_session = function()
         vim.notify("No existing session to load.")
       end,
+      telescope = {
+        mappings = { -- Mappings for managing sessions in Telescope
+          copy_session = '<C-c>',
+          change_branch = '<C-b>',
+          delete_session = '<C-d>',
+        },
+        icons = { -- icons displayed in the Telescope picker
+          selected = ' ',
+          dir = '  ',
+          branch = ' ',
+        },
+      },
     })
     vim.keymap.set('n', '<leader>SS', function()
       vim.cmd'Telescope persisted'
@@ -37,9 +50,6 @@ return {
         group = persisted,
         callback = function()
           local persisting_session = vim.g.persisting_session
-          if persisting_session == nil then
-            return
-          end
           local session_file_name_start_idx, _ = persisting_session:find("%%")
           if session_file_name_start_idx == nil then
             vim.notify("Error: no previous session to load.")

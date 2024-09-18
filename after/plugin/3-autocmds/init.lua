@@ -117,7 +117,6 @@ vim.api.nvim_create_autocmd({
 local welcome = vim.api.nvim_create_augroup('welcome', { clear = true })
 vim.api.nvim_create_autocmd({
   'WinEnter',
-  'BufEnter',
 }, {
   group = welcome,
   callback = function()
