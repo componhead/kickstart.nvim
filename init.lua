@@ -518,7 +518,7 @@ require('lazy').setup({
       end
 
       local grep_on_qf = function(p_bufnr)
-        require('telescope.actions').send_to_qflist(p_bufnr)
+        require('telescope.actions').smart_send_to_qflist(p_bufnr)
         local list = vim.fn.getqflist()
         local paths = Get_list_paths(list)
         require('telescope.builtin').live_grep { prompt_title = 'Live Grep on Quickfix', search_dirs = paths }
