@@ -83,6 +83,7 @@ return {
   },
   config = function(_, opts)
     require('zen-mode').setup(opts)
+    vim.keymap.set('n', '<leader>tz', '<cmd>ZenMode<CR>', { desc = 'toggle zen mode', silent = true })
     local zenMode = vim.api.nvim_create_augroup('zenMode', { clear = true })
     vim.api.nvim_create_autocmd({ 'VimLeavePre' }, {
       group = zenMode,

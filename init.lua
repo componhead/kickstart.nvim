@@ -418,17 +418,15 @@ require('lazy').setup({
       -- Document existing key chains
       spec = {
         { '<leader>c', group = '[C]ode', mode = { 'n', 'x' } },
-        { '<leader>r', group = '[R]ename' },
-        { '<leader>x', group = 'TROUBLE' },
-        { '<leader>c', group = 'CODE' },
-        { '<leader>cd', group = 'DB' },
-        { '<leader>d', group = 'DEBUG' },
+        { '<leader>d', group = 'DEBUG', mode = { 'v' } },
         { '<leader>g', group = 'GIT' },
         { '<leader>gl', group = 'GIT LOGS' },
         { '<leader>gb', group = 'BLAME' },
         { '<leader>h', group = 'HISTORY' },
         { '<leader>i', group = 'IA' },
         { '<leader>ia', group = 'ASK TO IA' },
+        { '<leader>ic', group = 'COMPLETE BY IA', mode ={ 'v' } },
+        { '<leader>ie', group = 'EDIT WITH INSTRUCTIONS', mode ={ 'v' } },
         { '<leader>im', group = 'ACT_AS' },
         { '<leader>n', group = 'NOTES' },
         { '<leader>q', group = 'QUICKFIX' },
@@ -437,12 +435,8 @@ require('lazy').setup({
         { '<leader>S', group = 'SESSION' },
         { '<leader>t', group = 'TOGGLE' },
         { '<leader>w', group = 'WORKSPACE' },
+        { '<leader>x', group = 'TROUBLE' },
         { '<leader>\\', group = 'FILESYSTEM' },
-        { '<leader>d', group = 'DEBUG', mode = { 'v' } },
-        { '<leader>g', group = 'GIT', mode ={ 'v' } },
-        { '<leader>i', group = 'IA', mode ={ 'v' } },
-        { '<leader>ic', group = 'COMPLETE BY IA', mode ={ 'v' } },
-        { '<leader>ie', group = 'EDIT WITH INSTRUCTIONS', mode ={ 'v' } },
       },
     },
   },
@@ -549,8 +543,10 @@ require('lazy').setup({
                 opts = {
                   nowait = true,
                   silent = true,
+                  desc = 'Live grep on found files results',
                 },
               },
+              ['<C-q>'] = require('telescope.actions').smart_send_to_qflist,
             },
             i = {
               ['<C-v>'] = require('telescope.actions').select_vertical,
@@ -570,8 +566,10 @@ require('lazy').setup({
                 opts = {
                   nowait = true,
                   silent = true,
+                  desc = 'Live grep on found files results',
                 },
               },
+              ['<C-q>'] = require('telescope.actions').smart_send_to_qflist,
             },
           },
           preview = {
@@ -580,7 +578,7 @@ require('lazy').setup({
           dynamic_preview_title = true,
           scroll_strategy = 'limit',
           path_display = {
-            shorten = { len = 4, exclude = { -1 } },
+            shorten = { len = 4, exclude = { -2, -1 } },
             truncate = 3,
           },
           layout_strategy = 'flex',
@@ -607,6 +605,10 @@ require('lazy').setup({
                 d = require('telescope.actions').delete_buffer,
               },
             },
+          },
+          quickfix = {
+            show_line = false,
+            trim_text = true,
           },
           diagnostics = {
             layout_strategy = 'vertical',
