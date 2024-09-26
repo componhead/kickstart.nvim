@@ -44,6 +44,7 @@ vim.keymap.set('n', '<leader>\\y', function() vim.cmd"let @+=expand('%')" end, {
 vim.keymap.set('n', '<leader>\\Y', function() vim.cmd"let @+=expand('%:p')" end, { desc = 'copy absolute file path to clipboard' })
 vim.keymap.set('n', '<leader>Sv', function() vim.cmd'source $VIMRC' end, { desc = 'source new nvim configuration' })
 vim.keymap.set('n', '<leader>tn', function() vim.cmd'set relativenumber!' end, { desc = 'toggle line numbers mode' })
+vim.keymap.set('n', '<leader>ts', function() vim.cmd'set scrollbind!' end, { desc = 'toggle scrollbind mode' })
 
 vim.keymap.set('c', '<C-w>', '<cmd>w !sudo tee > /dev/null %<CR>')
 vim.keymap.set('c', '<C-e>', '<cmd>let @+=v:errmsg<CR><Esc>')
