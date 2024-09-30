@@ -7,12 +7,12 @@ return {
       save_dir = vim.fn.expand(vim.fn.stdpath("data") .. "/sessions/"), -- Resolves to ~/.local/share/nvim/sessions/
       follow_cwd = false, -- Change the session file to match any change in the cwd?
       use_git_branch = true,
-      autostart = false,
-      autoload = false,
+      autostart = true,
+      autoload = true,
       allowed_dirs = {}, -- Table of dirs that the plugin will start and autoload from
       ignored_dirs = {}, -- Table of dirs that are ignored for starting and autoloading
       should_save = function()
-        return false
+        return true
       end,
       on_autoload_no_session = function()
         vim.notify("No existing session to load.")
