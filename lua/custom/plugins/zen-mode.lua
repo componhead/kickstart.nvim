@@ -57,7 +57,7 @@ return {
       wezterm = {
         enabled = true,
         -- can be either an absolute font size or the number of incremental steps
-        font = '+2', -- (10% increase per step)
+        font = 20,
       },
       -- this will change the scale factor in Neovide when in zen mode
       -- See alse also the Plugins/Wezterm section in this projects README
