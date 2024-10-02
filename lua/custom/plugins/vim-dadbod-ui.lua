@@ -19,14 +19,14 @@ return {
     vim.g.db_ui_save_location = vim.fn.stdpath('data') .. '/dadbod'
 
     vim.g.dbs = {
-      { name = 'TREE DB Forestry',
-        url =  'mysql://' .. vim.env.TREEDOM_DB_USER .. ':' .. vim.env.TREEDOM_DB_TREES_TEST_PASSWORD .. '@' .. vim.env.TREEDOM_DB_TREES_TEST_URL .. ':' .. vim.env.TREEDOM_DB_PORT .. '/'
+      { name = 'TUNNELLED (w/o password)',
+        url =  'mysql://' .. vim.env.TREEDOM_DB_USER .. '@' .. '127.0.0.1:3306/'
       },
-      { name = 'TEST',
-        url =  'mysql://' .. vim.env.TREEDOM_DB_USER .. ':' .. vim.env.TREEDOM_DB_TREES_TEST_PASSWORD .. '@' .. '127.0.0.1:3306/forestry'
+      { name = 'TREE DB TEST',
+        url =  'mysql://' .. vim.env.TREEDOM_DB_USER .. ':' .. vim.env.TREEDOM_DB_TREES_TEST_PASSWORD .. '@' .. '127.0.0.1:3306/'
       },
-      { name = 'Trees-prod',
-        url =  'mysql://' .. vim.env.TREEDOM_DB_USER .. ':' .. vim.env.TREEDOM_DB_TREES_PROD_PASSWORD .. '@' .. vim.env.TREEDOM_DB_TREES_PROD_URL .. ':' .. vim.env.TREEDOM_DB_PORT .. '/'
+      { name = 'TREES DB PROD',
+        url =  'mysql://' .. vim.env.TREEDOM_DB_USER .. ':' .. vim.env.TREEDOM_DB_TREES_PROD_PASSWORD .. '@' .. '127.0.0.1:3306'
       },
     }
   end

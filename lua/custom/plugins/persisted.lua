@@ -8,12 +8,9 @@ return {
       follow_cwd = false, -- Change the session file to match any change in the cwd?
       use_git_branch = true,
       autostart = true,
-      autoload = true,
+      autoload = false,
       allowed_dirs = {}, -- Table of dirs that the plugin will start and autoload from
       ignored_dirs = {}, -- Table of dirs that are ignored for starting and autoloading
-      should_save = function()
-        return true
-      end,
       on_autoload_no_session = function()
         vim.notify("No existing session to load.")
       end,
@@ -52,7 +49,7 @@ return {
           local persisting_session = vim.g.persisting_session
           local session_file_name_start_idx, _ = persisting_session:find("%%")
           if session_file_name_start_idx == nil then
-            vim.notify("Error: no previous session to load.")
+            vim.cmd ('cd ' .. vim.fn.expand("%:p:h"))
             return
           end
           local cwd_file_name = persisting_session:sub(tonumber(session_file_name_start_idx), -5)
@@ -63,9 +60,18 @@ return {
           else
             vim.g.session_file_path = normalized:sub(1, tonumber(cwd_branch_start_idx) - 1)
           end
-          vim.cmd ('cd' .. vim.g.session_file_path)
+          vim.cmd ('cd ' .. vim.g.session_file_path)
           vim.notify("Session loaded: " .. vim.g.session_file_path)
         end,
       })
-  end,
+    vim.api.nvim_create_autocmd(
+      { 'User' }, {
+        pattern = { 'PersistedTelescopeLoadPre' },
+        group = persisted,
+        callback = function()
+          vim.cmd('bufdo bwipeout!')
+        end,
+      }
+    )
+  end
 }
