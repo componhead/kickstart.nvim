@@ -15,12 +15,12 @@ return {
     }
     local conflicts = vim.api.nvim_create_augroup('git-conflict', { clear = true })
     vim.api.nvim_create_autocmd({
-      'BufEnter',
+      'VimEnter',
     }, {
       pattern = '*',
       group = conflicts,
       callback = function()
-        if vim.bo.filetype == 'diff' then
+        if vim.o.diff == true then
           vim.keymap.set('n', '==', '<Cmd>GitConflictChooseBase<CR>', { buffer = true, desc = 'Choose Base' })
           vim.keymap.set('n', '>>', '<Cmd>GitConflictChooseTheirs<CR>', { buffer = true, desc = 'Choose Theirs' })
           vim.keymap.set('n', '<<', '<Cmd>GitConflictChooseOurs<CR>', { buffer = true, desc = 'Choose Ours' })
