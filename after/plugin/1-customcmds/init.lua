@@ -15,6 +15,10 @@ function Get_root(file_name)
   end
 end
 
+function Is_in_root(filename)
+  return filename:match(vim.fn.getcwd()) ~= nil
+end
+
 function Get_list_paths(list)
   local paths = {}
   local hash = {}
@@ -36,6 +40,10 @@ vim.api.nvim_create_user_command('ShowPaths', function()
     { vim.fn.expand '%:h' .. '\n', 'Title' },
     { vim.fn.expand '%:t', 'WarningMsg' },
   }, false, {})
+end, {})
+
+vim.api.nvim_create_user_command('IsCurrentBufferInRoot', function()
+  return Is_in_root(vim.fn.expand('%:p'))
 end, {})
 
 vim.api.nvim_create_user_command('CdFileDir', function()
