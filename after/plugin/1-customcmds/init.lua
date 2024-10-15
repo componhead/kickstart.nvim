@@ -16,7 +16,8 @@ function Get_root(file_name)
 end
 
 function Is_in_root(filename)
-  return filename:match(vim.fn.getcwd()) ~= nil
+  local dir = Get_root '.git' or vim.fn.getcwd()
+  return filename:match(dir) ~= nil
 end
 
 function Get_list_paths(list)

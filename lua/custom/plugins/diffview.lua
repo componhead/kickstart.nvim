@@ -230,5 +230,8 @@ return {
         },
       },
     })
+    vim.cmd('cab d DiffviewOpen')
+    vim.cmd('cab df DiffviewFileHistory')
+    vim.cmd('cab dc DiffviewClose')
   end
 }

@@ -32,7 +32,7 @@ return {
         --   vim.cmd"let @+='Should not save'"
         --   return false
         -- end
-        if vim.o.diff or (not vim.cmd('IsInRoot')) then
+        if vim.o.diff then
           vim.cmd"let @+='Should not save'"
           return false
         end

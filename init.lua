@@ -511,6 +511,24 @@ require('lazy').setup({
         end
       end
 
+      local remove_selected_from_qf = function(buf)
+        local list = vim.fn.getqflist()
+        local rows = require('telescope.actions.state').get_current_picker(buf):get_multi_selection()
+        if vim.tbl_isempty(rows) then
+         rows = { require('telescope.actions.state').get_selected_entry() }
+        end
+        for _, row in pairs(rows) do
+          for idx, item in pairs(list) do
+            if item.bufnr == row.bufnr and item.text == row.text and item.lnum == row.lnum  and item.col == row.col then
+              table.remove(list, idx)
+                idx = idx - 1
+            end
+          end
+        end
+        vim.fn.setqflist(list)
+        vim.cmd('Telescope quickfix')
+      end
+
       local grep_on_qf = function(p_bufnr)
         require('telescope.actions').smart_send_to_qflist(p_bufnr)
         local list = vim.fn.getqflist()
@@ -542,7 +560,7 @@ require('lazy').setup({
                 type = 'action',
                 opts = {
                   nowait = true,
-                  silent = true,
+                  silent = false,
                   desc = 'Live grep on found files results',
                 },
               },
@@ -565,7 +583,7 @@ require('lazy').setup({
                 type = 'action',
                 opts = {
                   nowait = true,
-                  silent = true,
+                  silent = false,
                   desc = 'Live grep on found files results',
                 },
               },
@@ -609,6 +627,30 @@ require('lazy').setup({
           quickfix = {
             show_line = false,
             trim_text = true,
+            mappings = {
+              n = {
+                d = {
+                  remove_selected_from_qf,
+                  type = 'action',
+                  opts = {
+                    nowait = true,
+                    silent = true,
+                    desc = 'Remove entry from quickfix list',
+                  },
+                },
+              },
+              i = {
+                ['<C-S-d>'] = {
+                  remove_selected_from_qf,
+                  type = 'action',
+                  opts = {
+                    nowait = true,
+                    silent = true,
+                    desc = 'Remove entry from quickfix list',
+                  },
+                },
+              },
+            },
           },
           diagnostics = {
             layout_strategy = 'vertical',
