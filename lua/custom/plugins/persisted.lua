@@ -18,7 +18,7 @@ return {
         mappings = { -- Mappings for managing sessions in Telescope
           copy_session = '<C-c>',
           change_branch = '<C-b>',
-          delete_session = '<C-d>',
+          delete_session = '<C-S-d>',
         },
         icons = { -- icons displayed in the Telescope picker
           selected = ' ',

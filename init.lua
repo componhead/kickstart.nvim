@@ -496,24 +496,23 @@ require('lazy').setup({
 
       -- [[ Configure Telescope ]]
       -- See `:help telescope` and `:help telescope.setup()`
-      local select_one_or_multi = function(prompt_bufnr)
-        local picker = require('telescope.actions.state').get_current_picker(prompt_bufnr)
-        local multi = picker:get_multi_selection()
-        if not vim.tbl_isempty(multi) then
-          require('telescope.actions').close(prompt_bufnr)
-          for _, j in pairs(multi) do
+      local select_one_or_multi = function(bufnr)
+        local rows = require('telescope.actions.state').get_current_picker(bufnr):get_multi_selection()
+        if not vim.tbl_isempty(rows) then
+          require('telescope.actions').close(bufnr)
+          for _, j in pairs(rows) do
             if j.path ~= nil then
               vim.cmd(string.format('%s %s', 'edit', j.path))
             end
           end
         else
-          require('telescope.actions').select_default(prompt_bufnr)
+          require('telescope.actions').select_default(bufnr)
         end
       end
 
-      local remove_selected_from_qf = function(buf)
+      local remove_selected_from_qf = function(bufnr)
         local list = vim.fn.getqflist()
-        local rows = require('telescope.actions.state').get_current_picker(buf):get_multi_selection()
+        local rows = require('telescope.actions.state').get_current_picker(bufnr):get_multi_selection()
         if vim.tbl_isempty(rows) then
          rows = { require('telescope.actions.state').get_selected_entry() }
         end
@@ -529,11 +528,25 @@ require('lazy').setup({
         vim.cmd('Telescope quickfix')
       end
 
-      local grep_on_qf = function(p_bufnr)
-        require('telescope.actions').smart_send_to_qflist(p_bufnr)
+      local grep_on_qf = function(bufnr)
+        require('telescope.actions').smart_send_to_qflist(bufnr)
         local list = vim.fn.getqflist()
-        local paths = Get_list_paths(list)
-        require('telescope.builtin').live_grep { prompt_title = 'Live Grep on Quickfix', search_dirs = paths }
+        if vim.tbl_isempty(list) then
+          vim.notify('No items to grep into', vim.log.levels.WARN)
+          require('telescope.builtin').live_grep { prompt_title = 'Live Grep' }
+        else
+          local paths = Get_list_paths(list)
+          require('telescope.builtin').live_grep { prompt_title = 'Live Grep on Quickfix', search_dirs = paths }
+        end
+      end
+    
+      local send_selected_to_qf = function(bufnr)
+        local rows = require('telescope.actions.state').get_current_picker(bufnr):get_multi_selection()
+        if vim.tbl_isempty(rows) then
+         rows = { require('telescope.actions').toggle_all(bufnr) }
+        end
+        require('telescope.actions').smart_send_to_qflist(bufnr, rows)
+        vim.cmd('Telescope quickfix')
       end
 
       require('telescope').setup {
@@ -554,7 +567,7 @@ require('lazy').setup({
               ['<S-Up>'] = require('telescope.actions').cycle_history_prev,
               ['<PageDown>'] = false,
               ['<PageUp>'] = false,
-              ['<C-o>'] = select_one_or_multi,
+              ['<CR>'] = select_one_or_multi,
               ['<C-g>'] = {
                 grep_on_qf,
                 type = 'action',
@@ -564,7 +577,15 @@ require('lazy').setup({
                   desc = 'Live grep on found files results',
                 },
               },
-              ['<C-q>'] = require('telescope.actions').smart_send_to_qflist,
+              ['<C-q>'] = {
+                send_selected_to_qf,
+                type = 'action',
+                opts = {
+                  nowait = true,
+                  silent = false,
+                  desc = 'Send selected to quickfix list',
+                },
+              },
             },
             i = {
               ['<C-v>'] = require('telescope.actions').select_vertical,
@@ -577,7 +598,7 @@ require('lazy').setup({
               ['<S-Up>'] = require('telescope.actions').cycle_history_prev,
               ['<PageDown>'] = false,
               ['<PageUp>'] = false,
-              ['<C-o>'] = select_one_or_multi,
+              ['<CR>'] = select_one_or_multi,
               ['<C-g>'] = {
                 grep_on_qf,
                 type = 'action',
@@ -587,7 +608,15 @@ require('lazy').setup({
                   desc = 'Live grep on found files results',
                 },
               },
-              ['<C-q>'] = require('telescope.actions').smart_send_to_qflist,
+              ['<C-q>'] = {
+                send_selected_to_qf,
+                type = 'action',
+                opts = {
+                  nowait = true,
+                  silent = false,
+                  desc = 'Send selected to quickfix list',
+                },
+              },
             },
           },
           preview = {
@@ -621,6 +650,9 @@ require('lazy').setup({
             mappings = {
               n = {
                 d = require('telescope.actions').delete_buffer,
+              },
+              i = {
+                ['<C-S-d>'] = require('telescope.actions').delete_buffer,
               },
             },
           },
