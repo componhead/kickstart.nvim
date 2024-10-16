@@ -2,10 +2,9 @@ return {
   'stevearc/oil.nvim',
   -- Optional dependencies
   -- dependencies = { 'echasnovski/mini.icons' },
-  dependencies = { 'nvim-tree/nvim-web-devicons' }, -- use if prefer nvim-web-devicons
+  dependencies = { 'nvim-tree/nvim-web-devicons', 'nvim-telescope/telescope.nvim' }, -- use if prefer nvim-web-devicons
   config = function()
     local toggle = '<leader>\\\\'
-    vim.keymap.set('n', toggle, '<CMD>Oil --float<CR>', { desc = 'Open parent directory' })
     require('oil').setup {
       -- Oil will take over directory buffers (e.g. `vim .` or `:e src/`)
       -- Set to false if you want some other plugin (e.g. netrw) to open when you edit directories.
@@ -189,5 +188,14 @@ return {
         border = 'rounded',
       },
     }
+    vim.keymap.set('n', toggle, '<CMD>Oil --float<CR>', { desc = 'Open parent directory' })
+    vim.keymap.set('n', '<leader>sG', function()
+      local currdir = require('oil').get_current_dir()
+      require('telescope.builtin').live_grep { prompt_title = 'Live Grep in current and sub directories', search_dirs = { currdir } }
+    end, { desc = 'Live Grep in current and sub directories' })
+    vim.keymap.set('n', '<leader>sF', function()
+      local currdir = require('oil').get_current_dir()
+      require('telescope.builtin').find_files { prompt_title = 'Find files in current and sub directories', search_dirs = { currdir } }
+    end, { desc = 'Find files in current and sub directories' })
   end,
 }

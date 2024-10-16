@@ -1175,7 +1175,6 @@ require('lazy').setup({
           { name = 'luasnip' },
           { name = 'path' },
           { name = 'pandoc_references' },
-          { name = 'neorg' },
         },
       }
     end,
@@ -1244,7 +1243,7 @@ require('lazy').setup({
     main = 'nvim-treesitter.configs', -- Sets main module to use for opts
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
     opts = {
-      ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc', 'norg' },
+      ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' },
       -- Autoinstall languages that are not installed
       auto_install = true,
       highlight = {
@@ -1262,53 +1261,6 @@ require('lazy').setup({
     --    - Incremental selection: Included, see `:help nvim-treesitter-incremental-selection-mod`
     --    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
     --    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
-  },
-  {
-    'nvim-neorg/neorg',
-    lazy = false,
-    version = '*',
-    config = function()
-      require('neorg').setup {
-        load = {
-          ['core.defaults'] = {},
-          ['core.concealer'] = {},
-          ['core.dirman'] = {
-            config = {
-              workspaces = {
-                notes = vim.env.PRIVATE_DOTFILES_ROOT .. '/notes',
-              },
-              default_workspace = 'notes',
-            },
-          },
-          ['core.completion'] = {
-            config = {
-              engine = 'nvim-cmp',
-            },
-          },
-          ['core.integrations.nvim-cmp'] = {},
-        },
-      }
-
-      vim.api.nvim_create_autocmd({
-        'BufLeave',
-      }, {
-        group = vim.api.nvim_create_augroup('neorg', { clear = true }),
-        pattern = '*.norg',
-        callback = function()
-          if vim.bo.filetype == 'norg' then
-            vim.cmd 'bd'
-          end
-        end,
-      })
-
-      vim.keymap.set('n', '<Leader>no', '<Cmd>Neorg<CR>')
-      vim.keymap.set('n', '<Leader>ni', '<Cmd>Neorg index<CR>')
-      vim.keymap.set('n', '<Leader>nj', '<Cmd>Neorg journal<CR>')
-      vim.keymap.set('n', '<Leader>nq', '<Cmd>Neorg return<CR>')
-      vim.keymap.set('n', '<Leader>nt', '<Cmd>Neorg toggle-concealer<CR>')
-      vim.wo.foldlevel = 99
-      vim.wo.conceallevel = 2
-    end,
   },
 
   -- The following two comments only work if you have downloaded the kickstart repo, not just copy pasted the

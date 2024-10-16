@@ -27,16 +27,9 @@ return {
         },
       },
       should_save = function()
-        -- Do not save if the alpha dashboard is the current filetype
-        -- if vim.o.diff or (not vim.cmd('IsInRoot')) then
-        --   vim.cmd"let @+='Should not save'"
-        --   return false
-        -- end
         if vim.o.diff then
-          vim.cmd"let @+='Should not save'"
           return false
         end
-        vim.cmd"let @+='Saving...'"
         return true
       end,
     })
