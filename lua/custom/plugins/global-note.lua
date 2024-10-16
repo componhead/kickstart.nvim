@@ -47,8 +47,90 @@ return {
       -- Additional presets to create other global, project local, file local
       -- and other notes.
       -- { [name]: table } - tables there have the same fields as the current table.
-      additional_presets = {},
+      additional_presets = {
+        changes_nvim = {
+          filename = "changes_to_nvim.md",
+          title = "Changes to nvim configuration",
+          command_name = "ChangesNvimNote",
+        },
+
+        git = {
+          filename = "git.md",
+          title = "Tricks and notes on git",
+          command_name = "GitNote",
+        },
+
+        js = {
+          filename = "javascript.md",
+          title = "Tricks and notes on javascript",
+          command_name = "JavascriptNote",
+        },
+
+        ts = {
+          filename = "typescript.md",
+          title = "Tricks and notes on typescript",
+          command_name = "TypescriptNote",
+        },
+
+        js_ts = {
+          filename = "js_ts.md",
+          title = "Tricks and notes javascript and typescript relation",
+          command_name = "JsTsNote",
+        },
+
+        nvim = {
+          filename = "nvim.md",
+          title = "Tricks and notes on nvim",
+          command_name = "NvimNote",
+        },
+
+        wezterm = {
+          filename = "wezterm.md",
+          title = "Tricks and notes on wezterm",
+          command_name = "WeztermNote",
+        },
+
+        nix = {
+          filename = "nix.md",
+          title = "Tricks and notes on nix",
+          command_name = "NixNote",
+        },
+
+        ghostscript = {
+          filename = "ghostscript.md",
+          title = "Tricks and notes on ghostscript",
+          command_name = "GhostscriptNote",
+        },
+
+        ssh = {
+          filename = "ssh.md",
+          title = "Tricks and notes on ssh",
+          command_name = "SshNote",
+        },
+
+        colloquio = {
+          filename = "colloquio.md",
+          title = "Tricks and notes on colloquio",
+          command_name = "ColloquioNote",
+        },
+
+        book = {
+          filename = "book.md",
+          title = "Book",
+          command_name = "BookNote",
+        },
+      },
     })
+    vim.keymap.set("n", "<leader>nn", '<CMD>GlobalNote<CR>', { desc = "Open global note", })
+    vim.keymap.set("n", "<leader>ng", '<CMD>GitNote<CR>', { desc = "Open git note", })
+    vim.keymap.set("n", "<leader>nh", '<CMD>GhostscriptNote<CR>', { desc = "Open ghostscript note", })
+    vim.keymap.set("n", "<leader>nj", '<CMD>JavascriptNote<CR>', { desc = "Open javascript note", })
+    vim.keymap.set("n", "<leader>nJ", '<CMD>JsTsNote<CR>', { desc = "Open js_ts note", })
+    vim.keymap.set("n", "<leader>ns", '<CMD>SshNote<CR>', { desc = "Open ssh note", })
+    vim.keymap.set("n", "<leader>nt", '<CMD>TypescriptNote<CR>', { desc = "Open global note", })
+    vim.keymap.set("n", "<leader>nv", '<CMD>NvimNote<CR>', { desc = "Open nvim note", })
+    vim.keymap.set("n", "<leader>nw", '<CMD>WeztermNote<CR>', { desc = "Open wezterm note", })
+    vim.keymap.set("n", "<leader>nx", '<CMD>NixNote<CR>', { desc = "Open nix note", })
   end
 }
 
