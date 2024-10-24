@@ -81,6 +81,7 @@ return {
         ['gx'] = 'actions.open_external',
         ['g.'] = 'actions.toggle_hidden',
         ['g\\'] = 'actions.toggle_trash',
+        ['<C-p>'] = 'actions.preview',
       },
       -- Set to false to disable all of the above keymaps
       use_default_keymaps = true,

@@ -338,11 +338,6 @@ return { -- Fuzzy Finder (files, lsp, etc)
         },
         persisted = {
           layout_config = { width = 0.33, height = 0.50 },
-          mappings = {
-            n = {
-              d = require('telescope.actions').delete_buffer,
-            },
-          },
         }
       }
     }
@@ -381,8 +376,16 @@ return { -- Fuzzy Finder (files, lsp, etc)
     -- See `:help telescope.builtin`
     local builtin = require 'telescope.builtin'
     vim.keymap.set('n', '<leader><leader><leader>', function()
-      builtin.buffers { only_cwd = false }
-    end, { desc = 'find existing buffers' })
+      local cwd = vim.fn.getcwd()
+      local result = {}
+      for value in pairs(vim.cmd('buffers')) do
+        print(value.flag)
+        if value:match(cwd) == nil then
+          table.insert(result, value) 
+        end
+      end
+      return result
+    end, { desc = 'find external existing buffers' })
     vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
     vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
     vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })

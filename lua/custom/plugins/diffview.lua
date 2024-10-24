@@ -39,7 +39,7 @@ return {
         },
         merge_tool = {
           -- Config for conflicted files in diff views during a merge or rebase.
-          layout = "diff3_horizontal",
+          layout = "diff4_mixed",
           disable_diagnostics = true,   -- Temporarily disable diagnostics for diff buffers while in the view.
           winbar_info = true,           -- See |diffview-config-view.x.winbar_info|
         },
@@ -118,6 +118,10 @@ return {
           { "n", "<leader>cB",  actions.conflict_choose_all("base"),    { desc = "Choose the BASE version of a conflict for the whole file" } },
           { "n", "<leader>cA",  actions.conflict_choose_all("all"),     { desc = "Choose all the versions of a conflict for the whole file" } },
           { "n", "dX",          actions.conflict_choose_all("none"),    { desc = "Delete the conflict region for the whole file" } },
+          { "n", "[[",         '<cmd>diffget<cr>]czz',                  { desc = 'diffget (obtain)' } },
+          { "n", ']]',         '<cmd>diffput<cr>]czz',                  { desc = 'diffput' } },
+          { "n", ']c',         ']czz',                                  { desc = 'next diff hunk' } },
+          { "n", '[c',         '[czz',                                  { desc = 'previous diff hunk' } },
         },
         diff1 = {
           -- Mappings in single window diff layouts
