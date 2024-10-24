@@ -192,10 +192,16 @@ return {
     vim.keymap.set('n', toggle, '<CMD>Oil --float<CR>', { desc = 'Open parent directory' })
     vim.keymap.set('n', '<leader>sG', function()
       local currdir = require('oil').get_current_dir()
+      if currdir == nil or currdir == '' then
+        currdir = vim.fn.expand('%:p:h')
+      end
       require('telescope.builtin').live_grep { prompt_title = 'Live Grep in current and sub directories', search_dirs = { currdir } }
     end, { desc = 'Live Grep in current and sub directories' })
     vim.keymap.set('n', '<leader>sF', function()
       local currdir = require('oil').get_current_dir()
+      if currdir == nil or currdir == '' then
+        currdir = vim.fn.expand('%:p:h')
+      end
       require('telescope.builtin').find_files { prompt_title = 'Find files in current and sub directories', search_dirs = { currdir } }
     end, { desc = 'Find files in current and sub directories' })
   end,
