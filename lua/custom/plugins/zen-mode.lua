@@ -88,7 +88,7 @@ return {
     vim.api.nvim_create_autocmd({ 'VimLeavePre' }, {
       group = zenMode,
       callback = function()
-        require('zen-mode').close()
+        -- require('zen-mode').toggle()
       end,
     })
   end,

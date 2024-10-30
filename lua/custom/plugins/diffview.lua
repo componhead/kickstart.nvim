@@ -36,6 +36,7 @@ return {
           layout = "diff2_horizontal",
           disable_diagnostics = false,  -- Temporarily disable diagnostics for diff buffers while in the view.
           winbar_info = false,          -- See |diffview-config-view.x.winbar_info|
+          enhanced_diff_hl = true
         },
         merge_tool = {
           -- Config for conflicted files in diff views during a merge or rebase.

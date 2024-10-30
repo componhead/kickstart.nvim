@@ -139,3 +139,4 @@ vim.api.nvim_create_autocmd({
     vim.o.cursorline = false
   end,
 })
+
