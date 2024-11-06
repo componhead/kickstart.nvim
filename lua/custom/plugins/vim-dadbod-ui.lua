@@ -24,13 +24,13 @@ return {
           url =  'mysql://' .. vim.env.TREEDOM_DB_USER .. '@' .. '127.0.0.1:3306/'
         },
         { name = 'TREE DB TEST',
-          url =  'mysql://' .. vim.env.TREEDOM_DB_USER .. ':' .. vim.env.TREEDOM_DB_TREES_TEST_PASSWORD .. '@' .. '127.0.0.1:7001/'
+          url =  'mysql://' .. vim.env.TREEDOM_DB_USER .. ':' .. vim.env.TREEDOM_DB_TREES_TEST_PASSWORD .. '@' .. '127.0.0.1:7001'
         },
         { name = 'TREES DB PROD',
           url =  'mysql://' .. vim.env.TREEDOM_DB_USER .. ':' .. vim.env.TREEDOM_DB_TREES_PROD_PASSWORD .. '@' .. '127.0.0.1:7011'
         },
         { name = 'TREEDOM DB TEST',
-          url =  'mysql://' .. vim.env.TREEDOM_DB_USER .. ':' .. vim.env.TREEDOM_DB_TRD_TEST_PASSWORD .. '@' .. '127.0.0.1:7002/'
+          url =  'mysql://' .. vim.env.TREEDOM_DB_USER .. ':' .. vim.env.TREEDOM_DB_TRD_TEST_PASSWORD .. '@' .. '127.0.0.1:7002'
         },
         { name = 'TREESDOM DB PROD',
           url =  'mysql://' .. vim.env.TREEDOM_DB_USER .. ':' .. vim.env.TREEDOM_DB_TRD_PROD_PASSWORD .. '@' .. '127.0.0.1:7022'

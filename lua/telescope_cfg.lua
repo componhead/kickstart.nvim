@@ -86,7 +86,7 @@ return { -- Fuzzy Finder (files, lsp, etc)
         require('telescope.builtin').live_grep { prompt_title = 'Live Grep' }
       else
         local paths = Get_list_paths(list)
-        require('telescope.builtin').live_grep { prompt_title = 'Live Grep on Quickfix', search_dirs = paths }
+        require('telescope.builtin').live_grep { prompt_title = 'Live Grep on Quickfix files', search_dirs = paths }
       end
     end
 
