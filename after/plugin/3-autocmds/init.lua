@@ -117,6 +117,7 @@ vim.api.nvim_create_autocmd({
 local welcome = vim.api.nvim_create_augroup('welcome', { clear = true })
 vim.api.nvim_create_autocmd({
   'WinEnter',
+  'VimEnter'
 }, {
   group = welcome,
   callback = function()
@@ -126,7 +127,9 @@ vim.api.nvim_create_autocmd({
     vim.o.cursorline = true
     vim.cmd.hi('WinSeparator', 'guibg=' .. colors.blue7)
     vim.cmd.hi('NormalNC', 'guibg=#13141c')
-    vim.cmd.hi('LineNr', 'guifg=' .. colors.blue0, 'guibg=NONE', 'cterm=NONE', 'gui=NONE')
+    vim.cmd.hi('LineNr', 'guifg=' .. colors.blue0)
+    vim.cmd.hi('LineNrAbove', 'guifg=#1f618d')
+    vim.cmd.hi('LineNrBelow', 'guifg=#1f618d')
   end,
 })
 vim.api.nvim_create_autocmd({
@@ -134,9 +137,11 @@ vim.api.nvim_create_autocmd({
 }, {
   group = welcome,
   callback = function()
+    local colors = require('tokyonight.colors').setup { transform = true }
     vim.o.number = false
     vim.o.relativenumber = false
     vim.o.cursorline = false
+    vim.cmd.hi('NormalNC', 'guibg=black')
   end,
 })
 
