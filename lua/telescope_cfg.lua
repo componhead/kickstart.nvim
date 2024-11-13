@@ -376,15 +376,7 @@ return { -- Fuzzy Finder (files, lsp, etc)
     -- See `:help telescope.builtin`
     local builtin = require 'telescope.builtin'
     vim.keymap.set('n', '<leader><leader><leader>', function()
-      local cwd = vim.fn.getcwd()
-      local result = {}
-      for value in pairs(vim.cmd('buffers')) do
-        print(value.flag)
-        if value:match(cwd) == nil then
-          table.insert(result, value) 
-        end
-      end
-      return result
+      builtin.buffers { only_cwd = false }
     end, { desc = 'find external existing buffers' })
     vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
     vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
