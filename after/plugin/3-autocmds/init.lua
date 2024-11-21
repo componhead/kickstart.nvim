@@ -130,6 +130,7 @@ vim.api.nvim_create_autocmd({
     vim.cmd.hi('LineNr', 'guifg=' .. colors.blue2)
     vim.cmd.hi('LineNrAbove', 'guifg=' .. colors.blue0)
     vim.cmd.hi('LineNrBelow', 'guifg=' .. colors.blue0)
+    vim.cmd.hi('CursorLineNr', 'guifg=' .. colors.cyan, 'guibg=' .. colors.blue0)
   end,
 })
 vim.api.nvim_create_autocmd({
@@ -141,7 +142,7 @@ vim.api.nvim_create_autocmd({
     vim.o.number = false
     vim.o.relativenumber = false
     vim.o.cursorline = false
-    vim.cmd.hi('NormalNC', 'guibg=black')
+    vim.cmd.hi('NormalNC', 'guibg=' .. colors.black)
   end,
 })
 

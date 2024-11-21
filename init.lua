@@ -168,11 +168,11 @@ vim.opt.scrolloff = 10
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 -- Diagnostic keymaps
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
-vim.keymap.set('n', '<leader>qd', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+vim.keymap.set('n', '<leader>qd', vim.diagnostic.setqflist, { desc = 'Open diagnostic quickfix list' })
+vim.keymap.set('n', '<leader>qD', vim.diagnostic.setloclist, { desc = 'Open diagnostic loclist list' })
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
@@ -324,7 +324,7 @@ require('lazy').setup({
         { '<leader>ie', group = 'EDIT WITH INSTRUCTIONS', mode ={ 'v' } },
         { '<leader>im', group = 'ACT_AS' },
         { '<leader>n', group = 'NOTES' },
-        { '<leader>q', group = 'QUICKFIX' },
+        { '<leader>q', group = 'QUICKFIX/LOCLIST' },
         { '<leader>r', group = 'REFACTORY' },
         { '<leader>s', group = 'SEARCH' },
         { '<leader>S', group = 'SESSION' },

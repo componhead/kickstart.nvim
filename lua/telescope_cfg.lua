@@ -99,6 +99,45 @@ return { -- Fuzzy Finder (files, lsp, etc)
       vim.cmd('Telescope quickfix')
     end
 
+    local remove_selected_from_loclist = function(bufnr)
+      local list = vim.fn.getloclist(bufnr)
+      local rows = require('telescope.actions.state').get_current_picker(bufnr):get_multi_selection()
+      if vim.tbl_isempty(rows) then
+        rows = { require('telescope.actions.state').get_selected_entry() }
+      end
+      for _, row in pairs(rows) do
+        for idx, item in pairs(list) do
+          if item.bufnr == row.bufnr and item.text == row.text and item.lnum == row.lnum  and item.col == row.col then
+            table.remove(list, idx)
+            idx = idx - 1
+          end
+        end
+      end
+      vim.fn.setloclist(list)
+      vim.cmd('Telescope quickfix')
+    end
+
+    local grep_on_loclist = function(bufnr)
+      require('telescope.actions').smart_send_to_loclist(bufnr)
+      local list = vim.fn.getloclist(bufnr)
+      if vim.tbl_isempty(list) then
+        vim.notify('No items to grep into', vim.log.levels.WARN)
+        require('telescope.builtin').live_grep { prompt_title = 'Live Grep' }
+      else
+        local paths = Get_list_paths(list)
+        require('telescope.builtin').live_grep { prompt_title = 'Live Grep on Loclist files', search_dirs = paths }
+      end
+    end
+
+    local send_selected_to_loclist = function(bufnr)
+      local rows = require('telescope.actions.state').get_current_picker(bufnr):get_multi_selection()
+      if vim.tbl_isempty(rows) then
+        rows = { require('telescope.actions').toggle_all(bufnr) }
+      end
+      require('telescope.actions').smart_send_to_loclist(bufnr, rows)
+      vim.cmd('Telescope loclist')
+    end
+
     require('telescope').setup {
       -- You can put your default mappings / updates / etc. in here
       --  All the info you're looking for is in `:help telescope.setup()`
@@ -226,19 +265,8 @@ return { -- Fuzzy Finder (files, lsp, etc)
                   desc = 'Live grep on found files results',
                 },
               },
-              ['<C-q>'] = {
-                send_selected_to_qf,
-                type = 'action',
-                opts = {
-                  nowait = true,
-                  silent = false,
-                  desc = 'Send selected to quickfix list',
-                },
-              },
-            },
-            i = {
-              ['<C-g>'] = {
-                grep_on_qf,
+              ['<C-S-g>'] = {
+                grep_on_loclist,
                 type = 'action',
                 opts = {
                   nowait = true,
@@ -253,6 +281,53 @@ return { -- Fuzzy Finder (files, lsp, etc)
                   nowait = true,
                   silent = false,
                   desc = 'Send selected to quickfix list',
+                },
+              },
+              ['<C-S-q>'] = {
+                send_selected_to_loclist,
+                type = 'action',
+                opts = {
+                  nowait = true,
+                  silent = false,
+                  desc = 'Send selected to location list',
+                },
+              },
+            },
+            i = {
+              ['<C-g>'] = {
+                grep_on_qf,
+                type = 'action',
+                opts = {
+                  nowait = true,
+                  silent = false,
+                  desc = 'Live grep on found files results',
+                },
+              },
+              ['<C-S-g>'] = {
+                grep_on_loclist,
+                type = 'action',
+                opts = {
+                  nowait = true,
+                  silent = false,
+                  desc = 'Live grep on found files results',
+                },
+              },
+              ['<C-q>'] = {
+                send_selected_to_qf,
+                type = 'action',
+                opts = {
+                  nowait = true,
+                  silent = false,
+                  desc = 'Send selected to quickfix list',
+                },
+              },
+              ['<C-S-q>'] = {
+                send_selected_to_loclist,
+                type = 'action',
+                opts = {
+                  nowait = true,
+                  silent = false,
+                  desc = 'Send selected to loclist list',
                 },
               },
             },
@@ -322,6 +397,70 @@ return { -- Fuzzy Finder (files, lsp, etc)
             },
           },
         },
+        loclist = {
+          show_line = false,
+          trim_text = true,
+          mappings = {
+            n = {
+              ['<C-S-g>'] = {
+                grep_on_loclist,
+                type = 'action',
+                opts = {
+                  nowait = true,
+                  silent = false,
+                  desc = 'Live grep on found files results',
+                },
+              },
+              ['<C-S-q>'] = {
+                send_selected_to_loclist,
+                type = 'action',
+                opts = {
+                  nowait = true,
+                  silent = false,
+                  desc = 'Send selected to loclist list',
+                },
+              },
+              d = {
+                remove_selected_from_loclist,
+                type = 'action',
+                opts = {
+                  nowait = true,
+                  silent = true,
+                  desc = 'Remove entry from loclist list',
+                },
+              },
+            },
+            i = {
+              ['<C-S-g>'] = {
+                grep_on_loclist,
+                type = 'action',
+                opts = {
+                  nowait = true,
+                  silent = false,
+                  desc = 'Live grep on found files results',
+                },
+              },
+              ['<C-S-q>'] = {
+                send_selected_to_loclist,
+                type = 'action',
+                opts = {
+                  nowait = true,
+                  silent = false,
+                  desc = 'Send selected to loclist list',
+                },
+              },
+              ['<C-S-d>'] = {
+                remove_selected_from_loclist,
+                type = 'action',
+                opts = {
+                  nowait = true,
+                  silent = true,
+                  desc = 'Remove entry from loclist list',
+                },
+              },
+            },
+          },
+        },
         diagnostics = {
           layout_strategy = 'vertical',
           layout_config = {
@@ -360,6 +499,8 @@ return { -- Fuzzy Finder (files, lsp, etc)
     vim.keymap.set('n', '<leader>hn', function() require('telescope.builtin').notify() end, { desc = 'history of notify' })
 
     vim.keymap.set('n', '<leader>qq', function() vim.cmd'Telescope quickfix' end, { desc = 'open quickfix' })
+
+    vim.keymap.set('n', '<leader>qQ', function() vim.cmd'Telescope loclist' end, { desc = 'open loclist' })
 
     vim.keymap.set('n', '<leader>sc', function() require('telescope.builtin').find_files { cwd = require('telescope.utils').buffer_dir() } end, { desc = "search files under file's directories" })
 
