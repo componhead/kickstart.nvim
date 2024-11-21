@@ -71,7 +71,7 @@ return {
         end,
       })
     vim.api.nvim_create_autocmd(
-      { 'VimLeave' }, {
+      { 'VimLeave', 'VimSuspend' }, {
         pattern = '*',
         group = persisted,
         callback = function()
