@@ -1,13 +1,13 @@
 return {
   "olimorris/persisted.nvim",
-  lazy = false,
+  lazy = true,
   dependencies = { 'nvim-telescope/telescope.nvim' },
   config = function()
     require("persisted").setup({
       save_dir = vim.fn.expand(vim.fn.stdpath("data") .. "/sessions/"), -- Resolves to ~/.local/share/nvim/sessions/
       follow_cwd = false, -- Change the session file to match any change in the cwd?
       use_git_branch = false,
-      autostart = true,
+      autostart = false,
       autoload = false,
       allowed_dirs = {}, -- Table of dirs that the plugin will start and autoload from
       ignored_dirs = {}, -- Table of dirs that are ignored for starting and autoloading
@@ -53,6 +53,10 @@ return {
         group = persisted,
         callback = function()
           local persisting_session = vim.g.persisting_session
+          if persisting_session == nil then
+            vim.cmd('cd ' .. vim.env.HOME)
+            return
+          end
           local session_file_name_start_idx, _ = persisting_session:find("%%")
           if session_file_name_start_idx == nil then
             vim.cmd ('cd ' .. vim.fn.expand("%:p:h"))
@@ -76,6 +80,16 @@ return {
         group = persisted,
         callback = function()
           vim.cmd('SessionSave')
+        end,
+      }
+    )
+    vim.api.nvim_create_autocmd(
+      { 'VimEnter' }, {
+        pattern = '*',
+        group = persisted,
+        callback = function()
+          vim.print "VimEnter"
+          vim.cmd('SessionStart')
         end,
       }
     )
