@@ -54,22 +54,15 @@ return {
           command_name = "ChangesNvimNote",
         },
 
+        fastify = {
+          filename = "fastify.md",
+          title = "Tricks and notes on Fastify",
+          command_name = "FastifyNote",
+        },
         git = {
           filename = "git.md",
           title = "Tricks and notes on git",
           command_name = "GitNote",
-        },
-
-        js = {
-          filename = "javascript.md",
-          title = "Tricks and notes on javascript",
-          command_name = "JavascriptNote",
-        },
-
-        ts = {
-          filename = "typescript.md",
-          title = "Tricks and notes on typescript",
-          command_name = "TypescriptNote",
         },
 
         js_ts = {
@@ -121,13 +114,13 @@ return {
         },
       },
     })
+    vim.keymap.set("n", "<leader>nc", '<CMD>ChangesNvimNote<CR>', { desc = "Open changes to nvim note", })
+    vim.keymap.set("n", "<leader>nf", '<CMD>FastifyNote<CR>', { desc = "Open fastify note", })
     vim.keymap.set("n", "<leader>nn", '<CMD>GlobalNote<CR>', { desc = "Open global note", })
     vim.keymap.set("n", "<leader>ng", '<CMD>GitNote<CR>', { desc = "Open git note", })
     vim.keymap.set("n", "<leader>nh", '<CMD>GhostscriptNote<CR>', { desc = "Open ghostscript note", })
-    vim.keymap.set("n", "<leader>nj", '<CMD>JavascriptNote<CR>', { desc = "Open javascript note", })
-    vim.keymap.set("n", "<leader>nJ", '<CMD>JsTsNote<CR>', { desc = "Open js_ts note", })
+    vim.keymap.set("n", "<leader>nj", '<CMD>JsTsNote<CR>', { desc = "Open js_ts note", })
     vim.keymap.set("n", "<leader>ns", '<CMD>SshNote<CR>', { desc = "Open ssh note", })
-    vim.keymap.set("n", "<leader>nt", '<CMD>TypescriptNote<CR>', { desc = "Open global note", })
     vim.keymap.set("n", "<leader>nv", '<CMD>NvimNote<CR>', { desc = "Open nvim note", })
     vim.keymap.set("n", "<leader>nw", '<CMD>WeztermNote<CR>', { desc = "Open wezterm note", })
     vim.keymap.set("n", "<leader>nx", '<CMD>NixNote<CR>', { desc = "Open nix note", })
