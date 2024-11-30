@@ -519,6 +519,7 @@ return { -- Fuzzy Finder (files, lsp, etc)
     vim.keymap.set('n', '<leader><leader><leader>', function()
       builtin.buffers { only_cwd = false }
     end, { desc = 'find external existing buffers' })
+    vim.keymap.set('n', '<C-j>', builtin.jumplist, { desc = 'Jumplist' })
     vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
     vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
     vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })

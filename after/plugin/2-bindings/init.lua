@@ -56,7 +56,3 @@ end, { desc = 'Toggle search highlight' })
 
 vim.keymap.set('c', '<C-w>', '<cmd>w !sudo tee > /dev/null %<CR>')
 vim.keymap.set('c', '<C-e>', '<cmd>let @+=v:errmsg<CR><Esc>')
-
-vim.keymap.set('i', 'jk', '<ESC>')
-
-vim.keymap.set('t', 'jk', [[<C-\><C-n>]])
