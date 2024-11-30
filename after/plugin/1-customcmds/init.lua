@@ -35,42 +35,48 @@ function Get_list_paths(list)
   return paths
 end
 
-vim.api.nvim_create_user_command('ShowPaths', function()
-  return vim.api.nvim_echo({
-    { vim.fn.expand '%:p:h' .. '\n', 'Title' },
-    { vim.fn.expand '%:h' .. '\n', 'Title' },
-    { vim.fn.expand '%:t', 'WarningMsg' },
-  }, false, {})
-end, {})
-
 vim.api.nvim_create_user_command('IsCurrentBufferInRoot', function()
   return Is_in_root(vim.fn.expand('%:p'))
 end, {})
 
-vim.api.nvim_create_user_command('CdFileDir', function()
-  local dir = vim.fn.expand '%:h'
-  vim.api.nvim_set_current_dir(dir)
-end, {})
+function print_table(o)
+   if type(o) == 'table' then
+      local s = '{ '
+      for k,v in pairs(o) do
+         if type(k) ~= 'number' then k = '"'..k..'"' end
+         s = s .. '['..k..'] = ' .. print_table(v) .. ','
+      end
+      return s .. '} '
+   else
+      return tostring(o)
+   end
+end
 
-vim.api.nvim_create_user_command('CdWindowGitRoot', function()
+local cd_git_root = function(args)
   local dir = Get_root '.git' or vim.fn.getcwd()
-  vim.cmd('lcd ' .. dir)
-end, {})
+  if(args["args"] == '') then
+    vim.cmd('cd ' .. dir)
+  elseif args["args"] == 'tab' then
+    vim.cmd('tcd ' .. dir)
+  elseif args["args"] == 'window' then
+    vim.cmd('lcd ' .. dir)
+  end
+end
 
-vim.api.nvim_create_user_command('CdTabGitRoot', function()
-  local dir = Get_root '.git' or vim.fn.getcwd()
-  vim.cmd('tcd ' .. dir)
-end, {})
-
-vim.api.nvim_create_user_command('CdGitRoot', function()
-  local dir = Get_root '.git' or vim.fn.getcwd()
-  vim.api.nvim_set_current_dir(dir)
-end, {})
-
-vim.api.nvim_create_user_command('CdNodeRoot', function()
+local cd_node_root = function(args)
   local dir = Get_root 'package.json' or vim.fn.getcwd()
-  vim.api.nvim_set_current_dir(dir)
-end, {})
+  if(args["args"] == '') then
+    vim.cmd('cd ' .. dir)
+  elseif args["args"] == 'tab' then
+    vim.cmd('tcd ' .. dir)
+  elseif args["args"] == 'window' then
+    vim.cmd('lcd ' .. dir)
+  end
+end
+
+vim.api.nvim_create_user_command('CdGitRoot', cd_git_root, { nargs = '?', desc = 'change cwd to git root' })
+
+vim.api.nvim_create_user_command('CdNodeRoot', cd_node_root , { nargs = '?', desc = 'change cwd to node_modules'})
 
 vim.api.nvim_create_user_command('BufOnly', function()
   pcall(function()
