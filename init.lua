@@ -736,8 +736,8 @@ require('lazy').setup({
             -- set group index to 0 to skip loading LuaLS completions as lazydev recommends it
             group_index = 0,
           },
-          { name = 'nvim_lsp' },
           { name = 'luasnip' },
+          { name = 'nvim_lsp' },
           { name = 'path' },
           { name = 'pandoc_references' },
         },
@@ -853,6 +853,7 @@ require('lazy').setup({
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
   --    For additional information, see `::help lazy.nvim-lazy.nvim-structuring-your-pluginshelp lazy.nvim-lazy.nvim-structuring-your-plugins`
   { import = 'custom.plugins' },
+  { import = 'custom.plugins.ai' },
   --
   -- For additional information with loading, sourcing and examples see `:help lazy.nvim-🔌-plugin-spec`
   -- Or use telescope!
