@@ -119,7 +119,7 @@ return { -- Fuzzy Finder (files, lsp, etc)
 
     local grep_on_loclist = function(bufnr)
       require('telescope.actions').smart_send_to_loclist(bufnr)
-      local list = vim.fn.getloclist(bufnr)
+      local list = vim.fn.getloclist("%")
       if vim.tbl_isempty(list) then
         vim.notify('No items to grep into', vim.log.levels.WARN)
         require('telescope.builtin').live_grep { prompt_title = 'Live Grep' }
