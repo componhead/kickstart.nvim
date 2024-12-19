@@ -83,15 +83,5 @@ return {
         end,
       }
     )
-    vim.api.nvim_create_autocmd(
-      { 'VimEnter' }, {
-        pattern = '*',
-        group = persisted,
-        callback = function()
-          vim.print "VimEnter"
-          vim.cmd('SessionStart')
-        end,
-      }
-    )
   end
 }
