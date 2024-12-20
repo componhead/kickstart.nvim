@@ -249,7 +249,6 @@ require('lazy').setup({
   --    require('gitsigns').setup({ ... })
   --
   -- See `:help gitsigns` to understand what the configuration keys do
-  
 
   -- NOTE: Plugins can also be configured to run Lua code when they are loaded.
   --
@@ -264,7 +263,7 @@ require('lazy').setup({
   --
   -- Then, because we use the `opts` key (recommended), the configuration runs
   -- after the plugin has been loaded as `require(MODULE).setup(opts)`.
-  require('gitsigns_cfg'),
+  require 'gitsigns_cfg',
 
   { -- Useful plugin to show you pending keybinds.
     'folke/which-key.nvim',
@@ -318,8 +317,8 @@ require('lazy').setup({
         { '<leader>h', group = 'HISTORY' },
         { '<leader>i', group = 'IA' },
         { '<leader>ia', group = 'ASK TO IA' },
-        { '<leader>ic', group = 'COMPLETE BY IA', mode ={ 'v' } },
-        { '<leader>ie', group = 'EDIT WITH INSTRUCTIONS', mode ={ 'v' } },
+        { '<leader>ic', group = 'COMPLETE BY IA', mode = { 'v' } },
+        { '<leader>ie', group = 'EDIT WITH INSTRUCTIONS', mode = { 'v' } },
         { '<leader>im', group = 'ACT_AS' },
         { '<leader>n', group = 'NOTES' },
         { '<leader>q', group = 'QUICKFIX/LOCLIST' },
@@ -341,8 +340,6 @@ require('lazy').setup({
   --
   -- Use the `dependencies` key to specify the dependencies of a particular plugin
 
-  { require 'telescope_cfg' },
-
   -- LSP Plugins
   {
     -- `lazydev` configures Lua LSP for your Neovim config, runtime and plugins
@@ -361,6 +358,38 @@ require('lazy').setup({
     -- Main LSP Configuration
     'neovim/nvim-lspconfig',
     dependencies = {
+      {
+        'ibhagwan/fzf-lua',
+        -- optional for icon support
+        dependencies = { 'nvim-tree/nvim-web-devicons' },
+        config = function()
+          -- calling `setup` is optional for customization
+          require('fzf-lua').setup {}
+
+          vim.keymap.set('n', '<leader>glf', function()
+            vim.cmd 'FzfLua gitcommits'
+          end, { desc = 'commits log' })
+
+          vim.keymap.set('n', '<tab>', function()
+            vim.cmd 'FzfLua'
+          end, { desc = 'Find existing buffers in cwd' })
+          vim.keymap.set('n', '<leader><leader>', function()
+            require('fzf-lua').buffers { only_cwd = true }
+          end, { desc = 'find existing buffers in cwd' })
+          vim.keymap.set('n', '<leader><leader><leader>', function()
+            require('fzf-lua').oldfiles()
+          end, { desc = 'old files' })
+          vim.keymap.set('n', '<leader>qq', function()
+            require('fzf-lua').quickfix()
+          end, { desc = 'open quickfix' })
+          vim.keymap.set('n', '<leader>qQ', function()
+            require('fzf-lua').loclist()
+          end, { desc = 'open loclist' })
+          vim.keymap.set('n', '<leader>sg', function()
+            require('fzf-lua').live_grep()
+          end, { desc = 'grep text' })
+        end,
+      },
       -- Automatically install LSPs and related tools to stdpath for Neovim
       { 'williamboman/mason.nvim', config = true }, -- NOTE: Must be loaded before dependants
       'williamboman/mason-lspconfig.nvim',
@@ -419,39 +448,39 @@ require('lazy').setup({
           -- Jump to the definition of the word under your cursor.
           --  This is where a variable was first declared, or where a function is defined, etc.
           --  To jump back, press <C-t>.
-          map('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
+          map('gd', require('fzf-lua').lsp_definitions, 'goto definition')
 
           -- Find references for the word under your cursor.
-          map('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
+          map('gr', require('fzf-lua').lsp_references, 'goto references')
 
           -- Jump to the implementation of the word under your cursor.
           --  Useful when your language has ways of declaring types without an actual implementation.
-          map('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
+          map('gI', require('fzf-lua').lsp_implementations, 'goto implementation')
 
           -- Jump to the type of the word under your cursor.
           --  Useful when you're not sure what type a variable is and you want to see
           --  the definition of its *type*, not where it was *defined*.
-          map('<leader>D', require('telescope.builtin').lsp_type_definitions, 'Type [D]efinition')
+          map('<leader>D', require('fzf-lua').lsp_typedefs, 'type definition')
 
           -- Fuzzy find all the symbols in your current document.
           --  Symbols are things like variables, functions, types, etc.
-          map('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
+          map('<leader>ds', require('fzf-lua').lsp_document_symbols, 'document symbols')
 
           -- Fuzzy find all the symbols in your current workspace.
           --  Similar to document symbols, except searches over your entire project.
-          map('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+          map('<leader>ws', require('fzf-lua').lsp_workspace_symbols, 'workspace symbols')
 
           -- Rename the variable under your cursor.
           --  Most Language Servers support renaming across files, etc.
-          map('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
+          map('<leader>rn', vim.lsp.buf.rename, 'rename')
 
           -- Execute a code action, usually your cursor needs to be on top of an error
           -- or a suggestion from your LSP for this to activate.
-          map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction', { 'n', 'x' })
+          map('<leader>ca', vim.lsp.buf.code_action, 'code action', { 'n', 'x' })
 
           -- WARN: This is not Goto Definition, this is Goto Declaration.
           --  For example, in C this would take you to the header.
-          map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+          map('gD', vim.lsp.buf.declaration, 'goto declaration')
 
           -- The following two autocommands are used to highlight references of the
           -- word under your cursor when your cursor rests there for a little while.
@@ -579,48 +608,48 @@ require('lazy').setup({
     end,
   },
 
-  -- { -- Autoformat
-  --   'stevearc/conform.nvim',
-  --   event = { 'BufWritePre' },
-  --   cmd = { 'ConformInfo' },
-  --   keys = {
-  --     {
-  --       '<leader>f',
-  --       function()
-  --         require('conform').format { async = true, lsp_format = 'fallback' }
-  --       end,
-  --       mode = '',
-  --       desc = '[F]ormat buffer',
-  --     },
-  --   },
-  --   opts = {
-  --     notify_on_error = false,
-  --     format_on_save = function(bufnr)
-  --       -- Disable "format_on_save lsp_fallback" for languages that don't
-  --       -- have a well standardized coding style. You can add additional
-  --       -- languages here or re-enable it for the disabled ones.
-  --       local disable_filetypes = { c = true, cpp = true }
-  --       local lsp_format_opt
-  --       if disable_filetypes[vim.bo[bufnr].filetype] then
-  --         lsp_format_opt = 'never'
-  --       else
-  --         lsp_format_opt = 'fallback'
-  --       end
-  --       return {
-  --         timeout_ms = 500,
-  --         lsp_format = lsp_format_opt,
-  --       }
-  --     end,
-  --     formatters_by_ft = {
-  --       lua = { 'stylua' },
-  --       -- Conform can also run multiple formatters sequentially
-  --       -- python = { "isort", "black" },
-  --       --
-  --       -- You can use 'stop_after_first' to run the first available formatter from the list
-  --       -- javascript = { "prettierd", "prettier", stop_after_first = true },
-  --     },
-  --   },
-  -- },
+  { -- Autoformat
+    'stevearc/conform.nvim',
+    event = { 'BufWritePre' },
+    cmd = { 'ConformInfo' },
+    keys = {
+      {
+        '<leader>f',
+        function()
+          require('conform').format { async = true, lsp_format = 'fallback' }
+        end,
+        mode = '',
+        desc = '[F]ormat buffer',
+      },
+    },
+    opts = {
+      notify_on_error = false,
+      format_on_save = function(bufnr)
+        -- Disable "format_on_save lsp_fallback" for languages that don't
+        -- have a well standardized coding style. You can add additional
+        -- languages here or re-enable it for the disabled ones.
+        local disable_filetypes = { c = true, cpp = true }
+        local lsp_format_opt
+        if disable_filetypes[vim.bo[bufnr].filetype] then
+          lsp_format_opt = 'never'
+        else
+          lsp_format_opt = 'fallback'
+        end
+        return {
+          timeout_ms = 500,
+          lsp_format = lsp_format_opt,
+        }
+      end,
+      formatters_by_ft = {
+        lua = { 'stylua' },
+        -- Conform can also run multiple formatters sequentially
+        -- python = { "isort", "black" },
+        --
+        -- You can use 'stop_after_first' to run the first available formatter from the list
+        -- javascript = { "prettierd", "prettier", stop_after_first = true },
+      },
+    },
+  },
 
   { -- Autocompletion
     'hrsh7th/nvim-cmp',
@@ -758,7 +787,7 @@ require('lazy').setup({
       vim.cmd.colorscheme 'tokyonight-night'
 
       -- Change the "hint" color to the "orange" color, and make the "error" color bright red
-      local colors = require("tokyonight.colors").setup()
+      local colors = require('tokyonight.colors').setup()
       -- You can configure highlights by doing something like:
       vim.cmd.hi 'Comment gui=none'
     end,
@@ -810,7 +839,25 @@ require('lazy').setup({
     main = 'nvim-treesitter.configs', -- Sets main module to use for opts
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
     opts = {
-      ensure_installed = { 'bash', 'fish', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc', 'typescript', 'javascript', 'json', 'toml', 'graphql', 'sql' },
+      ensure_installed = {
+        'bash',
+        'fish',
+        'diff',
+        'html',
+        'lua',
+        'luadoc',
+        'markdown',
+        'markdown_inline',
+        'query',
+        'vim',
+        'vimdoc',
+        'typescript',
+        'javascript',
+        'json',
+        'toml',
+        'graphql',
+        'sql',
+      },
       -- Autoinstall languages that are not installed
       auto_install = true,
       highlight = {

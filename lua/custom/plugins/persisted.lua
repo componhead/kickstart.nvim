@@ -1,7 +1,6 @@
 return {
   "olimorris/persisted.nvim",
-  lazy = true,
-  dependencies = { 'nvim-telescope/telescope.nvim' },
+  lazy = false,
   config = function()
     require("persisted").setup({
       save_dir = vim.fn.expand(vim.fn.stdpath("data") .. "/sessions/"), -- Resolves to ~/.local/share/nvim/sessions/
@@ -14,18 +13,6 @@ return {
       on_autoload_no_session = function()
         vim.notify("No existing session to load.")
       end,
-      telescope = {
-        mappings = { -- Mappings for managing sessions in Telescope
-          copy_session = '<C-c>',
-          change_branch = '<C-b>',
-          delete_session = '<C-S-d>',
-        },
-        icons = { -- icons displayed in the Telescope picker
-          selected = ' ',
-          dir = '  ',
-          branch = ' ',
-        },
-      },
       should_save = function()
         if vim.o.diff then
           return false
@@ -34,7 +21,7 @@ return {
       end,
     })
     vim.keymap.set('n', '<leader>SS', function()
-      vim.cmd'Telescope persisted'
+      vim.cmd'SessionSelect'
     end, { desc = 'load session' })
     vim.keymap.set('n', '<leader>Ss', function()
       vim.cmd'SessionSave'
@@ -49,7 +36,7 @@ return {
     local persisted = vim.api.nvim_create_augroup('persisted', {}) -- A global group for all your config autocommands
     vim.api.nvim_create_autocmd(
       { 'User' }, {
-        pattern = {'PersistedLoadPost','PersistedTelescopeLoadPost'},
+        pattern = {'PersistedLoadPost'},
         group = persisted,
         callback = function()
           local persisting_session = vim.g.persisting_session

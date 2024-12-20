@@ -25,8 +25,6 @@ return {
     'williamboman/mason.nvim',
     'jay-babu/mason-nvim-dap.nvim',
 
-    'nvim-telescope/telescope-dap.nvim',
-
     -- Add your own debuggers here
     -- 'leoluz/nvim-dap-go',
     { 'mxsdev/nvim-dap-vscode-js', module = { 'dap-vscode-js' } },
