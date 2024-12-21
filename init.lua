@@ -377,7 +377,7 @@ require('lazy').setup({
             require('fzf-lua').buffers { only_cwd = true }
           end, { desc = 'find existing buffers in cwd' })
           vim.keymap.set('n', '<leader><leader><leader>', function()
-            require('fzf-lua').oldfiles()
+            require('fzf-lua').buffers { only_cwd = false }
           end, { desc = 'old files' })
           vim.keymap.set('n', '<leader>qq', function()
             require('fzf-lua').quickfix()
@@ -388,6 +388,12 @@ require('lazy').setup({
           vim.keymap.set('n', '<leader>sg', function()
             require('fzf-lua').live_grep()
           end, { desc = 'grep text' })
+          vim.keymap.set('n', '<leader>sf', function()
+            require('fzf-lua').files { only_cwd = true }
+          end, { desc = 'find existing files in cwd' })
+          vim.keymap.set('n', '<leader>so', function()
+            require('fzf-lua').oldfiles { only_cwd = false }
+          end, { desc = 'find old files' })
         end,
       },
       -- Automatically install LSPs and related tools to stdpath for Neovim
